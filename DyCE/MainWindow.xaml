@@ -1,0 +1,298 @@
+﻿<Window 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:Custom="http://kent.boogaart/controls" 
+    xmlns:local="clr-namespace:DynamicContent"
+	x:Class="DynamicContent.MainWindow"
+	x:Name="Window"
+	Title="Dynamic Content Engine Editor"
+	UseLayoutRounding="True" mc:Ignorable="d" Background="{DynamicResource DyCEInsetBackground}" FontSize="16" Foreground="White" FontWeight="Bold" Icon="/DyCE;component/Application.ico">
+	<Window.Resources>
+		<local:DyCEBag x:Key="DyCEBagDataSource" d:IsDataSource="True"/>
+		<RadialGradientBrush x:Key="DyCEWindowBackground" GradientOrigin="0.706,0.79" RadiusY="1.265" RadiusX="0.924" Center="0.706,0.79">
+			<GradientStop Color="#FF10121D" Offset="1"/>
+			<GradientStop Color="White"/>
+		</RadialGradientBrush>
+		<DataTemplate x:Key="DataTemplate">
+			<StackPanel>
+				<TextBlock Text="{Binding Key, Mode=OneWay}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate x:Key="DataTemplate1">
+			<StackPanel>
+				<TextBlock Text="{Binding Key, Mode=OneWay}"/>
+			</StackPanel>
+		</DataTemplate>
+		<Style x:Key="ClearButtonStyle" TargetType="{x:Type Button}">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Button}">
+						<Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" Background="#00000000">
+							<Grid.Effect>
+								<DropShadowEffect BlurRadius="0" ShadowDepth="0"/>
+							</Grid.Effect>
+							<Grid.RenderTransform>
+								<TransformGroup>
+									<ScaleTransform/>
+									<SkewTransform/>
+									<RotateTransform/>
+									<TranslateTransform/>
+								</TransformGroup>
+							</Grid.RenderTransform>
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="CommonStates">
+									<VisualStateGroup.Transitions>
+										<VisualTransition GeneratedDuration="0:0:0.1">
+											<VisualTransition.GeneratedEasingFunction>
+												<SineEase EasingMode="EaseInOut"/>
+											</VisualTransition.GeneratedEasingFunction>
+										</VisualTransition>
+									</VisualStateGroup.Transitions>
+									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="MouseOver">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="grid">
+												<EasingDoubleKeyFrame KeyTime="0" Value="1.3"/>
+											</DoubleAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="grid">
+												<EasingDoubleKeyFrame KeyTime="0" Value="1.3"/>
+											</DoubleAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)" Storyboard.TargetName="grid">
+												<EasingDoubleKeyFrame KeyTime="0" Value="3"/>
+											</DoubleAnimationUsingKeyFrames>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.ShadowDepth)" Storyboard.TargetName="grid">
+												<EasingDoubleKeyFrame KeyTime="0" Value="3"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+									<VisualState x:Name="Pressed"/>
+									<VisualState x:Name="Disabled">
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
+												<EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+						</Grid>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsFocused" Value="True"/>
+							<Trigger Property="IsDefaulted" Value="True"/>
+							<Trigger Property="IsMouseOver" Value="True"/>
+							<Trigger Property="IsPressed" Value="True"/>
+							<Trigger Property="IsEnabled" Value="False"/>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<RadialGradientBrush x:Key="DyCEInsetBackground" Center="0.354,0.319" GradientOrigin="0.354,0.319" RadiusY="0.981" RadiusX="0.717">
+			<GradientStop Color="#FF10121D" Offset="1"/>
+			<GradientStop Color="#FFA8A8AC"/>
+		</RadialGradientBrush>
+		<DataTemplate x:Key="EngineListTemplate">
+			<Grid>
+				<TextBlock Margin="0,0,0,4.04" TextWrapping="Wrap" Text="TextBlock" d:LayoutOverrides="Width, Height"/>
+			</Grid>
+		</DataTemplate>
+		<HierarchicalDataTemplate x:Key="DyCETemplate" ItemsSource="{Binding SubDyCE}">
+			<TextBlock Text="{Binding Name}"/>
+		</HierarchicalDataTemplate>
+	</Window.Resources>
+
+	<Grid x:Name="LayoutRoot" DataContext="{Binding Source={StaticResource DyCEBagDataSource}}">
+		<i:Interaction.Triggers>
+			<i:EventTrigger EventName="SelectedItemChanged" SourceObject="{Binding ElementName=list_DyCE}">
+				<ei:GoToStateAction StateName="DisplayEngine"/>
+			</i:EventTrigger>
+		</i:Interaction.Triggers>
+		<VisualStateManager.CustomVisualStateManager>
+			<ei:ExtendedVisualStateManager/>
+		</VisualStateManager.CustomVisualStateManager>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup x:Name="DisplayStates" ei:ExtendedVisualStateManager.UseFluidLayout="True">
+				<VisualStateGroup.Transitions>
+					<VisualTransition GeneratedDuration="0:0:0.2"/>
+				</VisualStateGroup.Transitions>
+				<VisualState x:Name="DisplayDefault"/>
+				<VisualState x:Name="DisplayEngine">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="pnl_DyCEEditor">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="treeView">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+						</ObjectAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+				<VisualState x:Name="DisplayEngineAndExamples">
+					<Storyboard>
+						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="pnl_DyCEEditor">
+							<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+						</ObjectAnimationUsingKeyFrames>
+						<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(Expander.IsExpanded)" Storyboard.TargetName="expander">
+							<DiscreteBooleanKeyFrame KeyTime="0" Value="True"/>
+						</BooleanAnimationUsingKeyFrames>
+						<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(Expander.IsExpanded)" Storyboard.TargetName="expander1">
+							<DiscreteBooleanKeyFrame KeyTime="0" Value="False"/>
+						</BooleanAnimationUsingKeyFrames>
+					</Storyboard>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<Grid.ContextMenu>
+			<ContextMenu/>
+		</Grid.ContextMenu>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+		<Expander x:Name="expander1" ExpandDirection="Left" IsExpanded="True">
+			<Expander.Background>
+				<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+					<GradientStop Color="#FF5A5B63" Offset="0.627"/>
+					<GradientStop Color="#FF22232D"/>
+				</LinearGradientBrush>
+			</Expander.Background>
+			<Expander.Header>
+				<StackPanel Margin="-15,22,-15,0">
+					<TextBlock Text="Engines" RenderTransformOrigin="0.5,0.5" Foreground="White" UseLayoutRounding="False" d:LayoutRounding="Auto" d:LayoutOverrides="Width">
+						<TextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform/>
+								<SkewTransform/>
+								<RotateTransform Angle="90"/>
+								<TranslateTransform/>
+							</TransformGroup>
+						</TextBlock.RenderTransform>
+					</TextBlock>
+					<Button x:Name="btn_NewEngine" Height="14" Margin="0,27,0,0" Style="{DynamicResource ClearButtonStyle}" Width="14" ToolTip="Add" Command="{Binding CreateEngineCommand, Mode=OneWay}" Click="btn_NewEngine_Click">
+						<Path Data="M4.4999999,0 L9.5,0 9.5,4.5 14,4.5 14,9.5 9.5,9.5 9.5,14 4.4999999,14 4.4999999,9.5 0,9.5 0,4.5 4.4999999,4.5 z" Fill="White" RenderTransformOrigin="0.5,0.5" Stretch="Fill" UseLayoutRounding="False" Height="14" Width="14" d:IsLocked="True"/>
+					</Button>
+				</StackPanel>
+			</Expander.Header>
+			<local:AutoSelectTreeView x:Name="list_DyCE" ItemTemplate="{DynamicResource DyCETemplate}" ItemsSource="{Binding DyCEList}" MinWidth="200"/>
+		</Expander>
+		<Grid x:Name="pnl_Shading" Grid.Column="1">
+			<Grid.Background>
+				<RadialGradientBrush Center="0.374,0.262" GradientOrigin="0.374,0.262" RadiusY="1.265" RadiusX="1.375">
+					<GradientStop Color="#FF10121D" Offset="1"/>
+					<GradientStop Color="White"/>
+				</RadialGradientBrush>
+			</Grid.Background>
+			<Rectangle HorizontalAlignment="Right" Width="30" Opacity="0.5">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+						<GradientStop Color="Black" Offset="1"/>
+						<GradientStop Color="#00000000"/>
+						<GradientStop Color="#3C000000" Offset="0.386"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Rectangle HorizontalAlignment="Left" Width="30" Opacity="0.5">
+				<Rectangle.Fill>
+					<LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Offset="1" Color="#00000000"/>
+						<GradientStop Color="#3D000000" Offset="0.523"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+			<Rectangle Height="50" VerticalAlignment="Top" Opacity="0.5" d:LayoutOverrides="GridBox">
+				<Rectangle.Fill>
+					<LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+						<GradientStop Color="Black" Offset="0"/>
+						<GradientStop Offset="1" Color="#00000000"/>
+						<GradientStop Color="#7D000000" Offset="0.228"/>
+					</LinearGradientBrush>
+				</Rectangle.Fill>
+			</Rectangle>
+		</Grid>
+		<TreeView x:Name="treeView" Grid.Column="1" Margin="34,61,30,81" Grid.ColumnSpan="2" Visibility="Hidden">
+			<TreeViewItem Header="Galaxy" IsExpanded="True">
+				<TreeViewItem Header="Spiral Galaxy" HorizontalAlignment="Right" Width="179">
+					<TreeViewItem Header="Arms: 3-5" IsExpanded="True" Width="179">
+						<TreeViewItem Header="Arm" IsExpanded="True">
+							<TreeViewItem Header="Segments: 3-10" IsExpanded="True">
+								<TreeViewItem Header="Segment" IsExpanded="True">
+									<TreeViewItem Header="Star Clusters: 20-30"/>
+								</TreeViewItem>
+							</TreeViewItem>
+						</TreeViewItem>
+					</TreeViewItem>
+				</TreeViewItem>
+				<TreeViewItem Header="Irregular Galaxy"/>
+				<TreeViewItem Header="Elliptical Galaxy" IsExpanded="True">
+					<TreeViewItem Header="Diameter"/>
+					<TreeViewItem Header="Regions: 3-12"/>
+				</TreeViewItem>
+			</TreeViewItem>
+		</TreeView>
+		<Grid x:Name="pnl_DyCEEditor" Margin="30" Grid.Column="1" d:LayoutOverrides="GridBox" DataContext="{Binding SelectedItem, ElementName=list_DyCE}" Visibility="Collapsed" Background="{DynamicResource DyCEInsetBackground}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.Effect>
+				<DropShadowEffect BlurRadius="18" ShadowDepth="10" Opacity="0.6" Direction="270"/>
+			</Grid.Effect>
+			<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="5" VerticalAlignment="Center" ToolTip="{Binding File.FullName, Mode=OneWay}">
+				<TextBlock.Effect>
+					<DropShadowEffect BlurRadius="3" ShadowDepth="3"/>
+				</TextBlock.Effect>
+			</TextBlock>
+			<local:ClickSelectTextBox x:Name="txt_EngineName" TextWrapping="Wrap" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Margin="10" VerticalAlignment="Center" MinWidth="100" ToolTip="{Binding File.FullName, Mode=OneWay}"/>
+			<TextBlock Text="Properties:" Margin="5" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+				<TextBlock.Effect>
+					<DropShadowEffect ShadowDepth="3" BlurRadius="3"/>
+				</TextBlock.Effect>
+			</TextBlock>
+			<Button Style="{DynamicResource ClearButtonStyle}" Width="14" ToolTip="Add" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="10,10,0,10" Command="{Binding AddPropertyCommand, Mode=OneWay}">
+				<Path Data="M4.4999999,0 L9.5,0 9.5,4.5 14,4.5 14,9.5 9.5,9.5 9.5,14 4.4999999,14 4.4999999,9.5 0,9.5 0,4.5 4.4999999,4.5 z" Fill="White" RenderTransformOrigin="0.5,0.5" Stretch="Fill" UseLayoutRounding="False" Height="14" Width="14" d:IsLocked="True"/>
+			</Button>
+			<local:AutoSelectTreeView Grid.Row="3" Grid.ColumnSpan="2" Margin="10" ItemsSource="{Binding SubDyCE}" ItemTemplate="{DynamicResource DyCETemplate}"/>
+			<TextBlock Text="Content:" Margin="5" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+				<TextBlock.Effect>
+					<DropShadowEffect ShadowDepth="3" BlurRadius="3"/>
+				</TextBlock.Effect>
+			</TextBlock>
+			<local:ClickSelectTextBox x:Name="txt_Content" TextWrapping="Wrap" Grid.Column="1" Margin="10" VerticalAlignment="Center" MinWidth="100" Grid.Row="2" Text="{Binding GoFormula}"/>
+		</Grid>
+		<Expander x:Name="expander" ExpandDirection="Right" Grid.Column="2">
+			<Expander.Background>
+				<LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+					<GradientStop Color="#FF5A5B63" Offset="0.627"/>
+					<GradientStop Color="#FF22232D"/>
+				</LinearGradientBrush>
+			</Expander.Background>
+			<Expander.Header>
+				<Grid Height="9" Width="30" Margin="-3,21,-3,0">
+					<TextBlock Text="Example Results" RenderTransformOrigin="0.5,0.5" Foreground="White" UseLayoutRounding="False" d:LayoutRounding="Auto" d:LayoutOverrides="Width, Height" Margin="-90,-12,-90,-0.28">
+						<TextBlock.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform/>
+								<SkewTransform/>
+								<RotateTransform Angle="-90"/>
+								<TranslateTransform/>
+							</TransformGroup>
+						</TextBlock.RenderTransform>
+					</TextBlock>
+				</Grid>
+			</Expander.Header>
+			<Grid Background="#FFE5E5E5" Width="200"/>
+		</Expander>
+	</Grid>
+</Window>
