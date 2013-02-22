@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DyCE xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Test Engine</Name>
+  <ID>a test</ID>
+  <Items>
+    <Item>He stood in the <span id="dyce:entry_types">doorway</span>, looking all dark and brooding, "My name is <span id="dyce:name_full_male">Bob Jones</span>."</Item>
+    <Item>He laid across the couch with a smirk, "My name is <span id="dyce:name_full_male">Bob Jones</span>."</Item>
+  </Items>
+</DyCE>

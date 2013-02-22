@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DyCE xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Random Monster</Name>
+  <ID>monster</ID>
+  <Template>
+    <Property id="Name" Type="HTML">Monster</Property>
+    <Property id="Details" Type="HTML">
+      <h1><span id="dyce:this.Name"/></h1>
+      <b>Size:</b> <span id="dyce:this.Size"/><br/>
+      <b>Type:</b> <span id="dyce:this.Type"/><br/>
+      <b>Number:</b> <span id="dyce:this.Number"/><br/>
+      <b>Number via Dice:</b> <span id="dyce:this.DiceNumber"/><br/>
+      <b>Description:</b><br/>
+      How do we deal with white space? Can we?<br/>
+      <br/>
+      Maybe the 'details' need to be in a separate HTML file?<br/>
+      <br/>
+      Should property lists be sub-DyCE?
+    </Property>
+    <Property id="Size" Type="List" Default="Medium">Gargantuan, Huge, Large, Medium, Small, Tiny</Property>
+    <Property id="Type" Type="List" Default="Humanoid">Animate, Beast, Humanoid, Magical Beast</Property>
+    <Property id="Origin" Type="List" Default="Natural">Aberrant, Elemental, Fey, Immortal, Natural, Shadow</Property>
+    <Property id="Number" Type="RandomRange">3-6</Property>
+    <Property id="DiceNumber" Type="Dice">3d2</Property>
+  </Template>
+  <Items>
+    <Item Weight="1000">
+      <Property id="Name">Aboleth</Property>
+      <Property id="Size">Large</Property>
+      <Property id="Type">Magical Beast</Property>
+      <Property id="Number">3-6</Property>
+      <Property id="DiceNumber">3d2</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Aboleth Servitor</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Abomination</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Angel</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Archon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Azer</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Balhannoth</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Banshrae</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Basilisk</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Bat</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Battlebriar</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Bear</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Beetle</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Behemoth</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Beholder</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Berbalang</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Boar</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Bodak</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Boneclaw</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Bulette</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Cambion</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Carrion Crawler</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Chimera</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Choker</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Chuul</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Colossus</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Crocodile</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Cyclops</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Dark One</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Death Knight</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Demon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Destrachan</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Devil</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Devourer</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Displacer Beast</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Doppelganger</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Dracolich</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Dragon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Black Dragon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Blue Dragon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Green Dragon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Red Dragon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">White Dragon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Dragonborn</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Dragonspawn</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Drake</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Drider</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Drow</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Dryad</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Dwarf</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Eidolon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Eladrin</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Elemental</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Elf</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Ettercap</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Ettin</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Flameskull</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Fomorian</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Foulspawn</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Galeb Duhr</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Gargoyle</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Ghost</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Ghoul</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Giant</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Gibbering Beast</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Githyanki</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Githzerai</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Gnoll</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Gnome</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Goblin</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Golem</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Gorgon</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Grell</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Grick</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Griff on</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Grimlock</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Guardian</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Hag</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Halfling</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Harpy</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Helmed Horror</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Homunculus</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Hook Horror</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Horse</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Hound</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Human</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Hydra</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Hyena</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Kobold</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Kruthik</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Kuo-Toa</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Lamia</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Larva Mage</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Lich</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Lich Vestige</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Lizardfolk</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Lycanthrope</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Magma Beast</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Manticore</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Marut</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Medusa</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Mind Flayer</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Minotaur</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Mummy</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Naga</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Nightmare</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Nightwalker</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Ogre</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Oni</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Ooze</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Orc</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Orcus</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Otyugh</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Owlbear</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Panther</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Purple Worm</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Quickling</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Rakshasa</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Rat</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Roc</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Roper</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Rot Harbinger</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Sahuagin</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Salamander</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Satyr</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Scorpion</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Shadar-Kai</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Shambling Mound</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Shifter</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Skeleton</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Skull Lord</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Slaad</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Snake</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Sorrowsworn</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Specter</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Sphinx</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Spider</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Stirge</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Swordwing</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Tiefl ing</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Treant</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Troglodyte</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Troll</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Umber Hulk</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Unicorn</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Vampire</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Vampire Spawn</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Vine Horror</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Warforged</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Wight</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Wolf</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Worg</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Wraith</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Wyvern</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Yuan-Ti</Property>
+    </Item>
+    <Item>
+      <Property id="Name">Zombie</Property>
+    </Item>
+  </Items>
+</DyCE>

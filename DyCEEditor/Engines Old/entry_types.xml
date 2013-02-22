@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DyCE xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Entry Type</Name>
+  <ID>entry_types</ID>
+  <Items>
+    <Item>window named <span id="dyce:name_full_male">Bob Jones</span></Item>
+    <Item>hole in the wall named <span id="dyce:name_full_male">Bob Jones</span></Item>
+  </Items>
+</DyCE>

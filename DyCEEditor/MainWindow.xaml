@@ -6,13 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:Custom="http://kent.boogaart/controls" 
-    xmlns:local="clr-namespace:DynamicContent"
-	x:Class="DynamicContent.MainWindow"
+    xmlns:local="clr-namespace:DynamicContent" 
+    xmlns:DyCE="clr-namespace:DyCE;assembly=DyCE" 
+    x:Class="DynamicContent.MainWindow"
 	x:Name="Window"
 	Title="Dynamic Content Engine Editor"
-	UseLayoutRounding="True" mc:Ignorable="d" Background="{DynamicResource DyCEInsetBackground}" FontSize="16" Foreground="White" FontWeight="Bold" Icon="/DyCE;component/Application.ico">
+	UseLayoutRounding="True" mc:Ignorable="d" Background="{DynamicResource DyCEInsetBackground}" FontSize="16" Foreground="White" FontWeight="Bold" Icon="/DyCEEditor;component/Application.ico">
 	<Window.Resources>
-		<local:DyCEBag x:Key="DyCEBagDataSource" d:IsDataSource="True"/>
+		<DyCE:DyCEBag x:Key="DyCEBagDataSource" d:IsDataSource="True"/>
 		<RadialGradientBrush x:Key="DyCEWindowBackground" GradientOrigin="0.706,0.79" RadiusY="1.265" RadiusX="0.924" Center="0.706,0.79">
 			<GradientStop Color="#FF10121D" Offset="1"/>
 			<GradientStop Color="White"/>

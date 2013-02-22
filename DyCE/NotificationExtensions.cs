@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace DynamicContent
+namespace DyCE
 {
     public static class NotificationExtensions
     {

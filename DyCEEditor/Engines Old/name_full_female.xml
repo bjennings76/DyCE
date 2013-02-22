@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DyCE xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Full Name (Female)</Name>
+  <ID>name_full_female</ID>
+  <Items>
+    <Item><span id="dyce:name_first_female">Mary</span> <span id="dyce:name_last">Jones</span></Item>
+  </Items>
+</DyCE>

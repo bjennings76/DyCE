@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using System.Diagnostics;
 
-namespace DynamicContent
+namespace DyCE
 {
     public class RelayCommand : ICommand
     {
@@ -36,7 +33,7 @@ namespace DynamicContent
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute(parameter);
+            return _canExecute == null || _canExecute(parameter);
         }
 
         public event EventHandler CanExecuteChanged

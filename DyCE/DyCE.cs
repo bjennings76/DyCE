@@ -3,16 +3,15 @@ using System.Linq;
 using System.IO;
 using System.Xml.Serialization;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace DynamicContent
+namespace DyCE
 {
 
     //  Name: Bears
-    //  Title Result: Brown Bear
-    //  Detail Result:
+    //  Go() Result.Text: Brown Bear
+    //  Result.TextDetail:
     //      This Brown Bear has <Property ID="FurType">brown fur</Property>, <Property ID="ClawType"/>, and <Property ID="Cave Type"/>.
     //      It likes <Property ID="BearHobbies"/>, <Property ID="BearHobbies"/>, and <Property ID="BearHobbies"/>.
     //      I has <Property ID="Skin"/>, <Property ID="Teeth"/>, <Property ID="Nose"/>, <Property ID="Ears"/>, <Property ID="Eye Type"/>,
@@ -55,18 +54,32 @@ namespace DynamicContent
         [XmlIgnore]
         public FileInfo File
         {
-            get 
-            {
-                if (_file == null)
-                    _file = new FileInfo(@".\Engines\" + Name + ".xml");
-
-                return _file;
-            }
+            get { return _file ?? (_file = new FileInfo(@".\Engines\" + ID + ".xml")); }
             set
             {
                 _file = value;
                 PropertyChanged.Notify(() => File);
             }
+        }
+
+        private int _seed;
+        [XmlIgnore]
+        public int Seed 
+        {
+            get { return _seed; }
+            set 
+            {
+                _seed = value;
+                PropertyChanged.Notify(() => Seed);
+                PropertyChanged.Notify(() => Rand);
+            }
+        }
+        public Random Rand 
+        { 
+            get 
+            {
+                return new Random(Seed); 
+            } 
         }
 
         [XmlElement("TextPiece")]
@@ -80,7 +93,7 @@ namespace DynamicContent
         {
             get
             {
-                ObservableCollection<DyCE> dyceList = new ObservableCollection<DyCE>();
+                var dyceList = new ObservableCollection<DyCE>();
 
                 foreach (TextPiece piece in TextPieces)
                     if (piece.Type == FragmentType.DyCE)
@@ -94,18 +107,15 @@ namespace DynamicContent
 
         public DyCE(string name, DyCEBag bag)
         {
-            Bag = bag;
             Name = name;
+            Bag = bag;
         }
 
-        public string Go()
-        {
-            return Go(new Random());
-        }
         public string Go(int seed)
         {
-            return Go(new Random(seed));
+            return Name;
         }
+
         public string Go(Random r)
         {
             return Name;
@@ -116,11 +126,7 @@ namespace DynamicContent
         {
             get
             {
-                string content = "";
-                foreach (TextPiece piece in TextPieces)
-                    content += piece.Fragment;
-
-                return content;
+                return TextPieces.Aggregate("", (current, piece) => current + piece.Fragment);
             }
 
             set
@@ -129,13 +135,10 @@ namespace DynamicContent
             }
         }
 
-        public string GoDetails(string seedText)
-        {
-            return GoDetails(new Random(Convert.ToInt32(seedText)));
-        }
         public string GoDetails(int seedNum)
         {
-            return GoDetails(new Random(seedNum));
+            var r = new Random(seedNum);
+            return GoDetails(r);
         }
 
         public string GoDetails(Random r)
@@ -162,7 +165,7 @@ namespace DynamicContent
 
         #region ICommands
 
-        private bool CanAddProperty = true;
+        private const bool CanAddProperty = true;
 
         internal void AddProperty()
         {
@@ -172,12 +175,10 @@ namespace DynamicContent
         RelayCommand _addPropertyCommand;
         public ICommand AddPropertyCommand
         {
-            get
-            {
-                if (_addPropertyCommand == null)
-                    _addPropertyCommand = new RelayCommand(param => this.AddProperty(), param => this.CanAddProperty);
-
-                return _addPropertyCommand;
+            get {
+                return _addPropertyCommand ??
+                       (_addPropertyCommand =
+                        new RelayCommand(param => AddProperty(), param => CanAddProperty));
             }
         }
 
