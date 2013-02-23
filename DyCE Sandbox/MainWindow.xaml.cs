@@ -39,7 +39,7 @@ namespace DyCE_Sandbox
             string result = test.Name + ":\r\n";
 
             foreach (var property in test.Properties)
-                result += "    " + property.Name + ": " + property.ValueResult + "\r\n";
+                result += "    " + property.Name + ": " + test[property.Name] + "\r\n";
 
             Console.WriteLine(result);
 

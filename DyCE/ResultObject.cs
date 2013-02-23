@@ -6,14 +6,14 @@ namespace DyCE
 {
     public class ResultObject : ResultBase
     {
-        public string Name { get; set; }
         private readonly List<ResultProperty> _properties;
         public IEnumerable<ResultProperty> Properties { get { return _properties; } }
+
+        public ResultBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }
 
         public ResultObject(EngineObject engineObject, int seed) : base(engineObject)
         {
             var rand = new Random(seed);
-            Name = engineObject.Name;
             _properties = engineObject.Properties.Select(p => p.Go(rand.Next()) as ResultProperty).ToList();
         }
 
