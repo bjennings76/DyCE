@@ -1,4 +1,7 @@
-﻿using DyCE;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Threading;
+using DyCE;
 using GalaSoft.MvvmLight;
 
 namespace DyCE_Sandbox
@@ -15,20 +18,49 @@ namespace DyCE_Sandbox
         {
             get
             {
-                return DyCEBag.Instance.SelectedEngine == null ? "DyCE Editor" : "DyCE Editor: " + DyCEBag.Instance.SelectedEngine.Name;
+                return SelectedEngine == null ? "DyCE Editor" : "DyCE Editor: " + SelectedEngine.Name;
             }
         }
 
+
+        private DyCEBag _bag;
+        public DyCEBag Bag { get { return _bag ?? (_bag = new DyCEBag()); } }
+
+        private static readonly DispatcherTimer _timer = new DispatcherTimer();
+
+        private readonly ObservableCollection<ResultBase> _results = new ObservableCollection<ResultBase>();
+        private EngineBase _selectedEngine;
+        public ObservableCollection<ResultBase> Results { get { return _results; } }
+
+        public EngineBase SelectedEngine
+        {
+            get { return _selectedEngine; } 
+            set
+            {
+                _selectedEngine = value;
+                RaisePropertyChanged(() => SelectedEngine);
+                RaisePropertyChanged(() => WindowName);
+                Results.Clear();
+            }
+        }
+
+        public bool Paused { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the ViewModel class.
         /// </summary>
         public ViewModel()
         {
-            DyCEBag.Instance.SubscribeToChange(() => DyCEBag.Instance.SelectedEngine, SelectedEngineChanged);
+            _timer.Interval = TimeSpan.FromSeconds(0.5);
+            _timer.Tick += _timer_Tick;
+            _timer.Start();
         }
-        
-        private void SelectedEngineChanged(DyCEBag sender) { RaisePropertyChanged(() => WindowName); }
+
+        void _timer_Tick(object sender, EventArgs e)
+        {
+            if (SelectedEngine != null && SelectedEngine.CanRun && !Paused)
+                Results.Add(SelectedEngine.Go(new Random().Next()));
+        }
 
     }
 }

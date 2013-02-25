@@ -23,14 +23,15 @@
     	<Grid.ColumnDefinitions>
     		<ColumnDefinition Width="25*"/>
     		<ColumnDefinition Width="51*"/>
+    		<ColumnDefinition Width="51*"/>
     	</Grid.ColumnDefinitions>
-    	<TreeView x:Name="treeView" ItemsSource="{Binding Instance.DyCEList}" Margin="0,0,5,0">
+    	<TreeView ItemsSource="{Binding Instance.DyCEList}" Margin="0,0,5,0">
     		<i:Interaction.Behaviors>
-    			<local:BindableSelectedItemBehavior SelectedItem="{Binding Instance.SelectedEngine, Mode=TwoWay}"/>
+    			<local:BindableSelectedItemBehavior SelectedItem="{Binding SelectedEngine, Mode=TwoWay, Source={StaticResource ViewModelDataSource}}"/>
     		</i:Interaction.Behaviors>
     	</TreeView>
         <GridSplitter Width="5"/>
-        <ContentControl Grid.Column="1" Content="{Binding Instance.SelectedEngine}" Grid.IsSharedSizeScope="True">
+        <ContentControl Grid.Column="1" Content="{Binding SelectedEngine}" Grid.IsSharedSizeScope="True" Margin="0,0,5,0">
         	<ContentControl.Resources>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineText}" ItemsSource="{Binding SubEngines}">
         			<Grid Grid.IsSharedSizeScope="True">
@@ -97,6 +98,11 @@
         			</StackPanel>
         		</HierarchicalDataTemplate>
         	</ContentControl.Resources>
+        	<ContentControl.DataContext>
+        		<Binding Source="{StaticResource ViewModelDataSource}"/>
+        	</ContentControl.DataContext>
         </ContentControl>
+        <GridSplitter Width="5" Grid.Column="1"/>
+        <TreeView ItemsSource="{Binding Results}" DataContext="{Binding Source={StaticResource ViewModelDataSource}}" Grid.Column="2"/>
     </Grid>
 </Window>

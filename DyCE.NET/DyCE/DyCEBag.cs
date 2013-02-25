@@ -30,17 +30,6 @@ namespace DyCE
             }
         }
 
-        private EngineBase _selectedEngine;
-        public EngineBase SelectedEngine
-        {
-            get { return _selectedEngine; } 
-            set
-            {
-                _selectedEngine = value;
-                RaisePropertyChanged(() => SelectedEngine);
-            }
-        }
-
         #endregion
 
         public DyCEBag()

@@ -1,18 +1,34 @@
+using System;
+
 namespace DyCE
 {
     public class EngineText : EngineBase {
-        private string _text;
 
+        private string _name;
         public override string Name 
         {
             get
             {
-                return "\"" + Text + "\"";
+                if (_name != null)
+                    return _name;
+
+                var lines = Text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
+                if (lines.Length == 1)
+                    return "\"" + lines[0] + "\"";
+
+                if (lines.Length > 1)
+                    return "\"" + lines[0] + "...\"";
+
+                return "[empty]";
+            }
+            set
+            {
+                _name = value;
+                RaisePropertyChanged(() => Name);
             }
         }
 
-        public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return null; } }
-
+        private string _text;
         public string Text
         {
             get { return _text; } 
@@ -23,6 +39,8 @@ namespace DyCE
                 RaisePropertyChanged(() => Name);
             }
         }
+
+        public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return null; } }
 
         public EngineText(string text) { Text = text; }
 
