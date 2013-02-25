@@ -26,7 +26,18 @@ namespace DyCE
                 _dyceList = value;
                 foreach (var engine in _dyceList)
                     engine.Bag = this;
-                PropertyChanged.Notify(() => DyCEList);
+                RaisePropertyChanged(() => DyCEList);
+            }
+        }
+
+        private EngineBase _selectedEngine;
+        public EngineBase SelectedEngine
+        {
+            get { return _selectedEngine; } 
+            set
+            {
+                _selectedEngine = value;
+                RaisePropertyChanged(() => SelectedEngine);
             }
         }
 
@@ -122,6 +133,7 @@ namespace DyCE
         private void CreateEngine() { DyCEList.Add(new EngineList("New Engine")); }
 
         RelayCommand _createEngineCommand;
+
         public ICommand CreateEngineCommand
         {
             get {
@@ -131,12 +143,5 @@ namespace DyCE
         }
 
         #endregion
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
     }
 }

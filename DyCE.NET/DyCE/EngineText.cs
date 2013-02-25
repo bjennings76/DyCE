@@ -1,6 +1,8 @@
 namespace DyCE
 {
     public class EngineText : EngineBase {
+        private string _text;
+
         public override string Name 
         {
             get
@@ -11,7 +13,16 @@ namespace DyCE
 
         public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return null; } }
 
-        public string Text { get; set; }
+        public string Text
+        {
+            get { return _text; } 
+            set
+            {
+                _text = value;
+                RaisePropertyChanged(() => Text);
+                RaisePropertyChanged(() => Name);
+            }
+        }
 
         public EngineText(string text) { Text = text; }
 

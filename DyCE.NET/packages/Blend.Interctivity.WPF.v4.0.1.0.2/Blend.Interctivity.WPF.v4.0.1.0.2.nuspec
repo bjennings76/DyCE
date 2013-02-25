@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Blend.Interctivity.WPF.v4.0</id>
+    <version>1.0.2</version>
+    <title>Blend Interctivity for WPF v4.0</title>
+    <authors>andresd</authors>
+    <owners>andresd</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Microsoft Expression Blend 4 Microsoft.Expression.Interactions.dll &amp; System.Windows.Interactivity.dll for WPF</description>
+    <references>
+      <reference file="Microsoft.Expression.Interactions.dll" />
+      <reference file="System.Windows.Interactivity.dll" />
+    </references>
+  </metadata>
+</package>

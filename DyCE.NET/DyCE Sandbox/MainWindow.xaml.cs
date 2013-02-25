@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using DyCE;
 
@@ -36,7 +37,9 @@ namespace DyCE_Sandbox
             DyCEBag.Instance.DyCEList.Add(defenseList);
             DyCEBag.Instance.DyCEList.Add(populationList);
             DyCEBag.Instance.DyCEList.Add(prosperityList);
-
+            defenseList.Items.ToList().ForEach(i => DyCEBag.Instance.DyCEList.Add(i));
+            populationList.Items.ToList().ForEach(i => DyCEBag.Instance.DyCEList.Add(i));
+            prosperityList.Items.ToList().ForEach(i => DyCEBag.Instance.DyCEList.Add(i));
 
             var test = steadingEngine.Go(55) as ResultObject;
 
@@ -49,6 +52,7 @@ namespace DyCE_Sandbox
 
             // Can we create an 'options' object that can be passed down to promote/restrict specific options?
             // Can we create a top-level 'template' of options for a Village, Town, Keep, and City?
+
         }
     }
 }

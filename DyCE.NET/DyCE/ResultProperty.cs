@@ -9,6 +9,6 @@ namespace DyCE
             ValueResult = engineObject.ValueEngine.Go(seed);
         }
 
-        public override string ToString() { return Name + ": " + ValueResult; }
+        public override string ToString() { return ValueResult.ToString(); }
     }
 }
