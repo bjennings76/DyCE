@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
@@ -9,7 +10,7 @@ namespace DyCE
     public abstract class EngineBase : ViewModelBase
     {
         private string _name;
-        public string Name
+        public virtual string Name
         {
             get { return _name; }
 
@@ -33,6 +34,8 @@ namespace DyCE
                 RaisePropertyChanged(() => ID);
             }
         }
+
+        public abstract IEnumerable<EngineBase> SubEngines { get; }
 
         public DateTime Created { get; set; }
 

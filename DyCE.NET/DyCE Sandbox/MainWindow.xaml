@@ -1,9 +1,14 @@
 ﻿<Window x:Class="DyCE_Sandbox.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <TreeView/>
-
+		xmlns:dyce="clr-namespace:DyCE;assembly=DyCE"
+        Title="MainWindow">
+	<Window.Resources>
+      <HierarchicalDataTemplate DataType= "{x:Type dyce:EngineBase}" ItemsSource="{Binding SubEngines}">
+        <TextBlock Text="{Binding Path=Name}"/>
+      </HierarchicalDataTemplate>
+	</Window.Resources>
+    <Grid DataContext="{Binding Source={StaticResource DyCEBagDataSource}}">
+        <TreeView ItemsSource="{Binding Instance.DyCEList}"/>
     </Grid>
 </Window>

@@ -9,6 +9,7 @@ namespace DyCE
 {
     public class EngineList : EngineBase
     {
+        public override IEnumerable<EngineBase> SubEngines { get { return Items; } }
 
         private readonly ObservableCollection<EngineBase> _items = new ObservableCollection<EngineBase>();
         public ObservableCollection<EngineBase> Items { get { return _items; } }

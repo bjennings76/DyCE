@@ -33,8 +33,12 @@ namespace DyCE_Sandbox
             var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty);
 
             DyCEBag.Instance.DyCEList.Add(steadingEngine);
+            DyCEBag.Instance.DyCEList.Add(defenseList);
+            DyCEBag.Instance.DyCEList.Add(populationList);
+            DyCEBag.Instance.DyCEList.Add(prosperityList);
 
-            var test = steadingEngine.Go(new Random().Next()) as ResultObject;
+
+            var test = steadingEngine.Go(55) as ResultObject;
 
             string result = test.Name + ":\r\n";
 

@@ -2,10 +2,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE Sandbox", "DyCE Sandbox\DyCE Sandbox.csproj", "{3E41E028-48AC-4821-ACA8-AAA6CB778E26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE Editor", "DyCEEditor\DyCE Editor.csproj", "{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE Tester", "DyCETester\DyCE Tester.csproj", "{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE", "DyCE\DyCE.csproj", "{CE24803B-E587-46D0-8891-225AAA242607}"
 EndProject
 Global
@@ -32,38 +28,6 @@ Global
 		{3E41E028-48AC-4821-ACA8-AAA6CB778E26}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{3E41E028-48AC-4821-ACA8-AAA6CB778E26}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{3E41E028-48AC-4821-ACA8-AAA6CB778E26}.Release|x86.ActiveCfg = Release|Any CPU
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Debug|Auto-Switch.ActiveCfg = Debug|x86
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Debug|Auto-Switch.Build.0 = Debug|x86
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Debug|x86.ActiveCfg = Debug|x86
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Debug|x86.Build.0 = Debug|x86
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Release|Auto-Switch.ActiveCfg = Release|Any CPU
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Release|Auto-Switch.Build.0 = Release|Any CPU
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Release|Mixed Platforms.Build.0 = Release|x86
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Release|x86.ActiveCfg = Release|x86
-		{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}.Release|x86.Build.0 = Release|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Debug|Auto-Switch.ActiveCfg = Debug|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Debug|Auto-Switch.Build.0 = Debug|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Debug|x86.ActiveCfg = Debug|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Debug|x86.Build.0 = Debug|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Release|Auto-Switch.ActiveCfg = Release|Any CPU
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Release|Auto-Switch.Build.0 = Release|Any CPU
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Release|Mixed Platforms.Build.0 = Release|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Release|x86.ActiveCfg = Release|x86
-		{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}.Release|x86.Build.0 = Release|x86
 		{CE24803B-E587-46D0-8891-225AAA242607}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CE24803B-E587-46D0-8891-225AAA242607}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE24803B-E587-46D0-8891-225AAA242607}.Debug|Auto-Switch.ActiveCfg = Debug|x86

@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+
 namespace DyCE
 {
     public class EngineProperty : EngineBase
     {
+        public override IEnumerable<EngineBase> SubEngines { get { return new EngineBase[] {ValueEngine}; } }
+
         public EngineProperty(string name, string value) : this(name, new EngineText(value)) { }
 
         public EngineProperty(string name, EngineBase valueEngine)
