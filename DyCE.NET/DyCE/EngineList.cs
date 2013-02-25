@@ -64,7 +64,7 @@ namespace DyCE
             var rand = new Random(seed);
 
             if (Items.Count < 1)
-                return new ResultText(this, "-- no items in list --", rand.Next());
+                return new ResultEmpty(this, rand.Next());
 
             if (Items.Count != _shuffledIndexes.Count)
             {

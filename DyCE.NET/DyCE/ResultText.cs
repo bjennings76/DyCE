@@ -1,3 +1,5 @@
+using Antlr4.StringTemplate;
+
 namespace DyCE
 {
     public class ResultText : ResultBase
@@ -13,16 +15,16 @@ namespace DyCE
             }
         }
 
-        public StringTemplate
-
-        public ResultText(EngineBase engineObject, string text, int seed) : base(engineObject, seed)
+        public ResultText(EngineText engineObject, string text, int seed) : base(engineObject, seed)
         {
             _text = text;
         }
 
         public override string ToString()
         {
-            return Text;
+            var template = new Template(Text);
+            template.Add("db", DyCEBag.Instance);
+            return template.Render();
         }
     }
 }
