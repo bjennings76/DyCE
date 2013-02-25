@@ -15,4 +15,3 @@ Eventually, I would like to see this put online as a service that could be acces
 1. Select the Sandbox Project as the Default Project
 2. Build the Project
 3. Run the Project
-4. View the results in the *Debug > View > Logs*
