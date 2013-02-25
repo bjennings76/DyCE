@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Antlr4.StringTemplate</id>
+    <version>4.0.6.9004</version>
+    <title>StringTemplate v4</title>
+    <authors>Terence Parr, Sam Harwell</authors>
+    <owners>Terence Parr, Sam Harwell</owners>
+    <projectUrl>http://www.stringtemplate.org/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>StringTemplate (or ST) is a template engine library used for generating text from data structures. The first version was developed for the Java platform and has evolved over the years of it's use on the jGuru.com website. StringTemplate's distinguishing characteristic is that it strictly enforces model-view separation unlike other comparable template engines. It is particularly good at multi-targeted code generators, multiple site skins, and internationalization/localization.</description>
+    <releaseNotes />
+    <tags>stringtemplate template templateengine</tags>
+    <references>
+      <reference file="Antlr4.StringTemplate.dll" />
+    </references>
+  </metadata>
+</package>

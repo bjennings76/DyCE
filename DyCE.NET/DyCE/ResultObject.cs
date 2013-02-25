@@ -11,7 +11,7 @@ namespace DyCE
 
         public ResultBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }
 
-        public ResultObject(EngineObject engineObject, int seed) : base(engineObject)
+        public ResultObject(EngineObject engineObject, int seed) : base(engineObject, seed)
         {
             var rand = new Random(seed);
             _properties = engineObject.Properties.Select(p => p.Go(rand.Next()) as ResultProperty).ToList();
