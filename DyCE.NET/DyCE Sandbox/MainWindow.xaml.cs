@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using DyCE;
 
 namespace DyCE_Sandbox
@@ -17,8 +19,13 @@ namespace DyCE_Sandbox
             Loaded += MainWindow_Loaded;
         }
 
+        private ViewModel _vm;
+
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            // Get the 'ViewModel' resource
+            _vm = (ViewModel)Application.Current.Resources["ViewModelDataSource"];
+
             var prosperityList = new EngineList("Prosperity Options");
             prosperityList.AddItems("Dirt", "Poor", "Moderate", "Wealthy", "Rich");
             var prosperityProperty = new EngineProperty("Prosperity", prosperityList);
@@ -53,6 +60,15 @@ namespace DyCE_Sandbox
             // Can we create an 'options' object that can be passed down to promote/restrict specific options?
             // Can we create a top-level 'template' of options for a Village, Town, Keep, and City?
 
+            _vm.Results.CollectionChanged += Results_CollectionChanged;
+        }
+
+        void Results_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            var border = System.Windows.Media.VisualTreeHelper.GetChild(tree_Results, 0) as Decorator;
+            if (border == null) return;
+            var scrollViewer = border.Child as ScrollViewer;
+            if (scrollViewer != null) scrollViewer.ScrollToBottom();
         }
     }
 }

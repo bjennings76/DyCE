@@ -103,6 +103,6 @@
         	</ContentControl.DataContext>
         </ContentControl>
         <GridSplitter Width="5" Grid.Column="1"/>
-        <TreeView ItemsSource="{Binding Results}" DataContext="{Binding Source={StaticResource ViewModelDataSource}}" Grid.Column="2"/>
+        <TreeView x:Name="tree_Results" ItemsSource="{Binding Results}" DataContext="{Binding Source={StaticResource ViewModelDataSource}}" Grid.Column="2"/>
     </Grid>
 </Window>
