@@ -1,12 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCEEditor", "DyCEEditor\DyCEEditor.csproj", "{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE Sandbox", "DyCE Sandbox\DyCE Sandbox.csproj", "{3E41E028-48AC-4821-ACA8-AAA6CB778E26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE", "DyCE\DyCE.csproj", "{CE24803B-E587-46D0-8891-225AAA242607}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCEEditor", "DyCEEditor\DyCEEditor.csproj", "{7B0EDF86-466A-4C1A-B9A5-BB3F5C4A92B8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCETester", "DyCETester\DyCETester.csproj", "{C700F0AE-A239-42C8-B7C5-A96E4F1291FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE Sandbox", "DyCE Sandbox\DyCE Sandbox.csproj", "{3E41E028-48AC-4821-ACA8-AAA6CB778E26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE", "DyCE\DyCE.csproj", "{CE24803B-E587-46D0-8891-225AAA242607}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
