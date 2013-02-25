@@ -6,7 +6,7 @@ namespace DyCE
 {
     public class EngineObject : EngineBase
     {
-        public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return Properties; } } //.Select(p => p.ValueEngine); } }
+        public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return Properties.Select(p => p.ValueEngine); } }
         private readonly ObservableCollection<EngineProperty> _properties = new ObservableCollection<EngineProperty>();
         public ObservableCollection<EngineProperty> Properties { get { return _properties; } }
 

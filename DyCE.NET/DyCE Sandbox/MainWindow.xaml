@@ -9,6 +9,9 @@
 		x:Class="DyCE_Sandbox.MainWindow"
         Title="{Binding WindowName, Mode=OneWay}" Icon="Application.ico">
 	<Window.Resources>
+      <HierarchicalDataTemplate  x:Key="EngineItemTemplate" ItemsSource="{Binding SubEngines}">
+        <TextBlock Text="{Binding Name}"/>
+      </HierarchicalDataTemplate>
       <HierarchicalDataTemplate DataType= "{x:Type dyce:EngineBase}" ItemsSource="{Binding SubEngines}">
         <TextBlock Text="{Binding Name}"/>
       </HierarchicalDataTemplate>
@@ -31,12 +34,16 @@
         	<ContentControl.Resources>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineText}" ItemsSource="{Binding SubEngines}">
         			<Grid Grid.IsSharedSizeScope="True">
+        				<Grid.ColumnDefinitions>
+        					<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
         				<Grid.RowDefinitions>
         					<RowDefinition Height="Auto"/>
 							<RowDefinition/>
 						</Grid.RowDefinitions>
-        					<TextBlock Text="Template Text:" Margin="2"/>
-        					<TextBox Text="{Binding Text}" Grid.Row="1" MinWidth="150" Margin="2" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto"/>
+        					<TextBlock Text="Text:" Margin="2,3,2,2" VerticalAlignment="Top"/>
+        					<TextBox Text="{Binding Text}" Grid.Row="0" MinWidth="150" Margin="2" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Grid.Column="1"/>
         				</Grid>
         		</HierarchicalDataTemplate>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineProperty}" ItemsSource="{Binding SubEngines}">
@@ -46,7 +53,7 @@
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
         					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center"/>
-        					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Instance.DyCEList, Source={StaticResource DyCEBagDataSource}}" SelectedItem="{Binding ValueEngine}"/>
+        					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Instance.DyCEList, Source={StaticResource DyCEBagDataSource}}" SelectedItem="{Binding ValueEngine}" ItemTemplate="{DynamicResource EngineItemTemplate}"/>
         			</Grid>
         		</HierarchicalDataTemplate>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineObject}" ItemsSource="{Binding SubEngines}">
@@ -65,7 +72,27 @@
         						<RowDefinition/>
         					</Grid.RowDefinitions>
         					<TextBlock Text="Properties:" Margin="2"/>
-        					<ListBox Grid.Row="1" MinWidth="150" Margin="2" ItemsSource="{Binding Properties}" MinHeight="50"/>
+        					<ItemsControl Grid.Row="1" MinWidth="150" Margin="2" ItemsSource="{Binding Properties}" MinHeight="50"/>
+        				</Grid>
+        			</StackPanel>
+        		</HierarchicalDataTemplate>
+        		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineList}" ItemsSource="{Binding SubEngines}">
+        			<StackPanel Grid.IsSharedSizeScope="True">
+        				<Grid Visibility="Visible">
+        					<Grid.ColumnDefinitions>
+        						<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        						<ColumnDefinition/>
+        					</Grid.ColumnDefinitions>
+        					<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
+        					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2"/>
+        				</Grid>
+        				<Grid Grid.Row="1">
+        					<Grid.RowDefinitions>
+        						<RowDefinition Height="Auto"/>
+        						<RowDefinition/>
+        					</Grid.RowDefinitions>
+        					<TextBlock Text="Engine List:" Margin="2"/>
+        					<ItemsControl Grid.Row="1" MinWidth="150" Margin="2" ItemsSource="{Binding Items}" MinHeight="50"/>
         				</Grid>
         			</StackPanel>
         		</HierarchicalDataTemplate>

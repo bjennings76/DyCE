@@ -19,15 +19,15 @@ namespace DyCE_Sandbox
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var prosperityList = new EngineList("Properities");
+            var prosperityList = new EngineList("Prosperity Options");
             prosperityList.AddItems("Dirt", "Poor", "Moderate", "Wealthy", "Rich");
             var prosperityProperty = new EngineProperty("Prosperity", prosperityList);
 
-            var populationList = new EngineList("Populations");
+            var populationList = new EngineList("Population Options");
             populationList.AddItems("Exodus", "Shrinking", "Steady", "Growing", "Booming");
             var populationProperty = new EngineProperty("Population", populationList);
 
-            var defenseList = new EngineList("Defenses");
+            var defenseList = new EngineList("Defense Options");
             defenseList.AddItems("None", "Militia", "Watch", "Guard", "Garrison", "Battalion", "Legion");
             var defenseProperty = new EngineProperty("Defenses", defenseList);
 
