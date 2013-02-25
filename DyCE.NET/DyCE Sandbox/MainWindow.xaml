@@ -27,7 +27,7 @@
     		</i:Interaction.Behaviors>
     	</TreeView>
         <GridSplitter Width="5"/>
-        <ContentControl Grid.Column="1" Content="{Binding Instance.SelectedEngine}">
+        <ContentControl Grid.Column="1" Content="{Binding Instance.SelectedEngine}" Grid.IsSharedSizeScope="True">
         	<ContentControl.Resources>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineText}" ItemsSource="{Binding SubEngines}">
         			<Grid Grid.IsSharedSizeScope="True">
@@ -40,6 +40,16 @@
         				</Grid>
         		</HierarchicalDataTemplate>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineProperty}" ItemsSource="{Binding SubEngines}">
+        			<Grid>
+        				<Grid.ColumnDefinitions>
+        					<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+							<ColumnDefinition/>
+						</Grid.ColumnDefinitions>
+        					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center"/>
+        					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Instance.DyCEList, Source={StaticResource DyCEBagDataSource}}" SelectedItem="{Binding ValueEngine}"/>
+        			</Grid>
+        		</HierarchicalDataTemplate>
+        		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineObject}" ItemsSource="{Binding SubEngines}">
         			<StackPanel Grid.IsSharedSizeScope="True">
         				<Grid Visibility="Visible">
         					<Grid.ColumnDefinitions>
@@ -50,12 +60,12 @@
         					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2"/>
         				</Grid>
         				<Grid Grid.Row="1">
-        					<Grid.ColumnDefinitions>
-        						<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        						<ColumnDefinition/>
-        					</Grid.ColumnDefinitions>
-        					<TextBlock Text="Engine" HorizontalAlignment="Right" Margin="2,3,2,2" VerticalAlignment="Top"/>
-        					<ComboBox Grid.Column="9" MinWidth="150" Margin="2" ItemsSource="{Binding Instance.DyCEList, Source={StaticResource DyCEBagDataSource}}" SelectedItem="{Binding ValueEngine}"/>
+        					<Grid.RowDefinitions>
+        						<RowDefinition Height="Auto"/>
+        						<RowDefinition/>
+        					</Grid.RowDefinitions>
+        					<TextBlock Text="Properties:" Margin="2"/>
+        					<ListBox Grid.Row="1" MinWidth="150" Margin="2" ItemsSource="{Binding Properties}" MinHeight="50"/>
         				</Grid>
         			</StackPanel>
         		</HierarchicalDataTemplate>
