@@ -7,7 +7,7 @@
 		xmlns:local="clr-namespace:DyCE_Sandbox"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 		x:Class="DyCE_Sandbox.MainWindow"
-        Title="{Binding WindowName, Mode=OneWay}" Icon="Application.ico">
+        Title="{Binding WindowName, Mode=OneWay}" Icon="Application.ico" Foreground="Black">
 	<Window.Resources>
       <HierarchicalDataTemplate  x:Key="EngineItemTemplate" ItemsSource="{Binding SubEngines}">
         <TextBlock Text="{Binding Name}"/>
@@ -103,6 +103,21 @@
         	</ContentControl.DataContext>
         </ContentControl>
         <GridSplitter Width="5" Grid.Column="1"/>
-        <TreeView x:Name="tree_Results" ItemsSource="{Binding Results}" DataContext="{Binding Source={StaticResource ViewModelDataSource}}" Grid.Column="2"/>
+		<Grid Grid.Column="2"  DataContext="{Binding Source={StaticResource ViewModelDataSource}}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition/>
+			</Grid.RowDefinitions>
+	        <TreeView x:Name="tree_Results" ItemsSource="{Binding Results}" Grid.Row="1"/>
+	        <Grid Margin="2">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+	        	<Slider Grid.Column="1" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5"/>
+	        	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Speed:" VerticalAlignment="Top" Margin="0,0,5,0"/>
+
+			</Grid>
+		</Grid>
     </Grid>
 </Window>

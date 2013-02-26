@@ -28,6 +28,16 @@ namespace DyCE_Sandbox
 
         private static readonly DispatcherTimer _timer = new DispatcherTimer();
 
+        public double TimerDuration
+        {
+            get { return _timer.Interval.TotalSeconds; } 
+            set
+            {
+                _timer.Interval = TimeSpan.FromSeconds(value);
+                RaisePropertyChanged(() => TimerDuration);
+            }
+        }
+
         private readonly ObservableCollection<ResultBase> _results = new ObservableCollection<ResultBase>();
         private EngineBase _selectedEngine;
         public ObservableCollection<ResultBase> Results { get { return _results; } }
