@@ -15,6 +15,9 @@
       <HierarchicalDataTemplate DataType= "{x:Type dyce:EngineBase}" ItemsSource="{Binding SubEngines}">
         <TextBlock Text="{Binding Name}"/>
       </HierarchicalDataTemplate>
+      <HierarchicalDataTemplate DataType= "{x:Type dyce:ResultBase}" ItemsSource="{Binding SubResults}">
+        <TextBlock Text="{Binding}"/>
+      </HierarchicalDataTemplate>
 	</Window.Resources>
 	<Window.DataContext>
 		<Binding Source="{StaticResource ViewModelDataSource}"/>
@@ -123,7 +126,13 @@
 			<i:Interaction.Behaviors>
 				<ei:DataStateBehavior Binding="{Binding Paused}" Value="False" TrueState="PreviewPlaying" FalseState="PreviewPaused"/>
 			</i:Interaction.Behaviors>
-	        <TreeView x:Name="tree_Results" ItemsSource="{Binding Results}" Grid.Row="1"/>
+	        <TreeView x:Name="tree_Results" ItemsSource="{Binding Results}" Grid.Row="1">
+				<!-- <TreeView.ItemContainerStyle>
+					<Style TargetType="{x:Type TreeViewItem}">
+						<Setter Property="IsExpanded" Value="True" />
+					</Style>
+				</TreeView.ItemContainerStyle> -->
+			</TreeView>
 			<Grid Margin="2">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>

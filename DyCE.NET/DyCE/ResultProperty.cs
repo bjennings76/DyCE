@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace DyCE
 {
     public class ResultProperty: ResultBase
@@ -9,6 +11,8 @@ namespace DyCE
             ValueResult = engineObject.ValueEngine.Go(seed);
         }
 
-        public override string ToString() { return ValueResult.ToString(); }
+        public override IEnumerable<ResultBase> SubResults { get { return new ResultBase[] {ValueResult}; } }
+
+        public override string ToString() { return Name + ": " + ValueResult.ToString(); }
     }
 }

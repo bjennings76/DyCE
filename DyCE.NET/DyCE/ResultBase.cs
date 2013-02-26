@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight;
 
@@ -14,6 +15,8 @@ namespace DyCE
             Engine = engineObject;
             Seed = seed;
         }
+
+        public abstract IEnumerable<ResultBase> SubResults { get; }
 
         public override string ToString() { return Engine.Name + ": " + base.ToString(); }
     }

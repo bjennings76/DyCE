@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Antlr4.StringTemplate;
 
 namespace DyCE
@@ -19,6 +20,8 @@ namespace DyCE
         {
             _text = text;
         }
+
+        public override IEnumerable<ResultBase> SubResults { get { return null; } }
 
         public override string ToString()
         {

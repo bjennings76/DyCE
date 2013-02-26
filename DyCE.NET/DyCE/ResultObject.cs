@@ -17,6 +17,8 @@ namespace DyCE
             _properties = engineObject.Properties.Select(p => p.Go(rand.Next()) as ResultProperty).ToList();
         }
 
+        public override IEnumerable<ResultBase> SubResults { get { return Properties; } }
+
         public override string ToString()
         {
             if (!string.IsNullOrWhiteSpace(Name))
