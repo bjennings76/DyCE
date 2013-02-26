@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Xml.Serialization;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace DyCE
 {
@@ -127,7 +128,7 @@ namespace DyCE
         {
             get {
                 return _createEngineCommand ??
-                       (_createEngineCommand = new RelayCommand(param => CreateEngine(), param => CanCreateEngine));
+                       (_createEngineCommand = new RelayCommand(CreateEngine, () => CanCreateEngine));
             }
         }
 

@@ -20,6 +20,18 @@
 		<Binding Source="{StaticResource ViewModelDataSource}"/>
 	</Window.DataContext>
     <Grid DataContext="{Binding Source={StaticResource DyCEBagDataSource}}">
+    	<VisualStateManager.VisualStateGroups>
+    		<VisualStateGroup x:Name="PreviewPauseStates">
+    			<VisualState x:Name="PreviewPlaying"/>
+    			<VisualState x:Name="PreviewPaused">
+    				<Storyboard>
+    					<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ContentControl.Content)" Storyboard.TargetName="btn_Pause">
+    						<DiscreteObjectKeyFrame KeyTime="0" Value="Play"/>
+    					</ObjectAnimationUsingKeyFrames>
+    				</Storyboard>
+    			</VisualState>
+    		</VisualStateGroup>
+    	</VisualStateManager.VisualStateGroups>
     	<Grid.ColumnDefinitions>
     		<ColumnDefinition Width="25*"/>
     		<ColumnDefinition Width="51*"/>
@@ -108,14 +120,19 @@
 				<RowDefinition Height="Auto"/>
 				<RowDefinition/>
 			</Grid.RowDefinitions>
+			<i:Interaction.Behaviors>
+				<ei:DataStateBehavior Binding="{Binding Paused}" Value="False" TrueState="PreviewPlaying" FalseState="PreviewPaused"/>
+			</i:Interaction.Behaviors>
 	        <TreeView x:Name="tree_Results" ItemsSource="{Binding Results}" Grid.Row="1"/>
-	        <Grid Margin="2">
+			<Grid Margin="2">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition/>
+					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-	        	<Slider Grid.Column="1" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5"/>
-	        	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Speed:" VerticalAlignment="Top" Margin="0,0,5,0"/>
+				<Slider Grid.Column="1" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5"/>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Speed:" VerticalAlignment="Top" Margin="0,0,5,0"/>
+				<Button x:Name="btn_Pause" Grid.ColumnSpan="2" Content="Pause" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="2" Command="{Binding PausePreviewCommand, Mode=OneWay}"/>
 
 			</Grid>
 		</Grid>

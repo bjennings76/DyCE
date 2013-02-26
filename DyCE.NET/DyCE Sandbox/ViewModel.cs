@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using DyCE;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 
 namespace DyCE_Sandbox
 {
@@ -54,7 +55,22 @@ namespace DyCE_Sandbox
             }
         }
 
-        public bool Paused { get; set; }
+        private bool _paused;
+        public bool Paused
+        {
+            get { return _paused; } 
+            set
+            {
+                _paused = value;
+                RaisePropertyChanged(() => Paused);
+            }
+        }
+
+        public RelayCommand PausePreviewCommand { get; private set; }
+
+        public bool CanPausePreview() { return SelectedEngine != null; }
+
+        public void PausePreview() { Paused = !Paused; }
 
         /// <summary>
         /// Initializes a new instance of the ViewModel class.
@@ -64,12 +80,19 @@ namespace DyCE_Sandbox
             _timer.Interval = TimeSpan.FromSeconds(0.5);
             _timer.Tick += _timer_Tick;
             _timer.Start();
+
+            PausePreviewCommand = new RelayCommand(PausePreview, CanPausePreview);
         }
 
         void _timer_Tick(object sender, EventArgs e)
         {
             if (SelectedEngine != null && SelectedEngine.CanRun && !Paused)
+            {
                 Results.Add(SelectedEngine.Go(new Random().Next()));
+
+                if (Results.Count > 100)
+                    Results.RemoveAt(0);
+            }
         }
 
     }

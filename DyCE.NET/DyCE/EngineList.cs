@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using System.Xml.Serialization;
+using GalaSoft.MvvmLight.Command;
 
 namespace DyCE
 {
@@ -47,10 +48,10 @@ namespace DyCE
 
         private const bool _canAddItem = true;
 
-        internal void AddItem() { Items.Add(new EngineText("Test")); }
+        private void AddItem() { Items.Add(new EngineText("Test")); }
 
         RelayCommand _addItemCommand;
-        public ICommand AddItemCommand { get { return _addItemCommand ?? (_addItemCommand = new RelayCommand(param => AddItem(), param => _canAddItem)); } }
+        public ICommand AddItemCommand { get { return _addItemCommand ?? (_addItemCommand = new RelayCommand(AddItem, () => _canAddItem)); } }
 
         #endregion
 
