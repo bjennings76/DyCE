@@ -26,7 +26,7 @@ namespace DyCE
         public override string ToString()
         {
             var template = new Template(Text);
-            template.Add("db", Engine.Bag);
+            template.Add("db", DyCEBag.Instance);
             return template.Render();
         }
     }

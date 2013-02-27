@@ -8,7 +8,7 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 		x:Class="DyCE_Sandbox.MainWindow"
         Title="{Binding WindowName, Mode=OneWay}" Icon="Application.ico" Foreground="Black"
-		DataContext="{Binding Bag, Mode=OneWay, Source={StaticResource ViewModelDataSource}}">
+		 MinWidth="500">
 	<Window.Resources>
       <HierarchicalDataTemplate  x:Key="EngineItemTemplate" ItemsSource="{Binding SubEngines}">
         <TextBlock Text="{Binding Name}"/>
@@ -20,7 +20,10 @@
         <TextBlock Text="{Binding}"/>
       </HierarchicalDataTemplate>
 	</Window.Resources>
-    <Grid>
+	<Window.DataContext>
+		<Binding Source="{StaticResource ViewModelDataSource}"/>
+	</Window.DataContext>
+    <Grid DataContext="{Binding Bag, Mode=OneWay, Source={StaticResource ViewModelDataSource}}">
     	<i:Interaction.Triggers>
     		<i:EventTrigger EventName="MouseLeftButtonDown">
     			<ei:CallMethodAction MethodName="CreateEngineText" TargetObject="{Binding}"/>
@@ -40,8 +43,8 @@
     	</VisualStateManager.VisualStateGroups>
     	<Grid.ColumnDefinitions>
     		<ColumnDefinition Width="200" MinWidth="150"/>
-    		<ColumnDefinition Width="51*" MinWidth="150"/>
-    		<ColumnDefinition Width="51*" MinWidth="150"/>
+    		<ColumnDefinition Width="50*" MinWidth="150"/>
+    		<ColumnDefinition Width="50*" MinWidth="150"/>
     	</Grid.ColumnDefinitions>
 		<Grid Margin="0,0,5,0">
 			<Grid.RowDefinitions>
@@ -81,6 +84,7 @@
         				<Grid.ColumnDefinitions>
         					<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
 							<ColumnDefinition/>
+        					<ColumnDefinition Width="Auto"/>
 						</Grid.ColumnDefinitions>
         					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center"/>
         					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Bag.DyCEList, Source={StaticResource ViewModelDataSource}}" SelectedItem="{Binding ValueEngine}" ItemTemplate="{DynamicResource EngineItemTemplate}"/>
@@ -88,7 +92,7 @@
         		</HierarchicalDataTemplate>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineObject}" ItemsSource="{Binding SubEngines}">
         			<StackPanel Grid.IsSharedSizeScope="True">
-        				<Grid Visibility="Visible">
+        				<Grid Visibility="Visible" Margin="2">
         					<Grid.ColumnDefinitions>
         						<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
         						<ColumnDefinition/>
@@ -96,14 +100,19 @@
         					<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
         					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2"/>
         				</Grid>
-        				<Grid Grid.Row="1">
+        				<Grid Grid.Row="1" Margin="2">
+        					<Grid.ColumnDefinitions>
+        						<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        						<ColumnDefinition/>
+        					</Grid.ColumnDefinitions>
         					<Grid.RowDefinitions>
         						<RowDefinition Height="Auto"/>
         						<RowDefinition/>
         					</Grid.RowDefinitions>
         					<TextBlock Text="Properties:" Margin="2"/>
-        					<ItemsControl Grid.Row="1" MinWidth="150" Margin="2" ItemsSource="{Binding Properties}" MinHeight="50"/>
+        					<ItemsControl Grid.Row="1" MinWidth="150" ItemsSource="{Binding Properties}" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2"/>
         				</Grid>
+        				<Button Content="Add Property" Margin="4" Command="{Binding CreatePropertyCommand, Mode=OneWay}"/>
         			</StackPanel>
         		</HierarchicalDataTemplate>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineList}" ItemsSource="{Binding SubEngines}">

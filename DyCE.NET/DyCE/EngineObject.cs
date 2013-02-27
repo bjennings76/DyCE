@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using GalaSoft.MvvmLight.Command;
 
 namespace DyCE
 {
@@ -18,6 +19,14 @@ namespace DyCE
                 properties = new[] {new EngineProperty("New Property")};
 
             _properties = new ObservableCollection<EngineProperty>(properties);
+            CreatePropertyCommand = new RelayCommand(CreateEngineProperty);
+        }
+
+        public RelayCommand CreatePropertyCommand { get; private set; }
+
+        public void CreateEngineProperty()
+        {
+            Properties.Add(new EngineProperty("New Property"));
         }
 
         public EngineBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }

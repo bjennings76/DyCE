@@ -12,8 +12,8 @@ namespace DyCE
 {
     public class DyCEBag : ViewModelBase
     {
-        //private static readonly DyCEBag _instance = new DyCEBag();
-        //public static DyCEBag Instance { get { return _instance; } }
+        private static readonly DyCEBag _instance = new DyCEBag();
+        public static DyCEBag Instance { get { return _instance; } }
 
         #region Bindable Properties
 
@@ -24,8 +24,6 @@ namespace DyCE
             set
             {
                 _dyceList = value;
-                foreach (var engine in _dyceList)
-                    engine.Bag = this;
                 RaisePropertyChanged(() => DyCEList);
             }
         }
@@ -45,7 +43,7 @@ namespace DyCE
             {
                 try
                 {
-                    DyCEList.Add(LoadEngine(file, this));
+                    DyCEList.Add(LoadEngine(file));
                 }
                 catch (Exception e)
                 {
@@ -96,7 +94,7 @@ namespace DyCE
             }
         }
 
-        private static EngineBase LoadEngine(FileInfo file, DyCEBag bag)
+        private static EngineBase LoadEngine(FileInfo file)
         {
             try
             {
@@ -109,7 +107,6 @@ namespace DyCE
                 textReader.Close();
 
                 engine.File = file;
-                engine.Bag = bag;
 
                 return engine;
             }
@@ -126,6 +123,12 @@ namespace DyCE
         private EngineBase GetDyCEngine(Guid engineID)
         {
             return DyCEList.FirstOrDefault(e => e.ID == engineID);
+        }
+
+        public EngineBase Add(EngineBase engine) 
+        { 
+            DyCEList.Add(engine);
+            return engine;
         }
     }
 }

@@ -43,8 +43,6 @@ namespace DyCE
 
         public FileInfo File { get; set; }
 
-        public DyCEBag Bag { internal get; set; }
-
         public virtual bool CanRun { get { return true; } }
 
         public bool IsSelected { get; set; }

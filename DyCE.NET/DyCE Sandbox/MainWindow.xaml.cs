@@ -40,13 +40,13 @@ namespace DyCE_Sandbox
 
             var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty);
 
-            _vm.Bag.DyCEList.Add(steadingEngine);
-            _vm.Bag.DyCEList.Add(defenseList);
-            _vm.Bag.DyCEList.Add(populationList);
-            _vm.Bag.DyCEList.Add(prosperityList);
-            defenseList.Items.ToList().ForEach(i => _vm.Bag.DyCEList.Add(i));
-            populationList.Items.ToList().ForEach(i => _vm.Bag.DyCEList.Add(i));
-            prosperityList.Items.ToList().ForEach(i => _vm.Bag.DyCEList.Add(i));
+            ViewModel.Bag.DyCEList.Add(steadingEngine);
+            ViewModel.Bag.DyCEList.Add(defenseList);
+            ViewModel.Bag.DyCEList.Add(populationList);
+            ViewModel.Bag.DyCEList.Add(prosperityList);
+            defenseList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
+            populationList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
+            prosperityList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
 
             var test = steadingEngine.Go(55) as ResultObject;
 

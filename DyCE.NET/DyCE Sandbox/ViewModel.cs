@@ -15,17 +15,9 @@ namespace DyCE_Sandbox
     /// </summary>
     public class ViewModel : ViewModelBase
     {
-        public string WindowName
-        {
-            get
-            {
-                return SelectedEngine == null ? "DyCE Editor" : "DyCE Editor: " + SelectedEngine.Name;
-            }
-        }
+        public string WindowName { get { return SelectedEngine == null ? "DyCE Editor" : "DyCE Editor: " + SelectedEngine.Name; } }
 
-
-        private DyCEBag _bag;
-        public DyCEBag Bag { get { return _bag ?? (_bag = new DyCEBag()); } }
+        public static DyCEBag Bag { get { return DyCEBag.Instance; } }
 
         private static readonly DispatcherTimer _timer = new DispatcherTimer();
 

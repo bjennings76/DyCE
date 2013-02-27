@@ -7,7 +7,5 @@
          
     	<local:ViewModel x:Key="ViewModelDataSource" d:IsDataSource="True"/>
          
-    	<DyCE:DyCEBag x:Key="DyCEBagDataSource" d:IsDataSource="True"/>
-         
     </Application.Resources>
 </Application>
