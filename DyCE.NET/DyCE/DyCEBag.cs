@@ -3,7 +3,6 @@ using System.Linq;
 using System.IO;
 using System.Collections.ObjectModel;
 using System;
-using System.ComponentModel;
 using System.Xml.Serialization;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
@@ -13,8 +12,8 @@ namespace DyCE
 {
     public class DyCEBag : ViewModelBase
     {
-        private static readonly DyCEBag _instance = new DyCEBag();
-        public static DyCEBag Instance { get { return _instance; } }
+        //private static readonly DyCEBag _instance = new DyCEBag();
+        //public static DyCEBag Instance { get { return _instance; } }
 
         #region Bindable Properties
 
@@ -53,7 +52,19 @@ namespace DyCE
                     Console.WriteLine("Can't load " + file.FullName + " (" + e.Message + ")");
                 }
             }
+
+            CreateEngineObjectCommand = new RelayCommand(CreateEngineObject);
+            CreateEngineListCommand = new RelayCommand(CreateEngineList);
+            CreateEngineTextCommand = new RelayCommand(CreateEngineText);
         }
+
+        public RelayCommand CreateEngineObjectCommand { get; private set; }
+        public RelayCommand CreateEngineListCommand { get; private set; }
+        public RelayCommand CreateEngineTextCommand { get; private set; }
+
+        public void CreateEngineObject() { DyCEList.Add(new EngineObject("New Object Engine")); }
+        public void CreateEngineList() { DyCEList.Add(new EngineList("New List Engine")); }
+        public void CreateEngineText() { DyCEList.Add(new EngineText("New Text Engine")); }
 
         internal string Go(string engineID) { return Go(engineID, new Random()); }
         internal string Go(string engineID, Random r) 
@@ -114,24 +125,7 @@ namespace DyCE
 
         private EngineBase GetDyCEngine(Guid engineID)
         {
-            return DyCEList.ToList().Find(e => e.ID == engineID);
+            return DyCEList.FirstOrDefault(e => e.ID == engineID);
         }
-
-        #region ICommands
-
-        private const bool CanCreateEngine = true;
-        private void CreateEngine() { DyCEList.Add(new EngineList("New Engine")); }
-
-        RelayCommand _createEngineCommand;
-
-        public ICommand CreateEngineCommand
-        {
-            get {
-                return _createEngineCommand ??
-                       (_createEngineCommand = new RelayCommand(CreateEngine, () => CanCreateEngine));
-            }
-        }
-
-        #endregion
     }
 }

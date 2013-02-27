@@ -40,20 +40,20 @@ namespace DyCE_Sandbox
 
             var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty);
 
-            DyCEBag.Instance.DyCEList.Add(steadingEngine);
-            DyCEBag.Instance.DyCEList.Add(defenseList);
-            DyCEBag.Instance.DyCEList.Add(populationList);
-            DyCEBag.Instance.DyCEList.Add(prosperityList);
-            defenseList.Items.ToList().ForEach(i => DyCEBag.Instance.DyCEList.Add(i));
-            populationList.Items.ToList().ForEach(i => DyCEBag.Instance.DyCEList.Add(i));
-            prosperityList.Items.ToList().ForEach(i => DyCEBag.Instance.DyCEList.Add(i));
+            _vm.Bag.DyCEList.Add(steadingEngine);
+            _vm.Bag.DyCEList.Add(defenseList);
+            _vm.Bag.DyCEList.Add(populationList);
+            _vm.Bag.DyCEList.Add(prosperityList);
+            defenseList.Items.ToList().ForEach(i => _vm.Bag.DyCEList.Add(i));
+            populationList.Items.ToList().ForEach(i => _vm.Bag.DyCEList.Add(i));
+            prosperityList.Items.ToList().ForEach(i => _vm.Bag.DyCEList.Add(i));
 
             var test = steadingEngine.Go(55) as ResultObject;
 
             string result = test.Name + ":\r\n";
 
             foreach (var property in test.Properties)
-                result += "    " + property.Name + ": " + test[property.Name] + "\r\n";
+                result += "    " + test[property.Name] + "\r\n";
 
             Console.WriteLine(result);
 

@@ -66,12 +66,6 @@ namespace DyCE_Sandbox
             }
         }
 
-        public RelayCommand PausePreviewCommand { get; private set; }
-
-        public bool CanPausePreview() { return SelectedEngine != null; }
-
-        public void PausePreview() { Paused = !Paused; }
-
         /// <summary>
         /// Initializes a new instance of the ViewModel class.
         /// </summary>
@@ -83,6 +77,12 @@ namespace DyCE_Sandbox
 
             PausePreviewCommand = new RelayCommand(PausePreview, CanPausePreview);
         }
+
+        public RelayCommand PausePreviewCommand { get; private set; }
+
+        public bool CanPausePreview() { return SelectedEngine != null; }
+
+        public void PausePreview() { Paused = !Paused; }
 
         void _timer_Tick(object sender, EventArgs e)
         {

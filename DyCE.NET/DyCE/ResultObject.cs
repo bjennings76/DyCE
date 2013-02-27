@@ -21,6 +21,9 @@ namespace DyCE
 
         public override string ToString()
         {
+            if (_properties.Count == 0)
+                return Name;
+
             if (!string.IsNullOrWhiteSpace(Name))
                 return Name + " Result: " + Properties.Select(p => p.ToString()).Aggregate((s1, s2) => s1 + ", " + s2);
 

@@ -13,6 +13,10 @@ namespace DyCE
         public EngineObject(string name, params EngineProperty[] properties)
         {
             Name = name;
+
+            if (properties.Length == 0)
+                properties = new[] {new EngineProperty("New Property")};
+
             _properties = new ObservableCollection<EngineProperty>(properties);
         }
 

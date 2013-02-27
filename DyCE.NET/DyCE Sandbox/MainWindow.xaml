@@ -7,7 +7,8 @@
 		xmlns:local="clr-namespace:DyCE_Sandbox"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
 		x:Class="DyCE_Sandbox.MainWindow"
-        Title="{Binding WindowName, Mode=OneWay}" Icon="Application.ico" Foreground="Black">
+        Title="{Binding WindowName, Mode=OneWay}" Icon="Application.ico" Foreground="Black"
+		DataContext="{Binding Bag, Mode=OneWay, Source={StaticResource ViewModelDataSource}}">
 	<Window.Resources>
       <HierarchicalDataTemplate  x:Key="EngineItemTemplate" ItemsSource="{Binding SubEngines}">
         <TextBlock Text="{Binding Name}"/>
@@ -19,10 +20,12 @@
         <TextBlock Text="{Binding}"/>
       </HierarchicalDataTemplate>
 	</Window.Resources>
-	<Window.DataContext>
-		<Binding Source="{StaticResource ViewModelDataSource}"/>
-	</Window.DataContext>
-    <Grid DataContext="{Binding Source={StaticResource DyCEBagDataSource}}">
+    <Grid>
+    	<i:Interaction.Triggers>
+    		<i:EventTrigger EventName="MouseLeftButtonDown">
+    			<ei:CallMethodAction MethodName="CreateEngineText" TargetObject="{Binding}"/>
+    		</i:EventTrigger>
+    	</i:Interaction.Triggers>
     	<VisualStateManager.VisualStateGroups>
     		<VisualStateGroup x:Name="PreviewPauseStates">
     			<VisualState x:Name="PreviewPlaying"/>
@@ -36,15 +39,26 @@
     		</VisualStateGroup>
     	</VisualStateManager.VisualStateGroups>
     	<Grid.ColumnDefinitions>
-    		<ColumnDefinition Width="25*"/>
-    		<ColumnDefinition Width="51*"/>
-    		<ColumnDefinition Width="51*"/>
+    		<ColumnDefinition Width="200" MinWidth="150"/>
+    		<ColumnDefinition Width="51*" MinWidth="150"/>
+    		<ColumnDefinition Width="51*" MinWidth="150"/>
     	</Grid.ColumnDefinitions>
-    	<TreeView ItemsSource="{Binding Instance.DyCEList}" Margin="0,0,5,0">
-    		<i:Interaction.Behaviors>
-    			<local:BindableSelectedItemBehavior SelectedItem="{Binding SelectedEngine, Mode=TwoWay, Source={StaticResource ViewModelDataSource}}"/>
-    		</i:Interaction.Behaviors>
-    	</TreeView>
+		<Grid Margin="0,0,5,0">
+			<Grid.RowDefinitions>
+				<RowDefinition/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+    		<TreeView ItemsSource="{Binding DyCEList}">
+    			<i:Interaction.Behaviors>
+    				<local:BindableSelectedItemBehavior SelectedItem="{Binding SelectedEngine, Mode=TwoWay, Source={StaticResource ViewModelDataSource}}"/>
+    			</i:Interaction.Behaviors>
+    		</TreeView>
+    		<StackPanel Grid.Row="1" Margin="2">
+    			<Button Content="Add Object Engine" Margin="2" Command="{Binding CreateEngineObjectCommand, Mode=OneWay}"/>
+    			<Button Content="Add List Engine" Margin="2" Command="{Binding CreateEngineListCommand, Mode=OneWay}"/>
+    			<Button Content="Add Text Engine" Margin="2" Command="{Binding CreateEngineTextCommand, Mode=OneWay}"/>
+    		</StackPanel>
+		</Grid>
         <GridSplitter Width="5"/>
         <ContentControl Grid.Column="1" Content="{Binding SelectedEngine}" Grid.IsSharedSizeScope="True" Margin="0,0,5,0">
         	<ContentControl.Resources>
@@ -69,7 +83,7 @@
 							<ColumnDefinition/>
 						</Grid.ColumnDefinitions>
         					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center"/>
-        					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Instance.DyCEList, Source={StaticResource DyCEBagDataSource}}" SelectedItem="{Binding ValueEngine}" ItemTemplate="{DynamicResource EngineItemTemplate}"/>
+        					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Bag.DyCEList, Source={StaticResource ViewModelDataSource}}" SelectedItem="{Binding ValueEngine}" ItemTemplate="{DynamicResource EngineItemTemplate}"/>
         			</Grid>
         		</HierarchicalDataTemplate>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineObject}" ItemsSource="{Binding SubEngines}">

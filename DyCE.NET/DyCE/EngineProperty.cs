@@ -6,6 +6,7 @@ namespace DyCE
     {
         public override IEnumerable<EngineBase> SubEngines { get { return new EngineBase[] {ValueEngine}; } }
 
+        public EngineProperty(string name) : this(name, new EngineText("New Property Value")) { }
         public EngineProperty(string name, string value) : this(name, new EngineText(value)) { }
 
         public EngineProperty(string name, EngineBase valueEngine)
