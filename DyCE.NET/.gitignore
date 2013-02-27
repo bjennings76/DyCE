@@ -3,3 +3,5 @@
 obj/
 bin/
 _ReSharper*
+*.user
+*.db
