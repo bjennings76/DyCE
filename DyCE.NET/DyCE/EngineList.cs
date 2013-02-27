@@ -59,7 +59,7 @@ namespace DyCE
 
         private static readonly List<int> _shuffledIndexes = new List<int>();
         private static int _shuffleIndex;
-        public EngineList(string name) { Name = name; }
+        public EngineList(string name):base(name) { }
 
         public override ResultBase Go(int seed)
         {

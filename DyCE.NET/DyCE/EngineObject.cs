@@ -11,7 +11,7 @@ namespace DyCE
         private readonly ObservableCollection<EngineProperty> _properties = new ObservableCollection<EngineProperty>();
         public ObservableCollection<EngineProperty> Properties { get { return _properties; } }
 
-        public EngineObject(string name, params EngineProperty[] properties)
+        public EngineObject(string name, params EngineProperty[] properties):base(name)
         {
             Name = name;
 
@@ -19,14 +19,23 @@ namespace DyCE
                 properties = new[] {new EngineProperty("New Property")};
 
             _properties = new ObservableCollection<EngineProperty>(properties);
+
             CreatePropertyCommand = new RelayCommand(CreateEngineProperty);
+            DeletePropertyCommand = new RelayCommand(DeleteEngineProperty, CanDeleteEngineProperty);
         }
 
         public RelayCommand CreatePropertyCommand { get; private set; }
+        public RelayCommand DeletePropertyCommand { get; private set; }
 
-        public void CreateEngineProperty()
+        public void CreateEngineProperty() { Properties.Add(new EngineProperty("New Property")); }
+
+        public bool CanDeleteEngineProperty() { return Properties.Any(p => p.IsSelected); }
+
+        public void DeleteEngineProperty()
         {
-            Properties.Add(new EngineProperty("New Property"));
+            var selectedProperties = Properties.Where(p => p.IsSelected).ToList();
+            if (selectedProperties.Count > 0)
+                selectedProperties.ForEach(p => Properties.Remove(p));
         }
 
         public EngineBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }

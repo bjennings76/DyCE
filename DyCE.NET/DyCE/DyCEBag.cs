@@ -4,7 +4,6 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System;
 using System.Xml.Serialization;
-using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 

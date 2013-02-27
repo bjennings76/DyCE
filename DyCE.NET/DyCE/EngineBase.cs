@@ -22,6 +22,8 @@ namespace DyCE
         }
 
         private Guid _id = Guid.NewGuid();
+        protected EngineBase(string name) { _name = name; }
+
         public Guid ID
         {
             get

@@ -42,7 +42,7 @@ namespace DyCE
 
         public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return null; } }
 
-        public EngineText(string text) { Text = text; }
+        public EngineText(string text, string name = null) : base(name) { Text = text; }
 
         public override ResultBase Go(int seed)
         {

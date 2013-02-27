@@ -139,6 +139,13 @@
   <ItemGroup>
     <Resource Include="Application.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\control_pause.png" />
+    <Resource Include="Icons\control_play.png" />
+    <Resource Include="Icons\item_add.png" />
+    <Resource Include="Icons\item_copy.png" />
+    <Resource Include="Icons\item_delete.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
