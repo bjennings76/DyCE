@@ -1,33 +1,42 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight;
 
 namespace DyCE
 {
+    [XmlInclude(typeof(EngineObject)), XmlInclude(typeof(EngineList)), XmlInclude(typeof(EngineText))]
     public abstract class EngineBase : ViewModelBase
     {
         private string _name;
+        [XmlAttribute]
         public virtual string Name
         {
             get { return _name; }
-
             set
             {
                 _name = value;
                 RaisePropertyChanged(() => Name);
+                RaisePropertyChanged(() => ID);
             }
         }
 
-        private Guid _id = Guid.NewGuid();
-        protected EngineBase(string name) { _name = name; }
-
-        public Guid ID
+        // dyce:Bear.Weapon
+        private string _id;
+        [XmlAttribute]
+        public string ID
         {
             get
             {
+                if (_id != null)
+                    return _id;
+
+                if (_name != null)
+                    return "dyce:" + _name.Replace(" ", "");
+
+                _id = "dyce:" + Guid.NewGuid().ToString();
+
                 return _id;
             }
             set
@@ -39,15 +48,15 @@ namespace DyCE
 
         public abstract IEnumerable<EngineBase> SubEngines { get; }
 
-        public DateTime Created { get; set; }
-
-        public DateTime Modified { get; set; }
-
-        public FileInfo File { get; set; }
-
-        public virtual bool CanRun { get { return true; } }
-
+        [XmlAttribute, DefaultValue(false)]
         public bool IsSelected { get; set; }
+
+        protected EngineBase(string name)
+        {
+            _name = name;
+        }
+
+        protected EngineBase() { }
 
         public abstract ResultBase Go(int seed);
 

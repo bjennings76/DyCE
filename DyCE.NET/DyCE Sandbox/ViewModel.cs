@@ -78,7 +78,7 @@ namespace DyCE_Sandbox
 
         void _timer_Tick(object sender, EventArgs e)
         {
-            if (SelectedEngine != null && SelectedEngine.CanRun && !Paused)
+            if (SelectedEngine != null && !Paused)
             {
                 Results.Add(SelectedEngine.Go(new Random().Next()));
 

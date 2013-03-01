@@ -8,12 +8,32 @@ using GalaSoft.MvvmLight.Command;
 
 namespace DyCE
 {
+    public class EngineRef
+    {
+        [XmlAttribute]
+        public string SubEngine { get; set; }
+    }
+
     public class EngineList : EngineBase
     {
         public override IEnumerable<EngineBase> SubEngines { get { return Items; } }
 
-        private readonly ObservableCollection<EngineBase> _items = new ObservableCollection<EngineBase>();
+        private ObservableCollection<EngineBase> _items = new ObservableCollection<EngineBase>();
+        [XmlIgnore]
         public ObservableCollection<EngineBase> Items { get { return _items; } }
+
+        [XmlArray("Items")]
+        public List<EngineRef> List
+        {
+            get { return Items.Select(e => new EngineRef{SubEngine = e.ID}).ToList();}
+            set
+            {
+                _items = new ObservableCollection<EngineBase>(value.Select(r => DyCEBag.Instance.DyCEList.FirstOrDefault(e => e.ID.Equals(r.SubEngine))));
+                RaisePropertyChanged(() => List);
+                RaisePropertyChanged(() => Items);
+            }
+        }
+
 
         private int _cyclePrime;
         [XmlIgnore]
@@ -55,11 +75,10 @@ namespace DyCE
 
         #endregion
 
-        public override bool CanRun { get { return Items.Count > 0; } }
-
         private static readonly List<int> _shuffledIndexes = new List<int>();
         private static int _shuffleIndex;
         public EngineList(string name):base(name) { }
+        public EngineList() { }
 
         public override ResultBase Go(int seed)
         {

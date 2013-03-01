@@ -61,7 +61,10 @@ namespace DyCE_Sandbox
             // Can we create a top-level 'template' of options for a Village, Town, Keep, and City?
 
             _vm.Results.CollectionChanged += Results_CollectionChanged;
+            _vm.SubscribeToChange(() => _vm.SelectedEngine, SelectedEngineChanged);
         }
+
+        private void SelectedEngineChanged(ViewModel sender) { control_EngineEditor.Focus(); }
 
         void Results_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -69,6 +72,12 @@ namespace DyCE_Sandbox
             if (border == null) return;
             var scrollViewer = border.Child as ScrollViewer;
             if (scrollViewer != null) scrollViewer.ScrollToBottom();
+        }
+
+        private void txt_SelectAll(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	var control = sender as TextBox;
+			control.SelectAll();
         }
     }
 }

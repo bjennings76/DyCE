@@ -1,34 +1,11 @@
 using System;
+using System.Xml.Serialization;
 
 namespace DyCE
 {
     public class EngineText : EngineBase {
-
-        private string _name;
-        public override string Name 
-        {
-            get
-            {
-                if (_name != null)
-                    return _name;
-
-                var lines = Text.Split(new[] {'\r', '\n'}, StringSplitOptions.RemoveEmptyEntries);
-                if (lines.Length == 1)
-                    return "\"" + lines[0] + "\"";
-
-                if (lines.Length > 1)
-                    return "\"" + lines[0] + "...\"";
-
-                return "[empty]";
-            }
-            set
-            {
-                _name = value;
-                RaisePropertyChanged(() => Name);
-            }
-        }
-
         private string _text;
+        [XmlText]
         public string Text
         {
             get { return _text; } 
@@ -43,6 +20,7 @@ namespace DyCE
         public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return null; } }
 
         public EngineText(string text, string name = null) : base(name) { Text = text; }
+        public EngineText() { }
 
         public override ResultBase Go(int seed)
         {
@@ -50,6 +28,19 @@ namespace DyCE
             return new ResultText(this, Text, seed);
         }
 
-        public override string ToString() { return "\"" + Text + "\""; }
+        public override string ToString()
+        {
+            if (Name != null)
+                return Name;
+
+            var lines = Text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            if (lines.Length == 1)
+                return "\"" + lines[0] + "\"";
+
+            if (lines.Length > 1)
+                return "\"" + lines[0] + "...\"";
+
+            return "[empty]";
+        }
     }
 }

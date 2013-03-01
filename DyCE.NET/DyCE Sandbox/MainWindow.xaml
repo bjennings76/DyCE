@@ -24,11 +24,6 @@
 		<Binding Source="{StaticResource ViewModelDataSource}"/>
 	</Window.DataContext>
     <Grid DataContext="{Binding Bag, Mode=OneWay, Source={StaticResource ViewModelDataSource}}">
-    	<i:Interaction.Triggers>
-    		<i:EventTrigger EventName="MouseLeftButtonDown">
-    			<ei:CallMethodAction MethodName="CreateEngineText" TargetObject="{Binding}"/>
-    		</i:EventTrigger>
-    	</i:Interaction.Triggers>
     	<VisualStateManager.VisualStateGroups>
     		<VisualStateGroup x:Name="PreviewPauseStates">
     			<VisualState x:Name="PreviewPlaying"/>
@@ -59,10 +54,12 @@
     		<StackPanel Grid.Row="1" Margin="2">
     			<Button Content="Add Object Engine" Margin="2" Command="{Binding CreateEngineObjectCommand, Mode=OneWay}"/>
     			<Button Content="Add List Engine" Margin="2" Command="{Binding CreateEngineListCommand, Mode=OneWay}"/>
+    			<Button Content="Add Text Engine" Margin="2" Command="{Binding CreateEngineTextCommand, Mode=OneWay}"/>
+    			<Button Content="Save DyCE Bag" Margin="2" Command="{Binding SaveCommand, Mode=OneWay}"/>
     		</StackPanel>
 		</Grid>
         <GridSplitter Width="5"/>
-        <ContentControl Grid.Column="1" Content="{Binding SelectedEngine}" Grid.IsSharedSizeScope="True" Margin="0,0,5,0">
+        <ContentControl x:Name="control_EngineEditor" Grid.Column="1" Content="{Binding SelectedEngine}" Grid.IsSharedSizeScope="True" Margin="0,0,5,0">
         	<ContentControl.Resources>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineText}" ItemsSource="{Binding SubEngines}">
         			<Grid Grid.IsSharedSizeScope="True">
@@ -91,14 +88,14 @@
         			</Grid>
         		</HierarchicalDataTemplate>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineObject}" ItemsSource="{Binding SubEngines}">
-        			<StackPanel Grid.IsSharedSizeScope="True">
+        			<StackPanel Grid.IsSharedSizeScope="True"  FocusManager.FocusedElement="{Binding ElementName=txt_Name}">
         				<Grid Visibility="Visible" Margin="2">
         					<Grid.ColumnDefinitions>
         						<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
         						<ColumnDefinition/>
         					</Grid.ColumnDefinitions>
         					<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
-        					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2"/>
+        					<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
         				</Grid>
         				<Grid Grid.Row="1" Margin="2">
         					<Grid.ColumnDefinitions>
@@ -116,14 +113,14 @@
         			</StackPanel>
         		</HierarchicalDataTemplate>
         		<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineList}" ItemsSource="{Binding SubEngines}">
-        			<StackPanel Grid.IsSharedSizeScope="True">
+        			<StackPanel Grid.IsSharedSizeScope="True" FocusManager.FocusedElement="{Binding ElementName=txt_Name}">
         				<Grid Visibility="Visible">
         					<Grid.ColumnDefinitions>
         						<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
         						<ColumnDefinition/>
         					</Grid.ColumnDefinitions>
         					<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
-        					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2"/>
+        					<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
         				</Grid>
         				<Grid Grid.Row="1">
         					<Grid.RowDefinitions>
