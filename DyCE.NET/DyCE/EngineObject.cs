@@ -11,7 +11,7 @@ namespace DyCE
         private readonly ObservableCollection<EngineProperty> _properties = new ObservableCollection<EngineProperty>();
         public ObservableCollection<EngineProperty> Properties { get { return _properties; } }
 
-        public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return Properties.Select(p => p.ValueEngine); } }
+        public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return Properties; } }
 
         public EngineObject(string name, params EngineProperty[] properties)
             : base(name)
@@ -44,6 +44,6 @@ namespace DyCE
         public EngineBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }
 
         public override ResultBase Go(int seed) { return new ResultObject(this, seed); }
-        public override string ToString() { return Name + " Engine: " + Properties.Select(p => p.ToString()).Aggregate((s1, s2) => s1 + ", " + s2); }
+        public override string ToString() { return Name + " Engine"; }
     }
 }

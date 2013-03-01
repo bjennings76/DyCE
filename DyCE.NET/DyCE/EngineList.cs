@@ -117,6 +117,9 @@ namespace DyCE
 
         public void AddWithDetail(string name, string desc) { Items.Add(new EngineObject("TextWithDetail", new EngineProperty("Text", name), new EngineProperty("TextDetail", desc))); }
 
-        public override string ToString() { return Name + ": " + Items.Select(e => e.ToString()).Aggregate((s1, s2) => s1 + ", " + s2); }
+        public override string ToString()
+        {
+            return Name + " List"; //Items.Select(e => e.ToString()).Aggregate((s1, s2) => s1 + ", " + s2); 
+        }
     }
 }
