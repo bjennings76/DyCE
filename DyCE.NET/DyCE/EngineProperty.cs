@@ -32,7 +32,7 @@ namespace DyCE
 
         public override string ToString()
         {
-            return Name + " Property: " + ValueEngine;
+            return Name + " Property";
         }
     }
 }

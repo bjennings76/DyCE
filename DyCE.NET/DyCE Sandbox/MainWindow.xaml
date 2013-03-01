@@ -52,98 +52,92 @@
             </StackPanel>
         </Grid>
         <GridSplitter Width="5"/>
-        <ContentControl x:Name="control_EngineEditor" Grid.Column="1" Content="{Binding SelectedEngine}" Grid.IsSharedSizeScope="True" Margin="0,0,5,0">
-            <ContentControl.Resources>
-                <HierarchicalDataTemplate DataType= "{x:Type dyce:EngineText}" ItemsSource="{Binding SubEngines}">
-                    <Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition/>
-						</Grid.RowDefinitions>
-                		<Grid Grid.IsSharedSizeScope="True">
-                			<Grid.ColumnDefinitions>
-                				<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                				<ColumnDefinition/>
-                			</Grid.ColumnDefinitions>
-                			<Grid.RowDefinitions>
-                				<RowDefinition Height="Auto"/>
-                				<RowDefinition/>
-                			</Grid.RowDefinitions>
-                			<TextBlock Text="Text:" Margin="2,3,2,2" VerticalAlignment="Top"/>
-                			<TextBox Text="{Binding Text}" Grid.Row="0" MinWidth="150" Margin="2" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Grid.Column="1"/>
-                		</Grid>
-                		<Grid Grid.Column="0" Grid.Row="1" MinHeight="200">
-                			<Grid.RowDefinitions>
-                				<RowDefinition Height="10*"/>
-                				<RowDefinition Height="11*"/>
-                			</Grid.RowDefinitions>
-                			<Custom:WebSourceControl Source="{Binding Text, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True}"/>
-                			<Custom:WebControl Source="{Binding Text}" Grid.Row="1"/>
-                		</Grid>
-                	</Grid>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType= "{x:Type dyce:EngineProperty}" ItemsSource="{Binding SubEngines}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center"/>
-                        <ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Bag.DyCEList, Source={StaticResource ViewModelDataSource}}" SelectedItem="{Binding ValueEngine}" ItemTemplate="{DynamicResource EngineItemTemplate}"/>
-                        <Image Source="Icons/item_delete.png" Grid.Column="2" Width="22" Height="22" Margin="2"/>
-                    </Grid>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType= "{x:Type dyce:EngineObject}" ItemsSource="{Binding SubEngines}">
-                    <StackPanel Grid.IsSharedSizeScope="True"  FocusManager.FocusedElement="{Binding ElementName=txt_Name}">
-                        <Grid Visibility="Visible" Margin="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
-                            <TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Margin="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Properties:" Margin="2"/>
-                            <ItemsControl Grid.Row="1" MinWidth="150" ItemsSource="{Binding Properties}" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2"/>
-                        </Grid>
-                        <Button Content="Add Property" Margin="4" Command="{Binding CreatePropertyCommand, Mode=OneWay}"/>
-                    </StackPanel>
-                </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType= "{x:Type dyce:EngineList}" ItemsSource="{Binding SubEngines}">
-                    <StackPanel Grid.IsSharedSizeScope="True" FocusManager.FocusedElement="{Binding ElementName=txt_Name}">
-                        <Grid Visibility="Visible">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
-                            <TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
-                        </Grid>
-                        <Grid Grid.Row="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="Engine List:" Margin="2"/>
-                            <ItemsControl Grid.Row="1" MinWidth="150" Margin="2" ItemsSource="{Binding Items}" MinHeight="50"/>
-                        </Grid>
-                    </StackPanel>
-                </HierarchicalDataTemplate>
-            </ContentControl.Resources>
-            <ContentControl.DataContext>
-                <Binding Source="{StaticResource ViewModelDataSource}"/>
-            </ContentControl.DataContext>
-        </ContentControl>
+        <ScrollViewer Grid.Column="1" Margin="0,0,5,0" VerticalScrollBarVisibility="Auto">
+        	<ContentControl x:Name="control_EngineEditor" Content="{Binding SelectedEngine}" Grid.IsSharedSizeScope="True">
+        		<ContentControl.Resources>
+        			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineText}" ItemsSource="{Binding SubEngines}">
+        				<Grid>
+        					<Grid.RowDefinitions>
+        						<RowDefinition Height="Auto"/>
+        						<RowDefinition/>
+        					</Grid.RowDefinitions>
+        					<Grid Grid.IsSharedSizeScope="True">
+        						<Grid.ColumnDefinitions>
+        							<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        							<ColumnDefinition/>
+        						</Grid.ColumnDefinitions>
+        						<Grid.RowDefinitions>
+        							<RowDefinition Height="Auto"/>
+        							<RowDefinition/>
+        						</Grid.RowDefinitions>
+        						<TextBlock Text="Text:" Margin="2,3,2,2" VerticalAlignment="Top"/>
+        						<TextBox Text="{Binding Text}" Grid.Row="0" MinWidth="150" Margin="2" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Grid.Column="1"/>
+        					</Grid>
+        				</Grid>
+        			</HierarchicalDataTemplate>
+        			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineProperty}" ItemsSource="{Binding SubEngines}">
+        				<Grid VerticalAlignment="Top">
+        					<Grid.ColumnDefinitions>
+        						<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        						<ColumnDefinition/>
+        						<ColumnDefinition Width="Auto"/>
+        					</Grid.ColumnDefinitions>
+        					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center"/>
+        					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Bag.DyCEList, Source={StaticResource ViewModelDataSource}}" SelectedItem="{Binding ValueEngine}" ItemTemplate="{DynamicResource EngineItemTemplate}"/>
+        					<Image Source="Icons/item_delete.png" Grid.Column="2" Width="22" Height="22" Margin="2"/>
+        				</Grid>
+        			</HierarchicalDataTemplate>
+        			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineObject}" ItemsSource="{Binding SubEngines}">
+        				<StackPanel Grid.IsSharedSizeScope="True"  FocusManager.FocusedElement="{Binding ElementName=txt_Name}">
+        					<Grid Visibility="Visible" Margin="2">
+        						<Grid.ColumnDefinitions>
+        							<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        							<ColumnDefinition/>
+        						</Grid.ColumnDefinitions>
+        						<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
+        						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
+        					</Grid>
+        					<Grid Grid.Row="1" Margin="2">
+        						<Grid.ColumnDefinitions>
+        							<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        							<ColumnDefinition/>
+        						</Grid.ColumnDefinitions>
+        						<Grid.RowDefinitions>
+        							<RowDefinition Height="Auto"/>
+        							<RowDefinition/>
+        						</Grid.RowDefinitions>
+        						<TextBlock Text="Properties:" Margin="2"/>
+        						<ItemsControl Grid.Row="1" MinWidth="150" ItemsSource="{Binding Properties}" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2"/>
+        					</Grid>
+        					<Button Content="Add Property" Margin="4" Command="{Binding CreatePropertyCommand, Mode=OneWay}"/>
+        				</StackPanel>
+        			</HierarchicalDataTemplate>
+        			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineList}" ItemsSource="{Binding SubEngines}">
+        				<StackPanel Grid.IsSharedSizeScope="True" FocusManager.FocusedElement="{Binding ElementName=txt_Name}">
+        					<Grid Visibility="Visible">
+        						<Grid.ColumnDefinitions>
+        							<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
+        							<ColumnDefinition/>
+        						</Grid.ColumnDefinitions>
+        						<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
+        						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
+        					</Grid>
+        					<Grid Grid.Row="1">
+        						<Grid.RowDefinitions>
+        							<RowDefinition Height="Auto"/>
+        							<RowDefinition/>
+        						</Grid.RowDefinitions>
+        						<TextBlock Text="Engine List:" Margin="2"/>
+        						<ItemsControl Grid.Row="1" MinWidth="150" Margin="2" ItemsSource="{Binding Items}" MinHeight="50"/>
+        					</Grid>
+        				</StackPanel>
+        			</HierarchicalDataTemplate>
+        		</ContentControl.Resources>
+        		<ContentControl.DataContext>
+        			<Binding Source="{StaticResource ViewModelDataSource}"/>
+        		</ContentControl.DataContext>
+        	</ContentControl>
+        </ScrollViewer>
         <GridSplitter Width="5" Grid.Column="1"/>
         <Grid Grid.Column="2"  DataContext="{Binding Source={StaticResource ViewModelDataSource}}">
             <Grid.RowDefinitions>

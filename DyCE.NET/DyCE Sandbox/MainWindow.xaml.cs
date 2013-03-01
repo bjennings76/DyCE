@@ -64,7 +64,10 @@ namespace DyCE_Sandbox
             _vm.SubscribeToChange(() => _vm.SelectedEngine, SelectedEngineChanged);
         }
 
-        private void SelectedEngineChanged(ViewModel sender) { control_EngineEditor.Focus(); }
+        private void SelectedEngineChanged(ViewModel sender)
+        {
+            //control_EngineEditor.Focus();
+        }
 
         void Results_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

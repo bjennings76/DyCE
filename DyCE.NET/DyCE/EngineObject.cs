@@ -44,6 +44,6 @@ namespace DyCE
         public EngineBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }
 
         public override ResultBase Go(int seed) { return new ResultObject(this, seed); }
-        public override string ToString() { return Name + " Engine"; }
+        public override string ToString() { return Name + " Object"; }
     }
 }
