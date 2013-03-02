@@ -8,32 +8,13 @@ using GalaSoft.MvvmLight.Command;
 
 namespace DyCE
 {
-    public class EngineRef
-    {
-        [XmlAttribute]
-        public string SubEngine { get; set; }
-    }
-
+    [XmlRoot("EngineList")]
     public class EngineList : EngineBase
     {
         public override IEnumerable<EngineBase> SubEngines { get { return Items; } }
 
-        private ObservableCollection<EngineBase> _items = new ObservableCollection<EngineBase>();
-        [XmlIgnore]
+        private readonly ObservableCollection<EngineBase> _items = new ObservableCollection<EngineBase>();
         public ObservableCollection<EngineBase> Items { get { return _items; } }
-
-        [XmlArray("Items")]
-        public List<EngineRef> List
-        {
-            get { return Items.Select(e => new EngineRef{SubEngine = e.ID}).ToList();}
-            set
-            {
-                _items = new ObservableCollection<EngineBase>(value.Select(r => DyCEBag.Instance.DyCEList.FirstOrDefault(e => e.ID.Equals(r.SubEngine))));
-                RaisePropertyChanged(() => List);
-                RaisePropertyChanged(() => Items);
-            }
-        }
-
 
         private int _cyclePrime;
         [XmlIgnore]

@@ -6,37 +6,16 @@ using GalaSoft.MvvmLight;
 
 namespace DyCE
 {
-    [XmlInclude(typeof(EngineObject)), XmlInclude(typeof(EngineList)), XmlInclude(typeof(EngineText))]
+    [XmlInclude(typeof(EngineObject)), XmlInclude(typeof(EngineList)), XmlInclude(typeof(EngineText)), XmlInclude(typeof(EngineRef))]
     public abstract class EngineBase : ViewModelBase
     {
-        private string _name;
-        [XmlAttribute]
-        public virtual string Name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                RaisePropertyChanged(() => Name);
-                RaisePropertyChanged(() => ID);
-            }
-        }
-
         // dyce:Bear.Weapon
         private string _id;
         [XmlAttribute]
-        public string ID
+        public virtual string ID
         {
             get
             {
-                if (_id != null)
-                    return _id;
-
-                if (_name != null)
-                    return "dyce:" + _name.Replace(" ", "");
-
-                _id = "dyce:" + Guid.NewGuid().ToString();
-
                 return _id;
             }
             set
@@ -46,17 +25,37 @@ namespace DyCE
             }
         }
 
+        private string _name;
+        [XmlAttribute]
+        public string Name
+        {
+            get { return _name ?? _id; }
+            set
+            {
+                SetID(value);
+                RaisePropertyChanged(() => Name);
+                RaisePropertyChanged(() => ID);
+            }
+        }
+
         public abstract IEnumerable<EngineBase> SubEngines { get; }
 
         [XmlAttribute, DefaultValue(false)]
         public bool IsSelected { get; set; }
 
-        protected EngineBase(string name)
-        {
-            _name = name;
-        }
-
         protected EngineBase() { }
+
+        protected EngineBase(string name) { SetID(name); }
+
+        private void SetID(string name)
+        {
+            if (name == null)
+                return;
+
+            _id = name.Replace(" ", "");
+            if (_id != name)
+                _name = name;
+        }
 
         public abstract ResultBase Go(int seed);
 

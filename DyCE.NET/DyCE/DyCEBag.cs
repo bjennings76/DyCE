@@ -32,6 +32,7 @@ namespace DyCE
 
         private ObservableCollection<EngineBase> _dyceList = new ObservableCollection<EngineBase>();
 
+        [XmlElement("Engine")]
         public ObservableCollection<EngineBase> DyCEList
         {
             get { return _dyceList; }
@@ -85,5 +86,14 @@ namespace DyCE
         }
 
         public static EngineBase GetEngine(string id) { return Instance.DyCEList.FirstOrDefault(e => e.ID.Equals(id, StringComparison.OrdinalIgnoreCase)); }
+        public static EngineBase GetSubEngineRef(EngineBase subEngine)
+        {
+            if ((subEngine is EngineRef) || string.IsNullOrWhiteSpace(subEngine.ID))
+                return subEngine;
+
+            return new EngineRef(subEngine.ID);
+        }
+
+        public static EngineRef GetSubEngineRef(string engineID) { return new EngineRef(engineID); }
     }
 }

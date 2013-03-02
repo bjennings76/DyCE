@@ -16,11 +16,7 @@ namespace DyCE
         public EngineObject(string name, params EngineProperty[] properties)
             : base(name)
         {
-            if (properties.Length == 0)
-                properties = new[] {new EngineProperty("New Property")};
-
             _properties = new ObservableCollection<EngineProperty>(properties);
-
             CreatePropertyCommand = new RelayCommand(CreateProperty);
             DeletePropertyCommand = new RelayCommand(DeleteProperty, CanDeleteProperty);
         }

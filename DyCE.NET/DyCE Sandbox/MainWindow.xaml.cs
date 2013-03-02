@@ -44,9 +44,9 @@ namespace DyCE_Sandbox
             ViewModel.Bag.DyCEList.Add(defenseList);
             ViewModel.Bag.DyCEList.Add(populationList);
             ViewModel.Bag.DyCEList.Add(prosperityList);
-            defenseList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
-            populationList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
-            prosperityList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
+            //defenseList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
+            //populationList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
+            //prosperityList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
 
             var test = steadingEngine.Go(55) as ResultObject;
 

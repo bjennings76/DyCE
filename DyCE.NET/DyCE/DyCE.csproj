@@ -86,6 +86,7 @@
     <Compile Include="EngineList.cs" />
     <Compile Include="EngineObject.cs" />
     <Compile Include="EngineProperty.cs" />
+    <Compile Include="EngineRef.cs" />
     <Compile Include="EngineText.cs" />
     <Compile Include="NotificationExtensions.cs" />
     <Compile Include="Randomize.cs" />

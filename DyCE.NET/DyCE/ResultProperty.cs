@@ -8,11 +8,11 @@ namespace DyCE
 
         public ResultProperty(EngineProperty engineObject, int seed) : base(engineObject, seed)
         {
-            ValueResult = engineObject.ValueEngine.Go(seed);
+            ValueResult = engineObject.SubEngineActual.Go(seed);
         }
 
-        public override IEnumerable<ResultBase> SubResults { get { return new ResultBase[] {ValueResult}; } }
+        public override IEnumerable<ResultBase> SubResults { get { return new[] {ValueResult}; } }
 
-        public override string ToString() { return Name + ": " + ValueResult.ToString(); }
+        public override string ToString() { return Name + ": " + ValueResult; }
     }
 }
