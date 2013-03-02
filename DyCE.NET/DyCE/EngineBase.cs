@@ -25,8 +25,11 @@ namespace DyCE
             }
         }
 
+        [XmlAttribute("Name")]
+        public virtual string NameSaved { get { return _name; } set { Name = value; } }
+
         private string _name;
-        [XmlAttribute]
+        [XmlIgnore]
         public string Name
         {
             get { return _name ?? _id; }

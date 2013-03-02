@@ -14,6 +14,7 @@ namespace DyCE
         public override IEnumerable<EngineBase> SubEngines { get { return Items; } }
 
         private readonly ObservableCollection<EngineBase> _items = new ObservableCollection<EngineBase>();
+        [XmlElement("Engine")]
         public ObservableCollection<EngineBase> Items { get { return _items; } }
 
         private int _cyclePrime;

@@ -9,6 +9,7 @@ namespace DyCE
     public class EngineObject : EngineBase
     {
         private readonly ObservableCollection<EngineProperty> _properties = new ObservableCollection<EngineProperty>();
+        [XmlElement("Property")]
         public ObservableCollection<EngineProperty> Properties { get { return _properties; } }
 
         public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return Properties; } }

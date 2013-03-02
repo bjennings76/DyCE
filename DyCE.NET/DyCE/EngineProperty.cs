@@ -41,7 +41,10 @@ namespace DyCE
         [XmlAttribute]
         public override string ID { get { return null; } set { base.ID = value; } }
 
-        public override IEnumerable<EngineBase> SubEngines { get { return new[] {SubEngine}; } }
+        [XmlAttribute("Name")]
+        public override string NameSaved { get { return Name; } set { Name = value; } }
+
+        public override IEnumerable<EngineBase> SubEngines { get { return new[] { SubEngine }; } }
 
         public EngineProperty(string name) 
             : this(name, new EngineText("New Property Value")) { }
