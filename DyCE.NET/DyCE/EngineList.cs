@@ -50,7 +50,18 @@ namespace DyCE
 
         private const bool _canAddItem = true;
 
-        private void AddItem() { Items.Add(new EngineText("Test")); }
+        private void AddItem() { Add("Test"); }
+        private void Add(object item)
+        {
+            if (item is EngineBase)
+                Items.Add(item as EngineBase);
+            else if (item is string)
+                Items.Add(new EngineText(item as string));
+            else if (item is IEnumerable<object>)
+                Items.Add(new EngineList(item as IEnumerable<object>));
+            else
+                throw new Exception("Unknown item type: " + item);
+        }
 
         RelayCommand _addItemCommand;
         public ICommand AddItemCommand { get { return _addItemCommand ?? (_addItemCommand = new RelayCommand(AddItem, () => _canAddItem)); } }
@@ -59,7 +70,17 @@ namespace DyCE
 
         private static readonly List<int> _shuffledIndexes = new List<int>();
         private static int _shuffleIndex;
+
+        public EngineList(IEnumerable<object> items) : this(null, items) { }
+
+        public EngineList(string name, IEnumerable<object> items):base(name)
+        {
+            foreach (var item in items)
+                Add(item);
+        }
+
         public EngineList(string name):base(name) { }
+
         public EngineList() { }
 
         public override ResultBase Go(int seed)

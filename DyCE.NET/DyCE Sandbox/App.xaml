@@ -6,6 +6,88 @@
     <Application.Resources>
          
     	<local:ViewModel x:Key="ViewModelDataSource" d:IsDataSource="True"/>
+    	<Style x:Key="FocusVisual">
+    		<Setter Property="Control.Template">
+    			<Setter.Value>
+    				<ControlTemplate>
+    					<Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+    				</ControlTemplate>
+    			</Setter.Value>
+    		</Setter>
+    	</Style>
+    	<SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+    	<SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+    	<SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+    	<SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+    	<SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+    	<SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+    	<SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+    	<SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+    	<SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+    	<Style x:Key="ButtonClear" TargetType="{x:Type Button}">
+    		<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+    		<Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+    		<Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+    		<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+    		<Setter Property="BorderThickness" Value="1"/>
+    		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+    		<Setter Property="VerticalContentAlignment" Value="Center"/>
+    		<Setter Property="Padding" Value="1"/>
+    		<Setter Property="Template">
+    			<Setter.Value>
+    				<ControlTemplate TargetType="{x:Type Button}">
+    					<Border x:Name="border" SnapsToDevicePixels="true" RenderTransformOrigin="0.5,0.5">
+    						<Border.RenderTransform>
+    							<TransformGroup>
+    								<ScaleTransform/>
+    								<SkewTransform/>
+    								<RotateTransform/>
+    								<TranslateTransform/>
+    							</TransformGroup>
+    						</Border.RenderTransform>
+    						<VisualStateManager.VisualStateGroups>
+    							<VisualStateGroup x:Name="CommonStates">
+    								<VisualStateGroup.Transitions>
+    									<VisualTransition GeneratedDuration="0:0:0.1"/>
+    								</VisualStateGroup.Transitions>
+    								<VisualState x:Name="Normal"/>
+    								<VisualState x:Name="MouseOver">
+    									<Storyboard>
+    										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="border">
+    											<EasingDoubleKeyFrame KeyTime="0" Value="1.2"/>
+    										</DoubleAnimationUsingKeyFrames>
+    										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="border">
+    											<EasingDoubleKeyFrame KeyTime="0" Value="1.2"/>
+    										</DoubleAnimationUsingKeyFrames>
+    									</Storyboard>
+    								</VisualState>
+    								<VisualState x:Name="Pressed">
+    									<Storyboard>
+    										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="border">
+    											<EasingDoubleKeyFrame KeyTime="0" Value="0.9"/>
+    										</DoubleAnimationUsingKeyFrames>
+    										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="border">
+    											<EasingDoubleKeyFrame KeyTime="0" Value="0.9"/>
+    										</DoubleAnimationUsingKeyFrames>
+    									</Storyboard>
+    								</VisualState>
+    								<VisualState x:Name="Disabled">
+    									<Storyboard>
+    										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border">
+    											<EasingDoubleKeyFrame KeyTime="0" Value="0.5"/>
+    										</DoubleAnimationUsingKeyFrames>
+    									</Storyboard>
+    								</VisualState>
+    							</VisualStateGroup>
+    							<VisualStateGroup x:Name="FocusStates"/>
+    							<VisualStateGroup x:Name="ValidationStates"/>
+    						</VisualStateManager.VisualStateGroups>
+    						<ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+    					</Border>
+    				</ControlTemplate>
+    			</Setter.Value>
+    		</Setter>
+    	</Style>
          
     </Application.Resources>
 </Application>

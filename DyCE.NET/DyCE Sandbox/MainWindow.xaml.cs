@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,27 +27,23 @@ namespace DyCE_Sandbox
             // Get the 'ViewModel' resource
             _vm = (ViewModel)Application.Current.Resources["ViewModelDataSource"];
 
-            var prosperityList = new EngineList("Prosperity Options");
-            prosperityList.AddItems("Dirt", "Poor", "Moderate", "Wealthy", "Rich");
+            var prosperityList = new EngineList("Prosperity Options", new[]{"Dirt", "Poor", "Moderate", "Wealthy", "Rich"});
             var prosperityProperty = new EngineProperty("Prosperity", prosperityList);
 
-            var populationList = new EngineList("Population Options");
-            populationList.AddItems("Exodus", "Shrinking", "Steady", "Growing", "Booming");
+            var populationList = new EngineList("Population Options", new[]{"Exodus", "Shrinking", "Steady", "Growing", "Booming"});
             var populationProperty = new EngineProperty("Population", populationList);
 
-            var defenseList = new EngineList("Defense Options");
-            defenseList.AddItems("None", "Militia", "Watch", "Guard", "Garrison", "Battalion", "Legion");
+            var defenseList = new EngineList(new[]{"None", "Militia", "Watch", "Guard", "Garrison", "Battalion", "Legion"});
             var defenseProperty = new EngineProperty("Defenses", defenseList);
 
-            var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty);
+            var testProperty = new EngineProperty("Test", new EngineText("Yup"));
+
+            var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty, testProperty);
 
             ViewModel.Bag.DyCEList.Add(steadingEngine);
-            ViewModel.Bag.DyCEList.Add(defenseList);
+            //ViewModel.Bag.DyCEList.Add(defenseList);
             ViewModel.Bag.DyCEList.Add(populationList);
             ViewModel.Bag.DyCEList.Add(prosperityList);
-            //defenseList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
-            //populationList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
-            //prosperityList.Items.ToList().ForEach(i => ViewModel.Bag.DyCEList.Add(i));
 
             var test = steadingEngine.Go(55) as ResultObject;
 

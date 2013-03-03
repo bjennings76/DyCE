@@ -82,9 +82,12 @@
         						<ColumnDefinition/>
         						<ColumnDefinition Width="Auto"/>
         					</Grid.ColumnDefinitions>
-        					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center"/>
-        					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Bag.DyCEList, Source={StaticResource ViewModelDataSource}}" SelectedItem="{Binding SubEngine}" ItemTemplate="{DynamicResource EngineItemTemplate}"/>
-        					<Image Source="Icons/item_delete.png" Grid.Column="2" Width="22" Height="22" Margin="2"/>
+        					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center" VerticalAlignment="Top"/>
+        					<ContentControl Content="{Binding SubEngine}" Grid.Column="1"/>
+        					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Bag.DyCEList, Source={StaticResource ViewModelDataSource}}" SelectedItem="{Binding SubEngine}" ItemTemplate="{DynamicResource EngineItemTemplate}" Visibility="Collapsed"/>
+        					<Button Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="2" Width="22" Style="{DynamicResource ButtonClear}">
+        						<Image Source="Icons/item_delete.png" Margin="0"/>
+        					</Button>
         				</Grid>
         			</HierarchicalDataTemplate>
         			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineObject}" ItemsSource="{Binding SubEngines}">

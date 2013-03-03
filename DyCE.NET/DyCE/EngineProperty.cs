@@ -15,7 +15,7 @@ namespace DyCE
         /// <summary>
         /// Derived from SubEngine. This is only saved if the engine is non-ref. (anonymous)
         /// </summary>
-        [XmlElement("SubEngine")]
+        [XmlElement("Engine")]
         public EngineBase SubEngineSaved { get { return SubEngineActual is EngineRef ? null : SubEngineActual; } set { SubEngineActual = value; } }
 
         /// <summary>
