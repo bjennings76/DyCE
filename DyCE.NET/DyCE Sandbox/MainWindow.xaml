@@ -82,8 +82,8 @@
         						<ColumnDefinition/>
         						<ColumnDefinition Width="Auto"/>
         					</Grid.ColumnDefinitions>
-        					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center" VerticalAlignment="Top"/>
-        					<ContentControl Content="{Binding SubEngine}" Grid.Column="1"/>
+        					<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="2" HorizontalContentAlignment="Right" MinWidth="50" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+        					<TextBlock Text="{Binding SubEngine}" Grid.Column="1" VerticalAlignment="Center"/>
         					<ComboBox Grid.Column="1" MinWidth="150" Margin="2" ItemsSource="{Binding Bag.DyCEList, Source={StaticResource ViewModelDataSource}}" SelectedItem="{Binding SubEngine}" ItemTemplate="{DynamicResource EngineItemTemplate}" Visibility="Collapsed"/>
         					<Button Grid.ColumnSpan="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="2" Width="22" Style="{DynamicResource ButtonClear}">
         						<Image Source="Icons/item_delete.png" Margin="0"/>
@@ -110,7 +110,7 @@
         							<RowDefinition/>
         						</Grid.RowDefinitions>
         						<TextBlock Text="Properties:" Margin="2"/>
-        						<ItemsControl Grid.Row="1" MinWidth="150" ItemsSource="{Binding Properties}" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2"/>
+        						<TreeView Grid.Row="1" MinWidth="150" ItemsSource="{Binding Properties}" Grid.IsSharedSizeScope="True" Grid.ColumnSpan="2"/>
         					</Grid>
         					<Button Content="Add Property" Margin="4" Command="{Binding CreatePropertyCommand, Mode=OneWay}"/>
         				</StackPanel>
@@ -122,17 +122,10 @@
         							<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
         							<ColumnDefinition/>
         						</Grid.ColumnDefinitions>
-        						<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
+        						<TextBlock Text="List Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
         						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
         					</Grid>
-        					<Grid Grid.Row="1">
-        						<Grid.RowDefinitions>
-        							<RowDefinition Height="Auto"/>
-        							<RowDefinition/>
-        						</Grid.RowDefinitions>
-        						<TextBlock Text="Engine List:" Margin="2"/>
-        						<ItemsControl Grid.Row="1" MinWidth="150" Margin="2" ItemsSource="{Binding Items}" MinHeight="50"/>
-        					</Grid>
+        					<Button Content="Add Engine" Margin="2" Command="{Binding AddItemCommand, Mode=OneWay}"/>
         				</StackPanel>
         			</HierarchicalDataTemplate>
         		</ContentControl.Resources>

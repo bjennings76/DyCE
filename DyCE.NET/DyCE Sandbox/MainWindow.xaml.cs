@@ -27,7 +27,7 @@ namespace DyCE_Sandbox
             // Get the 'ViewModel' resource
             _vm = (ViewModel)Application.Current.Resources["ViewModelDataSource"];
 
-            var prosperityList = new EngineList("Prosperity Options", new[]{"Dirt", "Poor", "Moderate", "Wealthy", "Rich"});
+            var prosperityList = new EngineList("Prosperity Options", new object[]{"Dirt", "Poor", new[]{"Moderate", "Extra Moderate", "Super Moderate"}, "Wealthy", "Rich"});
             var prosperityProperty = new EngineProperty("Prosperity", prosperityList);
 
             var populationList = new EngineList("Population Options", new[]{"Exodus", "Shrinking", "Steady", "Growing", "Booming"});
