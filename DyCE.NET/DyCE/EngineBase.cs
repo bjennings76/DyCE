@@ -70,6 +70,7 @@ namespace DyCE
             {
                 _selectedSubEngine = value;
                 RaisePropertyChanged(() => SelectedSubEngine);
+                RaisePropertyChanged(() => SelectedSubEngine.SelectedSubEngine);
             }
         }
 

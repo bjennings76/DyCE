@@ -94,7 +94,7 @@
         							<ColumnDefinition/>
         						</Grid.ColumnDefinitions>
         						<TextBlock Text="Name:" Margin="2"/>
-        						<TextBox Text="{Binding Text}" MinWidth="50" Margin="2" Grid.Column="1"/>
+        						<TextBox Text="{Binding Name}" MinWidth="50" Margin="2" Grid.Column="1"/>
         					</Grid>
         					<TextBlock Text="Text Template:" Margin="2"/>
         					<TextBox Text="{Binding Text}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
@@ -136,12 +136,27 @@
         			</HierarchicalDataTemplate>
         			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineObject}" ItemsSource="{Binding SubEngines}">
         				<StackPanel Grid.IsSharedSizeScope="True"  FocusManager.FocusedElement="{Binding ElementName=txt_Name}">
+        					<VisualStateManager.VisualStateGroups>
+        						<VisualStateGroup x:Name="SubEngineStates">
+        							<VisualStateGroup.Transitions>
+        								<VisualTransition GeneratedDuration="0:0:0.2"/>
+        							</VisualStateGroup.Transitions>
+        							<VisualState x:Name="SubEngineUnselected"/>
+        							<VisualState x:Name="SubEngineSelected">
+        								<Storyboard>
+        									<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="pnl_SubEngineSelected">
+        										<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+        									</DoubleAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        						</VisualStateGroup>
+        					</VisualStateManager.VisualStateGroups>
         					<Grid Visibility="Visible" Margin="2">
         						<Grid.ColumnDefinitions>
         							<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
         							<ColumnDefinition/>
         						</Grid.ColumnDefinitions>
-        						<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
+        						<TextBlock Text="Object Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
         						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
         					</Grid>
         					<ToolBar Margin="5">
@@ -160,11 +175,22 @@
         					</ToolBar>
         					<TextBlock Text="Properties:" Margin="2"/>
         					<ListBox ItemsSource="{Binding Properties}" SelectedItem="{Binding SelectedSubEngine}" HorizontalContentAlignment="Stretch" Template="{DynamicResource NoWheelScrollListBoxTemplate}"/>
-        					<Grid Margin="2">
+        					<Grid x:Name="pnl_SubEngineSelected" Margin="2">
+        						<i:Interaction.Behaviors>
+        							<ei:DataStateBehavior Binding="{Binding Text, ElementName=textBlock}" Value="" TrueState="SubEngineUnselected" FalseState="SubEngineSelected"/>
+        						</i:Interaction.Behaviors>
+        						<Grid.LayoutTransform>
+        							<TransformGroup>
+        								<ScaleTransform ScaleY="0"/>
+        								<SkewTransform/>
+        								<RotateTransform/>
+        								<TranslateTransform/>
+        							</TransformGroup>
+        						</Grid.LayoutTransform>
         						<ed:BlockArrow Fill="#FF727272" HorizontalAlignment="Center" Height="34" Orientation="Down" VerticalAlignment="Center" Width="20"/>
         						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
         							<TextBlock Text="Selected Engine: " Foreground="White"/>
-        							<TextBlock Text="{Binding SelectedSubEngine.SubEngine.DisplayName, Mode=OneWay}" Foreground="White"/>
+        							<TextBlock x:Name="textBlock" Text="{Binding SelectedSubEngine.SubEngine.DisplayName, Mode=OneWay}" Foreground="White"/>
         						</StackPanel>
         					</Grid>
         					<ContentControl Content="{Binding SelectedSubEngine.SubEngine}"/>
@@ -172,6 +198,21 @@
         			</HierarchicalDataTemplate>
         			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineList}" ItemsSource="{Binding SubEngines}">
         				<StackPanel Grid.IsSharedSizeScope="True" FocusManager.FocusedElement="{Binding ElementName=txt_Name}">
+        					<VisualStateManager.VisualStateGroups>
+        						<VisualStateGroup x:Name="SubEngineStates">
+        							<VisualStateGroup.Transitions>
+        								<VisualTransition GeneratedDuration="0:0:0.2"/>
+        							</VisualStateGroup.Transitions>
+        							<VisualState x:Name="SubEngineUnselected"/>
+        							<VisualState x:Name="SubEngineSelected">
+        								<Storyboard>
+        									<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="pnl_SubEngineSelected">
+        										<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+        									</DoubleAnimationUsingKeyFrames>
+        								</Storyboard>
+        							</VisualState>
+        						</VisualStateGroup>
+        					</VisualStateManager.VisualStateGroups>
         					<Grid Visibility="Visible">
         						<Grid.ColumnDefinitions>
         							<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
@@ -195,7 +236,24 @@
         						</Button>
         					</ToolBar>
         					<ListBox ItemsSource="{Binding Items}" ItemTemplate="{DynamicResource DeletableEngineItemTemplate}" SelectedItem="{Binding SelectedSubEngine}" HorizontalContentAlignment="Stretch" Template="{DynamicResource NoWheelScrollListBoxTemplate}"/>
-        					<TextBlock Margin="2" Text="Selected Engine:"/>
+        					<Grid x:Name="pnl_SubEngineSelected" Margin="2">
+        						<i:Interaction.Behaviors>
+        							<ei:DataStateBehavior Binding="{Binding Text, ElementName=textBlock}" Value="" TrueState="SubEngineUnselected" FalseState="SubEngineSelected"/>
+        						</i:Interaction.Behaviors>
+        						<Grid.LayoutTransform>
+        							<TransformGroup>
+        								<ScaleTransform ScaleY="0"/>
+        								<SkewTransform/>
+        								<RotateTransform/>
+        								<TranslateTransform/>
+        							</TransformGroup>
+        						</Grid.LayoutTransform>
+        						<ed:BlockArrow HorizontalAlignment="Center" Height="34" Orientation="Down" VerticalAlignment="Center" Width="20" Fill="#FF727272"/>
+        						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
+        							<TextBlock Text="Selected Engine: " Foreground="White"/>
+        							<TextBlock x:Name="textBlock" Text="{Binding SelectedSubEngine.DisplayName, Mode=OneWay}" Foreground="White"/>
+        						</StackPanel>
+        					</Grid>
         					<ContentControl Content="{Binding SelectedSubEngine}"/>
         				</StackPanel>
         			</HierarchicalDataTemplate>
