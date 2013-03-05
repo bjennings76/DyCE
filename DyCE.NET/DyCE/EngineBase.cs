@@ -38,10 +38,40 @@ namespace DyCE
                 SetID(value);
                 RaisePropertyChanged(() => Name);
                 RaisePropertyChanged(() => ID);
+                RaisePropertyChanged(() => DisplayName);
+            }
+        }
+
+        public string DisplayName { get { return ToString(); } }
+
+        private string _resultTemplate;
+
+        /// <summary>
+        /// This template text will be used to construct the result object's 'ToString' function using StringTemplate.
+        /// </summary>
+        public string ResultTemplate
+        {
+            get { return _resultTemplate; } 
+            set
+            {
+                _resultTemplate = value;
+                RaisePropertyChanged(() => ResultTemplate);
             }
         }
 
         public abstract IEnumerable<EngineBase> SubEngines { get; }
+
+        private EngineBase _selectedSubEngine;
+        [XmlIgnore]
+        public EngineBase SelectedSubEngine
+        {
+            get { return _selectedSubEngine; } 
+            set
+            {
+                _selectedSubEngine = value;
+                RaisePropertyChanged(() => SelectedSubEngine);
+            }
+        }
 
         [XmlAttribute, DefaultValue(false)]
         public bool IsSelected { get; set; }

@@ -27,7 +27,7 @@ namespace DyCE_Sandbox
             // Get the 'ViewModel' resource
             _vm = (ViewModel)Application.Current.Resources["ViewModelDataSource"];
 
-            var prosperityList = new EngineList("Prosperity Options", new object[]{"Dirt", "Poor", new[]{"Moderate", "Extra Moderate", "Super Moderate"}, "Wealthy", "Rich"});
+            var prosperityList = new EngineList("Prosperity Options", new object[]{"Dirt", "Poor", "Moderate", "Wealthy", "Rich"});
             var prosperityProperty = new EngineProperty("Prosperity", prosperityList);
 
             var populationList = new EngineList("Population Options", new[]{"Exodus", "Shrinking", "Steady", "Growing", "Booming"});
@@ -36,9 +36,7 @@ namespace DyCE_Sandbox
             var defenseList = new EngineList(new[]{"None", "Militia", "Watch", "Guard", "Garrison", "Battalion", "Legion"});
             var defenseProperty = new EngineProperty("Defenses", defenseList);
 
-            var testProperty = new EngineProperty("Test", new EngineText("Yup"));
-
-            var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty, testProperty);
+            var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty);
 
             ViewModel.Bag.DyCEList.Add(steadingEngine);
             //ViewModel.Bag.DyCEList.Add(defenseList);
