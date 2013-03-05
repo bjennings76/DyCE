@@ -77,6 +77,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLightLibs.4.1.27.0\lib\net40\GalaSoft.MvvmLight.WPF4.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Drawing" />
+    <Reference Include="Microsoft.Expression.Effects" />
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Blend.Interctivity.WPF.v4.0.1.0.2\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -156,6 +158,7 @@
   <ItemGroup>
     <Resource Include="Icons\control_pause.png" />
     <Resource Include="Icons\control_play.png" />
+    <Resource Include="Icons\edit.png" />
     <Resource Include="Icons\item_add.png" />
     <Resource Include="Icons\item_copy.png" />
     <Resource Include="Icons\item_delete.png" />

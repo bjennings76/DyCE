@@ -18,25 +18,21 @@ namespace DyCE
             : base(name)
         {
             _properties = new ObservableCollection<EngineProperty>(properties);
-            CreatePropertyCommand = new RelayCommand(CreateProperty);
-            DeletePropertyCommand = new RelayCommand(DeleteProperty, CanDeleteProperty);
         }
 
         public EngineObject() { }
 
-        [XmlIgnore]
-        public RelayCommand CreatePropertyCommand { get; private set; }
-        public void CreateProperty() { Properties.Add(new EngineProperty("New Property")); }
-
-        [XmlIgnore]
-        public RelayCommand DeletePropertyCommand { get; private set; }
-        public bool CanDeleteProperty() { return Properties.Any(p => p.IsSelected); }
-        public void DeleteProperty()
+        public RelayCommand CreatePropertyCommand { get { return new RelayCommand(CreateProperty); } }
+        public void CreateProperty()
         {
-            var selectedProperties = Properties.Where(p => p.IsSelected).ToList();
-            if (selectedProperties.Count > 0)
-                selectedProperties.ForEach(p => Properties.Remove(p));
+            var newProperty = new EngineProperty("New Property");
+            Properties.Add(newProperty);
+            newProperty.IsSelected = true;
+            SelectedSubEngine = newProperty;
         }
+
+        public RelayCommand<EngineProperty> DeleteCommand { get { return new RelayCommand<EngineProperty>(DeleteProperty); } }
+        public void DeleteProperty(EngineProperty engine) { Properties.Remove(engine); }
 
         public EngineBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }
 

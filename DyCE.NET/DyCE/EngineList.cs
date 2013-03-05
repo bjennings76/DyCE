@@ -83,6 +83,9 @@ namespace DyCE
 
         public EngineList() { }
 
+        public RelayCommand<EngineBase> DeleteCommand { get { return new RelayCommand<EngineBase>(DeleteProperty); } }
+        public void DeleteProperty(EngineBase engine) { Items.Remove(engine); }
+
         public override ResultBase Go(int seed)
         {
             var rand = new Random(seed);

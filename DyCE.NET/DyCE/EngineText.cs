@@ -14,6 +14,7 @@ namespace DyCE
                 _text = value;
                 RaisePropertyChanged(() => Text);
                 RaisePropertyChanged(() => Name);
+                RaisePropertyChanged(() => DisplayName);
             }
         }
 
