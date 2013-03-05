@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Serialization;
@@ -33,6 +34,27 @@ namespace DyCE
 
         public RelayCommand<EngineProperty> DeleteCommand { get { return new RelayCommand<EngineProperty>(DeleteProperty); } }
         public void DeleteProperty(EngineProperty engine) { Properties.Remove(engine); }
+
+        public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(AddEngineObject); } }
+        public void AddEngineObject() { Add(new EngineObject("New Object Engine")); }
+
+        public RelayCommand AddEngineListCommand { get { return new RelayCommand(AddEngineList); } }
+        public void AddEngineList() { Add(new EngineList("New List Engine")); }
+
+        public RelayCommand AddEngineTextCommand { get { return new RelayCommand(AddEngineText); } }
+        public void AddEngineText() { Add(new EngineText("New Text Engine")); }
+
+        private void Add(object item)
+        {
+            if (item is EngineBase)
+                Properties.Add(new EngineProperty("New Property", item as EngineBase));
+            else if (item is string)
+                Properties.Add(new EngineProperty("New Property", item as string));
+            else if (item is IEnumerable<object>)
+                Properties.Add(new EngineProperty("New Property", new EngineList(item as IEnumerable<object>)));
+            else
+                throw new Exception("Unknown item type: " + item);
+        }
 
         public EngineBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }
 

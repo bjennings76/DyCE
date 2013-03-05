@@ -37,26 +37,44 @@
         </Grid.ColumnDefinitions>
         <Grid Margin="0,0,5,0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TreeView ItemsSource="{Binding DyCEList}">
-                <i:Interaction.Behaviors>
-                    <local:BindableSelectedItemBehavior SelectedItem="{Binding SelectedEngine, Mode=TwoWay, Source={StaticResource ViewModelDataSource}}"/>
-                </i:Interaction.Behaviors>
-            </TreeView>
-            <StackPanel Grid.Row="1" Margin="2">
-                <Button Content="Add Object Engine" Margin="2" Command="{Binding CreateEngineObjectCommand, Mode=OneWay}"/>
-                <Button Content="Add List Engine" Margin="2" Command="{Binding CreateEngineListCommand, Mode=OneWay}"/>
-                <Button Content="Add Text Engine" Margin="2" Command="{Binding CreateEngineTextCommand, Mode=OneWay}"/>
-                <Button Content="Save DyCE Bag" Margin="2" Command="{Binding SaveCommand, Mode=OneWay}"/>
-            </StackPanel>
+            <ToolBar Margin="5">
+        		<ToolBar.Effect>
+        			<DropShadowEffect ShadowDepth="3" Opacity="0.5" Direction="270"/>
+        		</ToolBar.Effect>
+        		<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
+        			<Image Source="Icons/object.png" Width="24" Height="24"/>
+        		</Button>
+        		<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineListCommand, Mode=OneWay}" ToolTip="Add New List Engine">
+        			<Image Source="Icons/list.png" Width="24" Height="24"/>
+        		</Button>
+        		<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineTextCommand, Mode=OneWay}" ToolTip="Add New Text Engine">
+        			<Image Source="Icons/text.png" Width="24" Height="24"/>
+        		</Button>
+        	</ToolBar>
+        	<TreeView ItemsSource="{Binding DyCEList}" Grid.Row="1">
+        		<i:Interaction.Behaviors>
+        			<local:BindableSelectedItemBehavior SelectedItem="{Binding SelectedEngine, Mode=TwoWay, Source={StaticResource ViewModelDataSource}}"/>
+        		</i:Interaction.Behaviors>
+        	</TreeView>
+        	<StackPanel Grid.Row="2" Margin="2">
+        		<Button Content="Save DyCE Bag" Margin="2" Command="{Binding SaveCommand, Mode=OneWay}"/>
+        	</StackPanel>
         </Grid>
         <GridSplitter Width="5"/>
         <ScrollViewer Grid.Column="1" Margin="0,0,5,0" VerticalScrollBarVisibility="Auto" DataContext="{Binding Source={StaticResource ViewModelDataSource}}">
-        	<ContentControl x:Name="control_EngineEditor" Content="{Binding SelectedEngine}" Grid.IsSharedSizeScope="True" DataContext="{Binding Mode=OneWay}">
+        	<ScrollViewer.Background>
+        		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+        			<GradientStop Color="#FF4B4B4B" Offset="0"/>
+        			<GradientStop Color="#FFC3C3C3" Offset="1"/>
+        		</LinearGradientBrush>
+        	</ScrollViewer.Background>
+        	<ContentControl x:Name="control_EngineEditor" Content="{Binding SelectedEngine}" Grid.IsSharedSizeScope="True" DataContext="{Binding Mode=OneWay}" Foreground="White" Margin="5">
         		<ContentControl.Resources>
-        			<HierarchicalDataTemplate  x:Key="EngineItemTemplate" ItemsSource="{Binding SubEngines}">
+        			<HierarchicalDataTemplate  x:Key="DeletableEngineItemTemplate" ItemsSource="{Binding SubEngines}">
         				<Grid>
         					<Grid.ColumnDefinitions>
         						<ColumnDefinition/>
@@ -69,24 +87,35 @@
         				</Grid>
         			</HierarchicalDataTemplate>
         			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineText}" ItemsSource="{Binding SubEngines}">
-        				<Grid>
-        					<Grid.RowDefinitions>
-        						<RowDefinition Height="Auto"/>
-        						<RowDefinition/>
-        					</Grid.RowDefinitions>
-        					<StackPanel>
-        						<Grid>
-        							<Grid.ColumnDefinitions>
-        								<ColumnDefinition Width="Auto"/>
-        								<ColumnDefinition/>
-        							</Grid.ColumnDefinitions>
-        							<TextBlock Text="Name:" Margin="2"/>
-        							<TextBox Text="{Binding Text}" MinWidth="50" Margin="2" Grid.Column="1"/>
-        						</Grid>
-        						<TextBlock Text="Text Template:" Margin="2"/>
-        						<TextBox Text="{Binding Text}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
-        					</StackPanel>
-        				</Grid>
+        				<StackPanel>
+        					<Grid>
+        						<Grid.ColumnDefinitions>
+        							<ColumnDefinition Width="Auto"/>
+        							<ColumnDefinition/>
+        						</Grid.ColumnDefinitions>
+        						<TextBlock Text="Name:" Margin="2"/>
+        						<TextBox Text="{Binding Text}" MinWidth="50" Margin="2" Grid.Column="1"/>
+        					</Grid>
+        					<TextBlock Text="Text Template:" Margin="2"/>
+        					<TextBox Text="{Binding Text}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
+        					<ToolBar Margin="5">
+        						<ToolBar.Effect>
+        							<DropShadowEffect ShadowDepth="3" Opacity="0.5"/>
+        						</ToolBar.Effect>
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
+        							<Image Source="Icons/object.png" Width="24" Height="24"/>
+        						</Button>
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineListCommand, Mode=OneWay}" ToolTip="Add New List Engine">
+        							<Image Source="Icons/list.png" Width="24" Height="24"/>
+        						</Button>
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineTextCommand, Mode=OneWay}" ToolTip="Add New Text Engine">
+        							<Image Source="Icons/text.png" Width="24" Height="24"/>
+        						</Button>
+        						<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine">
+        							<Image Height="24" Source="Icons/reference.png" Width="24"/>
+        						</Button>
+        					</ToolBar>
+        				</StackPanel>
         			</HierarchicalDataTemplate>
         			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineProperty}" ItemsSource="{Binding SubEngines}">
         				<Grid VerticalAlignment="Top">
@@ -115,20 +144,29 @@
         						<TextBlock Text="Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
         						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
         					</Grid>
-        					<Grid Grid.Row="1" Margin="2">
-        						<Grid.ColumnDefinitions>
-        							<ColumnDefinition Width="Auto" SharedSizeGroup="Label"/>
-        							<ColumnDefinition/>
-        						</Grid.ColumnDefinitions>
-        						<Grid.RowDefinitions>
-        							<RowDefinition Height="Auto"/>
-        							<RowDefinition/>
-        						</Grid.RowDefinitions>
-        						<TextBlock Text="Properties:" Margin="2"/>
-        						<ListBox Grid.Row="1" ItemsSource="{Binding Properties}" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SelectedSubEngine}"/>
+        					<ToolBar Margin="5">
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
+        							<Image Source="Icons/object.png" Width="24" Height="24"/>
+        						</Button>
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineListCommand, Mode=OneWay}" ToolTip="Add New List Engine">
+        							<Image Source="Icons/list.png" Width="24" Height="24"/>
+        						</Button>
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineTextCommand, Mode=OneWay}" ToolTip="Add New Text Engine">
+        							<Image Source="Icons/text.png" Width="24" Height="24"/>
+        						</Button>
+        						<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine">
+        							<Image Height="24" Source="Icons/reference.png" Width="24"/>
+        						</Button>
+        					</ToolBar>
+        					<TextBlock Text="Properties:" Margin="2"/>
+        					<ListBox ItemsSource="{Binding Properties}" SelectedItem="{Binding SelectedSubEngine}" HorizontalContentAlignment="Stretch" Template="{DynamicResource NoWheelScrollListBoxTemplate}"/>
+        					<Grid Margin="2">
+        						<ed:BlockArrow Fill="#FF727272" HorizontalAlignment="Center" Height="34" Orientation="Down" VerticalAlignment="Center" Width="20"/>
+        						<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
+        							<TextBlock Text="Selected Engine: " Foreground="White"/>
+        							<TextBlock Text="{Binding SelectedSubEngine.SubEngine.DisplayName, Mode=OneWay}" Foreground="White"/>
+        						</StackPanel>
         					</Grid>
-        					<Button Content="Add Property" Margin="2" Command="{Binding CreatePropertyCommand, Mode=OneWay}"/>
-        					<TextBlock Margin="2" Text="Selected Engine:"/>
         					<ContentControl Content="{Binding SelectedSubEngine.SubEngine}"/>
         				</StackPanel>
         			</HierarchicalDataTemplate>
@@ -142,13 +180,29 @@
         						<TextBlock Text="List Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
         						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
         					</Grid>
-        					<ListBox ItemsSource="{Binding Items}" ItemTemplate="{DynamicResource EngineItemTemplate}" SelectedItem="{Binding SelectedSubEngine}" HorizontalContentAlignment="Stretch"/>
-        					<Button Content="Add Item" Margin="2" Command="{Binding AddItemCommand, Mode=OneWay}"/>
+        					<ToolBar Margin="5">
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
+        							<Image Source="Icons/object.png" Width="24" Height="24"/>
+        						</Button>
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineListCommand, Mode=OneWay}" ToolTip="Add New List Engine">
+        							<Image Source="Icons/list.png" Width="24" Height="24"/>
+        						</Button>
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineTextCommand, Mode=OneWay}" ToolTip="Add New Text Engine">
+        							<Image Source="Icons/text.png" Width="24" Height="24"/>
+        						</Button>
+        						<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine">
+        							<Image Height="24" Source="Icons/reference.png" Width="24"/>
+        						</Button>
+        					</ToolBar>
+        					<ListBox ItemsSource="{Binding Items}" ItemTemplate="{DynamicResource DeletableEngineItemTemplate}" SelectedItem="{Binding SelectedSubEngine}" HorizontalContentAlignment="Stretch" Template="{DynamicResource NoWheelScrollListBoxTemplate}"/>
         					<TextBlock Margin="2" Text="Selected Engine:"/>
         					<ContentControl Content="{Binding SelectedSubEngine}"/>
         				</StackPanel>
         			</HierarchicalDataTemplate>
         		</ContentControl.Resources>
+        		<ContentControl.Effect>
+        			<DropShadowEffect Direction="270" ShadowDepth="3" Opacity="0.6"/>
+        		</ContentControl.Effect>
         	</ContentControl>
         </ScrollViewer>
         <GridSplitter Width="5" Grid.Column="1"/>
@@ -167,15 +221,15 @@
 					</Style>
 				</TreeView.ItemContainerStyle> -->
             </TreeView>
-            <Grid Margin="2">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Slider Grid.Column="1" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5" VerticalAlignment="Center"/>
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Speed:" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                <Button x:Name="btn_Pause" Grid.Column="2" Command="{Binding PausePreviewCommand, Mode=OneWay}" Style="{DynamicResource ButtonClear}">
+                <Slider Grid.Column="1" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5" VerticalAlignment="Center" Margin="2"/>
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Speed:" VerticalAlignment="Center" Margin="2"/>
+                <Button x:Name="btn_Pause" Grid.Column="2" Command="{Binding PausePreviewCommand, Mode=OneWay}" Style="{DynamicResource ButtonClear}" Margin="2">
                 	<Grid Height="22" Width="22">
                 		<Image x:Name="image1" Source="Icons/control_pause.png"/>
                 		<Image x:Name="image" Source="Icons/control_play.png" Opacity="0"/>

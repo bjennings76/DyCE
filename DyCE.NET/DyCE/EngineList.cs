@@ -50,7 +50,6 @@ namespace DyCE
 
         private const bool _canAddItem = true;
 
-        private void AddItem() { Add("Test"); }
         private void Add(object item)
         {
             if (item is EngineBase)
@@ -62,9 +61,6 @@ namespace DyCE
             else
                 throw new Exception("Unknown item type: " + item);
         }
-
-        RelayCommand _addItemCommand;
-        public ICommand AddItemCommand { get { return _addItemCommand ?? (_addItemCommand = new RelayCommand(AddItem, () => _canAddItem)); } }
 
         #endregion
 
@@ -82,6 +78,17 @@ namespace DyCE
         public EngineList(string name):base(name) { }
 
         public EngineList() { }
+
+
+        public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(AddEngineObject); } }
+        public void AddEngineObject() { Add(new EngineObject("New Object Engine")); }
+
+        public RelayCommand AddEngineListCommand { get { return new RelayCommand(AddEngineList); } }
+        public void AddEngineList() { Add(new EngineList("New List Engine")); }
+
+        public RelayCommand AddEngineTextCommand { get { return new RelayCommand(AddEngineText); } }
+        public void AddEngineText() { Add(new EngineText("New Text Engine")); }
+
 
         public RelayCommand<EngineBase> DeleteCommand { get { return new RelayCommand<EngineBase>(DeleteProperty); } }
         public void DeleteProperty(EngineBase engine) { Items.Remove(engine); }
@@ -114,14 +121,6 @@ namespace DyCE
             _shuffleIndex = 0;
             _shuffledIndexes.Shuffle(rand);
         }
-
-        public void AddItems(params string[] itemNames)
-        {
-            foreach (var item in itemNames)
-                Items.Add(new EngineText(item));
-        }
-
-        public void AddWithDetail(string name, string desc) { Items.Add(new EngineObject("TextWithDetail", new EngineProperty("Text", name), new EngineProperty("TextDetail", desc))); }
 
         public override string ToString()
         {

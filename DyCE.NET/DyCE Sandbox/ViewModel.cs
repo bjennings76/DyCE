@@ -15,7 +15,7 @@ namespace DyCE_Sandbox
     /// </summary>
     public class ViewModel : ViewModelBase
     {
-        public string WindowName { get { return SelectedEngine == null ? "DyCE Editor" : "DyCE Editor: " + SelectedEngine.Name; } }
+        public string WindowName { get { return SelectedEngine == null ? "DyCE Editor" : "DyCE Editor: " + SelectedEngine.DisplayName; } }
 
         public static DyCEBag Bag { get { return DyCEBag.Instance; } }
 

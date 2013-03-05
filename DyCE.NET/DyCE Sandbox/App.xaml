@@ -4,8 +4,23 @@
              xmlns:DyCE="clr-namespace:DyCE;assembly=DyCE" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:DyCE_Sandbox" mc:Ignorable="d" x:Class="DyCE_Sandbox.App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    	<local:ViewModel x:Key="ViewModelDataSource" d:IsDataSource="True"/>
+        <ControlTemplate x:Key="NoWheelScrollListBoxTemplate" TargetType="ListBox">
+            <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="1,1,1,1" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" Name="Bd" SnapsToDevicePixels="True">
+                <!-- This is the new control -->
+                <local:NoWheelScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False">
+                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                </local:NoWheelScrollViewer>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="UIElement.IsEnabled" Value="False">
+                    <Setter TargetName="Bd" Property="Panel.Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                </Trigger>
+                <Trigger Property="ItemsControl.IsGrouping" Value="True">
+                    <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <local:ViewModel x:Key="ViewModelDataSource" d:IsDataSource="True"/>
     	<Style x:Key="FocusVisual">
     		<Setter Property="Control.Template">
     			<Setter.Value>

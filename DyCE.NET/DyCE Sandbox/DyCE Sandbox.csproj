@@ -103,6 +103,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="NoWheelScrollViewer.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -154,6 +155,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Application.ico" />
+    <Resource Include="Icons\list.png" />
+    <Resource Include="Icons\object.png" />
+    <Resource Include="Icons\reference.png" />
+    <Resource Include="Icons\text.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\control_pause.png" />

@@ -59,26 +59,19 @@ namespace DyCE
 		public DyCEBag()
 		{
 		    Creator = Environment.UserName + "@" + Environment.UserDomainName;
-            CreateEngineObjectCommand = new RelayCommand(CreateEngineObject);
-            CreateEngineListCommand = new RelayCommand(CreateEngineList);
-            CreateEngineTextCommand = new RelayCommand(CreateEngineText);
-            SaveCommand = new RelayCommand(Save);
         }
 
-        [XmlIgnore]
-        public RelayCommand CreateEngineObjectCommand { get; private set; }
-        public void CreateEngineObject() { DyCEList.Add(new EngineObject("New Object Engine")); }
+        public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(AddEngineObject);} }
+        public void AddEngineObject() { DyCEList.Add(new EngineObject("New Object Engine")); }
+
+        public RelayCommand AddEngineListCommand { get{ return new RelayCommand(AddEngineList);} }
+        public void AddEngineList() { DyCEList.Add(new EngineList("New List Engine")); }
+
+        public RelayCommand AddEngineTextCommand { get { return new RelayCommand(AddEngineText); } }
+        public void AddEngineText() { DyCEList.Add(new EngineText("New Text Engine")); }
 
         [XmlIgnore]
-        public RelayCommand CreateEngineListCommand { get; private set; }
-        public void CreateEngineList() { DyCEList.Add(new EngineList("New List Engine")); }
-
-        [XmlIgnore]
-        public RelayCommand CreateEngineTextCommand { get; private set; }
-        public void CreateEngineText() { DyCEList.Add(new EngineText("New Text Engine")); }
-
-        [XmlIgnore]
-        public RelayCommand SaveCommand { get; private set; }
+        public RelayCommand SaveCommand { get { return new RelayCommand(Save); } }
         public void Save()
         {
             Utilities.SaveToXML(File, this);
