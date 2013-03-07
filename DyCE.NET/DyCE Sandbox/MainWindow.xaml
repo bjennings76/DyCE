@@ -235,7 +235,7 @@
         							<Image Height="24" Source="Icons/reference.png" Width="24"/>
         						</Button>
         					</ToolBar>
-        					<ListBox ItemsSource="{Binding Items}" ItemTemplate="{DynamicResource DeletableEngineItemTemplate}" SelectedItem="{Binding SelectedSubEngine}" HorizontalContentAlignment="Stretch" Template="{DynamicResource NoWheelScrollListBoxTemplate}"/>
+        					<ListBox ItemsSource="{Binding Items}" ItemTemplate="{DynamicResource DeletableEngineItemTemplate}" SelectedItem="{Binding SelectedSubEngine}" HorizontalContentAlignment="Stretch" Template="{DynamicResource NoWheelScrollListBoxTemplate}" MaxHeight="400"/>
         					<Grid x:Name="pnl_SubEngineSelected" Margin="2">
         						<i:Interaction.Behaviors>
         							<ei:DataStateBehavior Binding="{Binding Text, ElementName=textBlock}" Value="" TrueState="SubEngineUnselected" FalseState="SubEngineSelected"/>

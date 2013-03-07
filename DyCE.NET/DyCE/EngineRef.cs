@@ -16,14 +16,14 @@ namespace DyCE
             {
                 _refID = value;
                 RaisePropertyChanged(() => RefID);
-                TrackEngineChanges();
+                //TrackEngineChanges();
                 RaisePropertyChanged(() => SubEngine);
                 RaisePropertyChanged(() => SubEngines);
                 RaiseEngineChanged();
             }
         }
 
-        public EngineBase SubEngine { get { return DyCEBag.Instance[RefID]; } }
+        public EngineBase SubEngine { get { return DB.Instance["General"][RefID]; } }
 
         public override IEnumerable<EngineBase> SubEngines { get { return new[] {SubEngine}; } }
 
@@ -43,12 +43,12 @@ namespace DyCE
                 {
                     SubEngine.SubscribeToChange(() => SubEngine.ID, IDUpdated);
                     _trackingChanges = true;
-                    DyCEBag.Instance.DyCEList.CollectionChanged -= DyCEListOnCollectionChanged;
+                    DB.Instance["General"].DyCEList.CollectionChanged -= DyCEListOnCollectionChanged;
                 }
             }
             else
             {
-                DyCEBag.Instance.DyCEList.CollectionChanged += DyCEListOnCollectionChanged;
+                DB.Instance["General"].DyCEList.CollectionChanged += DyCEListOnCollectionChanged;
             }
         }
 
@@ -57,7 +57,7 @@ namespace DyCE
             if (SubEngine != null)
             {
                 TrackEngineChanges();
-                DyCEBag.Instance.DyCEList.CollectionChanged -= DyCEListOnCollectionChanged;
+                DB.Instance["General"].DyCEList.CollectionChanged -= DyCEListOnCollectionChanged;
             }
         }
 

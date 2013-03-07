@@ -27,23 +27,25 @@ namespace DyCE_Sandbox
             // Get the 'ViewModel' resource
             _vm = (ViewModel)Application.Current.Resources["ViewModelDataSource"];
 
-            var prosperityList = new EngineList("Prosperity Options", new object[]{"Dirt", "Poor", "Moderate", "Wealthy", "Rich"});
-            var prosperityProperty = new EngineProperty("Prosperity", prosperityList);
+            //var prosperityList = new EngineList("Prosperity Options", new object[]{"Dirt", "Poor", "Moderate", "Wealthy", "Rich"});
+            //var prosperityProperty = new EngineProperty("Prosperity", prosperityList);
 
-            var populationList = new EngineList("Population Options", new[]{"Exodus", "Shrinking", "Steady", "Growing", "Booming"});
-            var populationProperty = new EngineProperty("Population", populationList);
+            //var populationList = new EngineList("Population Options", new[]{"Exodus", "Shrinking", "Steady", "Growing", "Booming"});
+            //var populationProperty = new EngineProperty("Population", populationList);
 
-            var defenseList = new EngineList(new[]{"None", "Militia", "Watch", "Guard", "Garrison", "Battalion", "Legion"});
-            var defenseProperty = new EngineProperty("Defenses", defenseList);
+            //var defenseList = new EngineList(new[]{"None", "Militia", "Watch", "Guard", "Garrison", "Battalion", "Legion"});
+            //var defenseProperty = new EngineProperty("Defenses", defenseList);
 
-            var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty);
+            //var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty);
 
-            ViewModel.Bag.DyCEList.Add(steadingEngine);
-            //ViewModel.Bag.DyCEList.Add(defenseList);
-            ViewModel.Bag.DyCEList.Add(populationList);
-            ViewModel.Bag.DyCEList.Add(prosperityList);
+            //ViewModel.Bag.DyCEList.Add(steadingEngine);
+            ////ViewModel.Bag.DyCEList.Add(defenseList);
+            //ViewModel.Bag.DyCEList.Add(populationList);
+            //ViewModel.Bag.DyCEList.Add(prosperityList);
 
-            var test = steadingEngine.Go(55) as ResultObject;
+            //_vm.Bag = DyCEBag.Load(new FileInfo(@"Engines\Generic.xml"));
+
+            var test = DB.Instance["General"]["Steading"].Go(55) as ResultObject;
 
             string result = test.Name + ":\r\n";
 

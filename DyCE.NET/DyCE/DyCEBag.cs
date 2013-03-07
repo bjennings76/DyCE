@@ -10,11 +10,45 @@ using GalaSoft.MvvmLight.Command;
 
 namespace DyCE
 {
+    public class DB
+    {
+        private static readonly DB _instance = new DB();
+        public static DB Instance { get { return _instance; } }
+
+        private Dictionary<string, DyCEBag> _dyCEBags;
+        public Dictionary<string, DyCEBag> DyCEBags { get { return _dyCEBags ?? (_dyCEBags = LoadDyCEBags()); } }
+
+        private bool _loading;
+
+        private Dictionary<string, DyCEBag> LoadDyCEBags()
+        {
+            _loading = true;
+            var engineDirectory = new DirectoryInfo("Engines");
+
+            if (!engineDirectory.Exists) 
+                return null;
+
+            var files = engineDirectory.GetFiles("*.xml");
+            var db = new Dictionary<string, DyCEBag>();
+
+            foreach (var file in files)
+            {
+                var engine = DyCEBag.Load(file);
+
+                if (engine == null) 
+                    continue;
+
+                db[engine.Name] = engine;
+            }
+            _loading = false;
+            return db;
+        }
+
+        public DyCEBag this[string id] { get { return _loading ? null : DyCEBags[id]; } }
+    }
+
     public class DyCEBag : ViewModelBase
     {
-        private static readonly DyCEBag _instance = new DyCEBag();
-        public static DyCEBag Instance { get { return _instance; } }
-
         private string _name = "General";
         [XmlAttribute]
         public string Name
@@ -47,13 +81,6 @@ namespace DyCE
         [XmlIgnore]
         public FileInfo File { get { return _file ?? (_file = new FileInfo(Path.Combine("Engines", Name + ".xml"))); } set { _file = value; } }
 
-        public static DyCEBag Load(FileInfo file)
-        {
-            var dyceBag = Utilities.LoadFromXML<DyCEBag>(file);
-            dyceBag.File = file;
-            return dyceBag;
-        }
-
         public EngineBase this[string id] { get { return DyCEList.FirstOrDefault(e => e.ID == id); } }
 		
 		public DyCEBag()
@@ -70,7 +97,6 @@ namespace DyCE
         public RelayCommand AddEngineTextCommand { get { return new RelayCommand(AddEngineText); } }
         public void AddEngineText() { DyCEList.Add(new EngineText("New Text Engine")); }
 
-        [XmlIgnore]
         public RelayCommand SaveCommand { get { return new RelayCommand(Save); } }
         public void Save()
         {
@@ -78,7 +104,13 @@ namespace DyCE
             Process.Start(File.FullName);
         }
 
-        public static EngineBase GetEngine(string id) { return Instance.DyCEList.FirstOrDefault(e => e.ID.Equals(id, StringComparison.OrdinalIgnoreCase)); }
+        public static DyCEBag Load(FileInfo file)
+        {
+            var dyceBag = Utilities.LoadFromXML<DyCEBag>(file);
+            dyceBag.File = file;
+            return dyceBag;
+        }
+
         public static EngineBase GetSubEngineRef(EngineBase subEngine)
         {
             if ((subEngine is EngineRef) || string.IsNullOrWhiteSpace(subEngine.ID))

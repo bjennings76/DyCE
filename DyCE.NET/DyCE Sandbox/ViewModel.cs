@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Threading;
 using DyCE;
 using GalaSoft.MvvmLight;
@@ -17,8 +19,6 @@ namespace DyCE_Sandbox
     {
         public string WindowName { get { return SelectedEngine == null ? "DyCE Editor" : "DyCE Editor: " + SelectedEngine.DisplayName; } }
 
-        public static DyCEBag Bag { get { return DyCEBag.Instance; } }
-
         private static readonly DispatcherTimer _timer = new DispatcherTimer();
 
         public double TimerDuration
@@ -28,6 +28,19 @@ namespace DyCE_Sandbox
             {
                 _timer.Interval = TimeSpan.FromSeconds(value);
                 RaisePropertyChanged(() => TimerDuration);
+            }
+        }
+
+        public IEnumerable<DyCEBag> DyCEBags { get { return DB.Instance.DyCEBags.Values; } } 
+
+        private DyCEBag _bag;
+        public DyCEBag Bag
+        {
+            get { return _bag ?? DyCEBags.FirstOrDefault(); }
+            set
+            {
+                _bag = value;
+                RaisePropertyChanged(() => Bag);
             }
         }
 
@@ -49,6 +62,7 @@ namespace DyCE_Sandbox
         }
 
         private bool _paused;
+
         public bool Paused
         {
             get { return _paused; } 
