@@ -39,6 +39,7 @@ namespace DyCE
                 RaisePropertyChanged(() => Name);
                 RaisePropertyChanged(() => ID);
                 RaisePropertyChanged(() => DisplayName);
+                RaiseEngineChanged();
             }
         }
 
@@ -62,6 +63,7 @@ namespace DyCE
         public abstract IEnumerable<EngineBase> SubEngines { get; }
 
         private EngineBase _selectedSubEngine;
+
         [XmlIgnore]
         public EngineBase SelectedSubEngine
         {
@@ -74,8 +76,31 @@ namespace DyCE
             }
         }
 
+        private bool _isSelected;
         [XmlAttribute, DefaultValue(false)]
-        public bool IsSelected { get; set; }
+        public bool IsSelected
+        {
+            get { return _isSelected; } 
+            set
+            {
+                _isSelected = value;
+                RaisePropertyChanged(() => IsSelected);
+            }
+        }
+
+
+        #region Changed [event]
+
+        public event EventHandler Changed;
+
+        public void RaiseEngineChanged()
+        {
+            EventHandler handler = Changed;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        #endregion
 
         protected EngineBase() { }
 

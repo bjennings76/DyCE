@@ -19,6 +19,7 @@ namespace DyCE
                 TrackEngineChanges();
                 RaisePropertyChanged(() => SubEngine);
                 RaisePropertyChanged(() => SubEngines);
+                RaiseEngineChanged();
             }
         }
 

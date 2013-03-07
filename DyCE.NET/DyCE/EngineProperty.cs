@@ -6,11 +6,26 @@ namespace DyCE
 {
     public class EngineProperty : EngineBase
     {
+
         /// <summary>
         /// The actual sub-engine regardless of reference or anonymous state.
         /// </summary>
         [XmlIgnore]
-        public EngineBase SubEngineActual { get; set; }
+        private EngineBase _subEngineActual;
+        public EngineBase SubEngineActual
+        {
+            get { return _subEngineActual; } 
+            set
+            {
+                _subEngineActual = value;
+                RaiseEngineChanged();
+                RaisePropertyChanged(() => SubEngine);
+                RaisePropertyChanged(() => SubEngines);
+                RaisePropertyChanged(() => SubEngineActual);
+                RaisePropertyChanged(() => SubEngineSaved);
+                RaisePropertyChanged(() => RefID);
+            }
+        }
 
         /// <summary>
         /// Derived from SubEngine. This is only saved if the engine is non-ref. (anonymous)

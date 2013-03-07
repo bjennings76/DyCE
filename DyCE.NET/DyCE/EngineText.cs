@@ -15,6 +15,7 @@ namespace DyCE
                 RaisePropertyChanged(() => Text);
                 RaisePropertyChanged(() => Name);
                 RaisePropertyChanged(() => DisplayName);
+                RaiseEngineChanged();
             }
         }
 
@@ -26,7 +27,7 @@ namespace DyCE
         public override ResultBase Go(int seed)
         {
             //TODO: Parse text for sub-engines and replace with results.
-            return new ResultText(this, Text, seed);
+            return new ResultText(this, seed);
         }
 
         public override string ToString()

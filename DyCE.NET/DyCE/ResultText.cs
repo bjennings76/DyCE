@@ -5,20 +5,23 @@ namespace DyCE
 {
     public class ResultText : ResultBase
     {
-        private string _text;
         public string Text
         {
-            get { return _text; }
-            set
+            get
             {
-                _text = value;
-                RaisePropertyChanged(() => Text);
+                var engine = Engine as EngineText;
+                return engine != null ? engine.Text : null;
             }
         }
 
-        public ResultText(EngineText engineObject, string text, int seed) : base(engineObject, seed)
+        public ResultText(EngineText engineObject, int seed) : base(engineObject, seed)
         {
-            _text = text;
+            engineObject.Changed += engineObject_Changed;
+        }
+
+        void engineObject_Changed(object sender, System.EventArgs e)
+        {
+            RaisePropertyChanged(() => Text);
         }
 
         public override IEnumerable<ResultBase> SubResults { get { return null; } }

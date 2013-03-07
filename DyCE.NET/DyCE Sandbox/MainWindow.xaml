@@ -5,10 +5,10 @@
 		 MinWidth="500" mc:Ignorable="d">
     <Window.Resources>
         <HierarchicalDataTemplate DataType= "{x:Type dyce:EngineBase}" ItemsSource="{Binding SubEngines}">
-            <TextBlock Text="{Binding}"/>
+            <TextBlock Text="{Binding DisplayName}"/>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType= "{x:Type dyce:ResultBase}" ItemsSource="{Binding SubResults}">
-            <TextBlock Text="{Binding}"/>
+            <TextBlock Text="{Binding DisplayName}"/>
         </HierarchicalDataTemplate>
     </Window.Resources>
     <Window.DataContext>
@@ -94,11 +94,9 @@
         							<ColumnDefinition/>
         						</Grid.ColumnDefinitions>
         						<TextBlock Text="Name:" Margin="2"/>
-        						<TextBox Text="{Binding Name}" MinWidth="50" Margin="2" Grid.Column="1"/>
+        						<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="50" Margin="2" Grid.Column="1"/>
         					</Grid>
-        					<TextBlock Text="Text Template:" Margin="2"/>
-        					<TextBox Text="{Binding Text}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
-        					<ToolBar Margin="5">
+        					<ToolBar Margin="5" Visibility="Collapsed">
         						<ToolBar.Effect>
         							<DropShadowEffect ShadowDepth="3" Opacity="0.5"/>
         						</ToolBar.Effect>
@@ -115,6 +113,8 @@
         							<Image Height="24" Source="Icons/reference.png" Width="24"/>
         						</Button>
         					</ToolBar>
+        					<TextBlock Text="Text Template:" Margin="2"/>
+        					<TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
         				</StackPanel>
         			</HierarchicalDataTemplate>
         			<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineProperty}" ItemsSource="{Binding SubEngines}">
