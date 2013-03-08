@@ -55,7 +55,7 @@
         			<Image Source="Icons/text.png" Width="24" Height="24"/>
         		</Button>
         	</ToolBar>
-        	<TreeView ItemsSource="{Binding DyCEList}" Grid.Row="1">
+        	<TreeView ItemsSource="{Binding DyCEList}" Grid.Row="1"  VirtualizingStackPanel.IsVirtualizing="True">
         		<i:Interaction.Behaviors>
         			<local:BindableSelectedItemBehavior SelectedItem="{Binding SelectedEngine, Mode=TwoWay, Source={StaticResource ViewModelDataSource}}"/>
         		</i:Interaction.Behaviors>
