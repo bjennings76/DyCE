@@ -31,7 +31,7 @@ namespace DyCE_Sandbox
             }
         }
 
-        public IEnumerable<DyCEBag> DyCEBags { get { return DB.Instance.DyCEBags.Values; } } 
+        public IEnumerable<DyCEBag> DyCEBags { get { return DB.Instance.DyCEBags; } } 
 
         private DyCEBag _bag;
         public DyCEBag Bag

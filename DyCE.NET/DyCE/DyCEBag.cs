@@ -15,8 +15,8 @@ namespace DyCE
         private static readonly DB _instance = new DB();
         public static DB Instance { get { return _instance; } }
 
-        private Dictionary<string, DyCEBag> _dyCEBags;
-        public Dictionary<string, DyCEBag> DyCEBags
+        private ObservableCollection<DyCEBag> _dyCEBags;
+        public ObservableCollection<DyCEBag> DyCEBags
         {
             get
             {
@@ -29,6 +29,9 @@ namespace DyCE
                 return _dyCEBags;
             }
         }
+
+        public void Add(DyCEBag bag) { DyCEBags.Add(bag); }
+
 
         private bool _loading;
 
@@ -45,7 +48,7 @@ namespace DyCE
 
         #endregion
 
-        private Dictionary<string, DyCEBag> LoadDyCEBags()
+        private ObservableCollection<DyCEBag> LoadDyCEBags()
         {
             _loading = true;
             var engineDirectory = new DirectoryInfo("Engines");
@@ -54,7 +57,7 @@ namespace DyCE
                 return null;
 
             var files = engineDirectory.GetFiles("*.xml");
-            var db = new Dictionary<string, DyCEBag>();
+            var db = new ObservableCollection<DyCEBag>();
 
             foreach (var file in files)
             {
@@ -63,13 +66,13 @@ namespace DyCE
                 if (engine == null) 
                     continue;
 
-                db[engine.Name] = engine;
+                db.Add(engine);
             }
             _loading = false;
             return db;
         }
 
-        public DyCEBag this[string id] { get { return _loading ? null : DyCEBags[id]; } }
+        public DyCEBag this[string id] { get { return _loading ? null : DyCEBags.FirstOrDefault(b => b.Name == id); } }
     }
 
     public class DyCEBag : ViewModelBase

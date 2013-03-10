@@ -54,7 +54,7 @@ namespace DyCE_Sandbox
 	    private bool ValidEngine(object o)
 	    {
             var engine = o as EngineBase;
-	        return !engine.Has(_baseEngine);
+	        return engine != null && !engine.Has(_baseEngine);
 	    }
 
 	    private void btn_AddEngine(object sender, System.Windows.RoutedEventArgs e)

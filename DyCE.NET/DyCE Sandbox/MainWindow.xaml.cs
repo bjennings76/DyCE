@@ -94,5 +94,16 @@ namespace DyCE_Sandbox
 
             new EngineSelectionWindow(baseEngine).ShowDialog();
         }
+
+        private void btn_AddDyCEBag(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var nameDialog = new NewDyCEBagWindow();
+            if (nameDialog.ShowDialog() != true)
+                return;
+
+            var newBag = new DyCEBag {Name = nameDialog.Result};
+            DB.Instance.Add(newBag);
+            _vm.Bag = newBag;
+        }
     }
 }
