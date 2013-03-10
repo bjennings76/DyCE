@@ -15,3 +15,7 @@ Eventually, I would like to see this put online as a service that could be acces
 1. Select the Sandbox Project as the Default Project
 2. Build the Project
 3. Run the Project
+
+## Task Tracking
+
+DyCE.NET tasks are tracked on the [DyCE.NET Trello Board](https://trello.com/board/dyce-net/512e85c1f187b3fe5100568b).
