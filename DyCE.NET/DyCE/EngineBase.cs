@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight;
 
@@ -76,19 +77,6 @@ namespace DyCE
             }
         }
 
-        private bool _isSelected;
-        [XmlAttribute, DefaultValue(false)]
-        public bool IsSelected
-        {
-            get { return _isSelected; } 
-            set
-            {
-                _isSelected = value;
-                RaisePropertyChanged(() => IsSelected);
-            }
-        }
-
-
         #region Changed [event]
 
         public event EventHandler Changed;
@@ -114,6 +102,22 @@ namespace DyCE
             _id = name.Replace(" ", "");
             if (_id != name)
                 _name = name;
+        }
+
+        public abstract void Add(object item);
+
+        public bool Has(EngineBase subEngine)
+        {
+            // If this is the same engine, then yes, we have that subEngine (and it would be self-referential)
+            if (this == subEngine)
+                return true;
+
+            // If SubEngines are null, then we do not have this subEngine.
+            if (SubEngines == null)
+                return false;
+
+            // If there are any SubEngines that have this engine as a subEngine, then we have this engine.
+            return SubEngines.Any(e => e.Has(subEngine));
         }
 
         public abstract ResultBase Go(int seed);

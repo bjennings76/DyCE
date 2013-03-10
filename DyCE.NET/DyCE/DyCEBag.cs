@@ -16,9 +16,34 @@ namespace DyCE
         public static DB Instance { get { return _instance; } }
 
         private Dictionary<string, DyCEBag> _dyCEBags;
-        public Dictionary<string, DyCEBag> DyCEBags { get { return _dyCEBags ?? (_dyCEBags = LoadDyCEBags()); } }
+        public Dictionary<string, DyCEBag> DyCEBags
+        {
+            get
+            {
+                if (_dyCEBags == null)
+                {
+                    _dyCEBags = LoadDyCEBags();
+                    RaiseLoaded();
+                }
+
+                return _dyCEBags;
+            }
+        }
 
         private bool _loading;
+
+        #region Loaded [event]
+
+        public event EventHandler Loaded;
+
+        public void RaiseLoaded()
+        {
+            EventHandler handler = Loaded;
+            if (handler != null)
+                handler(this, EventArgs.Empty);
+        }
+
+        #endregion
 
         private Dictionary<string, DyCEBag> LoadDyCEBags()
         {
@@ -89,13 +114,23 @@ namespace DyCE
         }
 
         public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(AddEngineObject);} }
-        public void AddEngineObject() { DyCEList.Add(new EngineObject("New Object Engine")); }
+
+        public void AddEngineObject()
+        {
+            Add(new EngineObject("New Object Engine"));
+        }
+
+        public EngineBase Add(EngineBase newEngine)
+        {
+            DyCEList.Add(newEngine);
+            return newEngine;
+        }
 
         public RelayCommand AddEngineListCommand { get{ return new RelayCommand(AddEngineList);} }
         public void AddEngineList() { DyCEList.Add(new EngineList("New List Engine")); }
 
         public RelayCommand AddEngineTextCommand { get { return new RelayCommand(AddEngineText); } }
-        public void AddEngineText() { DyCEList.Add(new EngineText("New Text Engine")); }
+        public void AddEngineText() { DyCEList.Add(new EngineText("New Text Value", "New Text Engine")); }
 
         public RelayCommand SaveCommand { get { return new RelayCommand(Save); } }
         public void Save()

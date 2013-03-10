@@ -28,7 +28,6 @@ namespace DyCE
         {
             var newProperty = new EngineProperty("New Property");
             Properties.Add(newProperty);
-            newProperty.IsSelected = true;
             SelectedSubEngine = newProperty;
         }
 
@@ -36,15 +35,19 @@ namespace DyCE
         public void DeleteProperty(EngineProperty engine) { Properties.Remove(engine); }
 
         public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(AddEngineObject); } }
-        public void AddEngineObject() { Add(new EngineObject("New Object Engine")); }
+        public void AddEngineObject() {
+            var newEngine = new EngineObject("New Object Engine");
+            DB.Instance["General"].Add(newEngine);
+            Add(newEngine); 
+        }
 
         public RelayCommand AddEngineListCommand { get { return new RelayCommand(AddEngineList); } }
-        public void AddEngineList() { Add(new EngineList("New List Engine")); }
+        public void AddEngineList() { Add(new EngineList()); }
 
         public RelayCommand AddEngineTextCommand { get { return new RelayCommand(AddEngineText); } }
-        public void AddEngineText() { Add(new EngineText("New Text Engine")); }
+        public void AddEngineText() { Add(new EngineText("New Text Value")); }
 
-        private void Add(object item)
+        public override void Add(object item)
         {
             if (item is EngineBase)
                 Properties.Add(new EngineProperty("New Property", item as EngineBase));

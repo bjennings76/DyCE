@@ -23,16 +23,25 @@ namespace DyCE
             }
         }
 
-        public EngineBase SubEngine { get { return DB.Instance["General"][RefID]; } }
+        public EngineBase SubEngine
+        {
+            get
+            {
+                var bag = DB.Instance["General"];
+
+                if (bag == null)
+                    return null;
+
+                var subEngine = bag[RefID];
+                if (subEngine == null)
+                    throw new Exception("Could not find engine " + RefID);
+                return subEngine;
+            }
+        }
 
         public override IEnumerable<EngineBase> SubEngines { get { return new[] {SubEngine}; } }
 
         public override ResultBase Go(int seed) { return SubEngine.Go(seed); }
-
-        public EngineRef()
-        {
-            TrackEngineChanges();
-        }
 
         private bool _trackingChanges;
         private void TrackEngineChanges()
@@ -44,13 +53,24 @@ namespace DyCE
                     SubEngine.SubscribeToChange(() => SubEngine.ID, IDUpdated);
                     _trackingChanges = true;
                     DB.Instance["General"].DyCEList.CollectionChanged -= DyCEListOnCollectionChanged;
+                    DB.Instance.Loaded -= DBLoaded;
                 }
             }
             else
             {
+                var bag = DB.Instance["General"];
+
+                if (bag == null)
+                {
+                    DB.Instance.Loaded += DBLoaded;
+                    return;
+                }
+
                 DB.Instance["General"].DyCEList.CollectionChanged += DyCEListOnCollectionChanged;
             }
         }
+
+        private void DBLoaded(object sender, EventArgs eventArgs) { TrackEngineChanges(); }
 
         private void DyCEListOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
@@ -63,11 +83,21 @@ namespace DyCE
 
         private void IDUpdated(EngineBase sender) { RefID = sender.ID; }
 
-        public EngineRef(string engineID) { RefID = engineID; }
+        public EngineRef()
+        {
+        }
+
+        public EngineRef(string engineID) : this()
+        {
+            RefID = engineID;
+            TrackEngineChanges();
+        }
 
         public override string ToString()
         {
             return SubEngine + " Ref";
         }
+
+        public override void Add(object item) { throw new NotImplementedException(); }
     }
 }

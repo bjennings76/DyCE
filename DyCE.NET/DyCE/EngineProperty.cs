@@ -81,5 +81,7 @@ namespace DyCE
         {
             return Name + " Property";
         }
+
+        public override void Add(object item) { throw new System.NotImplementedException(); }
     }
 }

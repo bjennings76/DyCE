@@ -35,6 +35,9 @@ namespace DyCE
             if (Name != null)
                 return Name;
 
+            if (Text == null)
+                return "";
+
             var lines = Text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             if (lines.Length == 1)
                 return "\"" + lines[0] + "\"";
@@ -44,5 +47,7 @@ namespace DyCE
 
             return "[empty]";
         }
+
+        public override void Add(object item) { throw new NotImplementedException(); }
     }
 }

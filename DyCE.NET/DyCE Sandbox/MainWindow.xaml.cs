@@ -74,10 +74,25 @@ namespace DyCE_Sandbox
             if (scrollViewer != null) scrollViewer.ScrollToBottom();
         }
 
-        private void txt_SelectAll(object sender, System.Windows.RoutedEventArgs e)
+        private void txt_SelectAll(object sender, RoutedEventArgs e)
         {
         	var control = sender as TextBox;
 			control.SelectAll();
+        }
+
+        private void btn_SelectEngine(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+
+            if (button == null)
+                return;
+
+            var baseEngine = button.DataContext as EngineBase;
+
+            if (baseEngine == null)
+                return;
+
+            new EngineSelectionWindow(baseEngine).ShowDialog();
         }
     }
 }

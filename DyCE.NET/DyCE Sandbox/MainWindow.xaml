@@ -93,7 +93,7 @@
         							<ColumnDefinition Width="Auto"/>
         							<ColumnDefinition/>
         						</Grid.ColumnDefinitions>
-        						<TextBlock Text="Name:" Margin="2"/>
+        						<TextBlock Text="Text Name:" Margin="2"/>
         						<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="50" Margin="2" Grid.Column="1"/>
         					</Grid>
         					<ToolBar Margin="5" Visibility="Collapsed">
@@ -157,19 +157,19 @@
         							<ColumnDefinition/>
         						</Grid.ColumnDefinitions>
         						<TextBlock Text="Object Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
-        						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
+        						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotKeyboardFocus="txt_SelectAll"/>
         					</Grid>
         					<ToolBar Margin="5">
-        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
         							<Image Source="Icons/object.png" Width="24" Height="24"/>
         						</Button>
-        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineListCommand, Mode=OneWay}" ToolTip="Add New List Engine">
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineListCommand, Mode=OneWay}" ToolTip="Add New List Engine">
         							<Image Source="Icons/list.png" Width="24" Height="24"/>
         						</Button>
-        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineTextCommand, Mode=OneWay}" ToolTip="Add New Text Engine">
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineTextCommand, Mode=OneWay}" ToolTip="Add New Text Engine">
         							<Image Source="Icons/text.png" Width="24" Height="24"/>
         						</Button>
-        						<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine">
+        						<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine" Click="btn_SelectEngine">
         							<Image Height="24" Source="Icons/reference.png" Width="24"/>
         						</Button>
         					</ToolBar>
@@ -219,10 +219,10 @@
         							<ColumnDefinition/>
         						</Grid.ColumnDefinitions>
         						<TextBlock Text="List Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
-        						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotFocus="txt_SelectAll"/>
+        						<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotKeyboardFocus="txt_SelectAll"/>
         					</Grid>
         					<ToolBar Margin="5">
-        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding CreateEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
+        						<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
         							<Image Source="Icons/object.png" Width="24" Height="24"/>
         						</Button>
         						<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineListCommand, Mode=OneWay}" ToolTip="Add New List Engine">
@@ -231,7 +231,7 @@
         						<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineTextCommand, Mode=OneWay}" ToolTip="Add New Text Engine">
         							<Image Source="Icons/text.png" Width="24" Height="24"/>
         						</Button>
-        						<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine">
+        						<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine" Click="btn_SelectEngine">
         							<Image Height="24" Source="Icons/reference.png" Width="24"/>
         						</Button>
         					</ToolBar>

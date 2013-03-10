@@ -50,7 +50,7 @@ namespace DyCE
 
         private const bool _canAddItem = true;
 
-        private void Add(object item)
+        public override void Add(object item)
         {
             if (item is EngineBase)
                 Items.Add(item as EngineBase);

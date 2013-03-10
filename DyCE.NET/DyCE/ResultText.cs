@@ -28,6 +28,9 @@ namespace DyCE
 
         public override string ToString()
         {
+            if (Text == null)
+                return base.ToString();
+
             var template = new Template(Text);
             template.Add("db", DB.Instance);
             return template.Render();

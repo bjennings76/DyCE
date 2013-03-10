@@ -57,7 +57,9 @@ namespace DyCE_Sandbox
                 RaisePropertyChanged(() => SelectedEngine);
                 RaisePropertyChanged(() => WindowName);
                 Results.Clear();
-                Results.Add(SelectedEngine.Go(new Random().Next()));
+
+                if (_selectedEngine != null)
+                    Results.Add(SelectedEngine.Go(new Random().Next()));
             }
         }
 
