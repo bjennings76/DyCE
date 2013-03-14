@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Antlr4.StringTemplate;
 
@@ -31,9 +32,17 @@ namespace DyCE
             if (Text == null)
                 return base.ToString();
 
-            var template = new Template(Text);
-            template.Add("db", DB.Instance);
-            return template.Render();
+            try
+            {
+                var template = new Template(Text, '$', '$');
+                template.Add("dyce", this);
+                var result = template.Render();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return "*** Template Error: " + ex.Message + " ***\r\n\r\n" + Text;
+            }
         }
     }
 }

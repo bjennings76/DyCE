@@ -11,6 +11,16 @@ namespace DyCE
         public string DisplayName { get { return ToString(); } }
         public int Seed { get; set; }
 
+
+        public string this[string url]
+        {
+            get
+            {
+                return "Accessing: " + url;
+            }
+        }
+
+
         public ResultBase(EngineBase engineObject, int seed)
         {
             Engine = engineObject;
