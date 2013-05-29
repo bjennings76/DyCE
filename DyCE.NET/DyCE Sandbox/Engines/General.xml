@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DyCEBag xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="General" Creator="Brian@BDJSILVER">
   <Engine xsi:type="EngineObject" ID="Steading">
-    <Property Name="Prosperity" RefID="ProsperityOptions" />
-    <Property Name="Population" RefID="PopulationOptionsandStuff" />
+    <Property Name="Prosperity" RefID="ProsperityOptions">
+      <SubEngineActual xsi:type="EngineRef" RefID="ProsperityOptions" />
+    </Property>
+    <Property Name="Population" RefID="PopulationOptions">
+      <SubEngineActual xsi:type="EngineRef" RefID="PopulationOptions" />
+    </Property>
     <Property Name="Defenses">
+      <SubEngineActual xsi:type="EngineList">
+        <Engine xsi:type="EngineText">None</Engine>
+        <Engine xsi:type="EngineText">Militia</Engine>
+        <Engine xsi:type="EngineText">Watch</Engine>
+        <Engine xsi:type="EngineText">Guard</Engine>
+        <Engine xsi:type="EngineText">Garrison</Engine>
+        <Engine xsi:type="EngineText">Battalion</Engine>
+        <Engine xsi:type="EngineText">Legion</Engine>
+      </SubEngineActual>
       <Engine xsi:type="EngineList">
         <Engine xsi:type="EngineText">None</Engine>
         <Engine xsi:type="EngineText">Militia</Engine>
@@ -15,7 +28,7 @@
       </Engine>
     </Property>
   </Engine>
-  <Engine xsi:type="EngineList" ID="PopulationOptionsandStuff" Name="Population Options and Stuff">
+  <Engine xsi:type="EngineList" ID="PopulationOptions" Name="Population Options">
     <Engine xsi:type="EngineText">Exodus</Engine>
     <Engine xsi:type="EngineText">Shrinking</Engine>
     <Engine xsi:type="EngineText">Steady</Engine>
@@ -29,7 +42,7 @@
     <Engine xsi:type="EngineText">Wealthy</Engine>
     <Engine xsi:type="EngineText">Rich</Engine>
   </Engine>
-  <Engine xsi:type="EngineList" Name="Six Letter Words">
+  <Engine xsi:type="EngineList" ID="SixLetterWords" Name="Six Letter Words">
     <Engine xsi:type="EngineText">aahing</Engine>
     <Engine xsi:type="EngineText">aaliis</Engine>
     <Engine xsi:type="EngineText">aarrgh</Engine>
@@ -15819,4 +15832,14 @@
     <Engine xsi:type="EngineText">zygote</Engine>
     <Engine xsi:type="EngineText">zymase</Engine>
   </Engine>
+  <Engine xsi:type="EngineText" ID="TemplateTest" Name="Template Test ">Test: $dyce.SixLetterWords$</Engine>
+  <Engine xsi:type="EngineText" ID="TemplatePropertyTest" Name="Template Property Test ">&lt;b&gt;Finnigan&lt;/b&gt; came across a steading. &lt;br/&gt;
+
+It's population was &lt;b&gt;$dyce.Steading.Population$&lt;/b&gt;. &lt;br/&gt;
+
+The settlement was &lt;b&gt;$dyce.Steading.Prosperity$&lt;/b&gt;. &lt;br/&gt;
+
+It's defenses consisted of &lt;b&gt;$dyce.Steading.Defenses$&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
+
+Finnigan exclaimed, "$dyce.SixLetterWords$!"</Engine>
 </DyCEBag>

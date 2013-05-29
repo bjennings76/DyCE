@@ -12,11 +12,17 @@ namespace DyCE
         public int Seed { get; set; }
 
 
-        public string this[string url]
+        public ResultBase this[string url]
         {
             get
             {
-                return "Accessing: " + url;
+                var chunks = url.Split(new[] {'.'});
+                var subEngine = Engine;
+
+                foreach (var chunk in chunks)
+                    subEngine = DyCEBag.GetSubEngineRef(chunk);
+
+                return subEngine.Go(Seed);
             }
         }
 

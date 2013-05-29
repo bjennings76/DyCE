@@ -7,7 +7,6 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 		xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing"
-		xmlns:Custom="http://schemas.awesomium.com/winfx"
 		x:Class="DyCE_Sandbox.MainWindow"
         Title="{Binding WindowName, Mode=OneWay}" Icon="Application.ico" Foreground="Black"
 		 MinWidth="500" mc:Ignorable="d">
@@ -16,8 +15,7 @@
             <TextBlock Text="{Binding DisplayName}"/>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType= "{x:Type dyce:ResultBase}" ItemsSource="{Binding SubResults}">
-            <Grid>
-        	</Grid>
+            <TextBlock Text="{Binding DisplayName}"/>
         </HierarchicalDataTemplate>
     </Window.Resources>
     <Window.DataContext>
@@ -301,7 +299,7 @@
     		</ContentControl>
     	</ScrollViewer>
     	<GridSplitter Width="5" Grid.Column="1"/>
-    	<Grid Grid.Column="2"  DataContext="{Binding Source={StaticResource ViewModelDataSource}}" Margin="2">
+    	<Grid Grid.Column="2"  DataContext="{Binding Source={StaticResource ViewModelDataSource}}">
     		<Grid.RowDefinitions>
     			<RowDefinition Height="Auto"/>
     			<RowDefinition/>
@@ -309,20 +307,20 @@
     		<i:Interaction.Behaviors>
     			<ei:DataStateBehavior Binding="{Binding Paused}" Value="False" TrueState="PreviewPlaying" FalseState="PreviewPaused"/>
     		</i:Interaction.Behaviors>
-    		<TreeView x:Name="tree_Results" ItemsSource="{Binding Results}" Grid.Row="1" Margin="2">
-    			<!-- <TreeView.ItemContainerStyle>
+    		<!-- <TreeView x:Name="tree_Results" ItemsSource="{Binding Results}" Grid.Row="1" Margin="2">
+    			<TreeView.ItemContainerStyle>
 					<Style TargetType="{x:Type TreeViewItem}">
 						<Setter Property="IsExpanded" Value="True" />
 					</Style>
-				</TreeView.ItemContainerStyle> -->
-    		</TreeView>
+				</TreeView.ItemContainerStyle>
+    		</TreeView> -->
     		<Grid Margin="2">
     			<Grid.ColumnDefinitions>
     				<ColumnDefinition Width="Auto"/>
     				<ColumnDefinition/>
     				<ColumnDefinition Width="Auto"/>
     			</Grid.ColumnDefinitions>
-    			<Slider Grid.Column="1" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5" VerticalAlignment="Center" Margin="2"/>
+    			<Slider Grid.Column="1" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5" VerticalAlignment="Center" Margin="2" IsDirectionReversed="True"/>
     			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Speed:" VerticalAlignment="Center" Margin="2"/>
     			<Button x:Name="btn_Pause" Grid.Column="2" Command="{Binding PausePreviewCommand, Mode=OneWay}" Style="{DynamicResource ButtonClear}">
     				<Grid Height="22" Width="22">
@@ -332,6 +330,7 @@
     			</Button>
 
     		</Grid>
+    		<WebBrowser x:Name="web_Results" local:BrowserBehavior.Html="{Binding ResultsHTML, Mode=OneWay}" Grid.Row="1" Margin="2" UseLayoutRounding="True"/>
     	</Grid>
     </Grid>
 </Window>

@@ -13,6 +13,6 @@ namespace DyCE
 
         public override IEnumerable<ResultBase> SubResults { get { return new[] {ValueResult}; } }
 
-        public override string ToString() { return Name + ": " + ValueResult; }
+        public override string ToString() { return ValueResult.ToString(); }
     }
 }

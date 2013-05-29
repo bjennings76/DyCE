@@ -11,7 +11,7 @@ namespace DyCE
 
         public override IEnumerable<ResultBase> SubResults { get { return Properties; } }
 
-        public ResultBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }
+        public new ResultBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }
 
         public ResultObject(EngineObject engineObject, int seed) : base(engineObject, seed)
         {

@@ -64,9 +64,6 @@ namespace DyCE
 
         #endregion
 
-        private static readonly List<int> _shuffledIndexes = new List<int>();
-        private static int _shuffleIndex;
-
         public EngineList(IEnumerable<object> items) : this(null, items) { }
 
         public EngineList(string name, IEnumerable<object> items):base(name)
@@ -100,27 +97,34 @@ namespace DyCE
             if (Items.Count < 1)
                 return new ResultEmpty(this, rand.Next());
 
-            if (Items.Count != _shuffledIndexes.Count)
-            {
-                _shuffledIndexes.Clear();
-                for (int i = 0; i < Items.Count; i++)
-                    _shuffledIndexes.Add(i);
-                Reshuffle(rand);
-            }
+            int index = rand.Next(0, Items.Count - 1);
 
-            _shuffleIndex++;
+            return Items[index].Go(rand.Next());
 
-            if (_shuffleIndex >= Items.Count)
-                Reshuffle(rand);
+            //if (Items.Count != _shuffledIndexes.Count)
+            //{
+            //    _shuffledIndexes.Clear();
+            //    for (int i = 0; i < Items.Count; i++)
+            //        _shuffledIndexes.Add(i);
+            //    Reshuffle(rand);
+            //}
 
-            return Items[_shuffledIndexes[_shuffleIndex]].Go(rand.Next());
+            //_shuffleIndex++;
+
+            //if (_shuffleIndex >= Items.Count)
+            //    Reshuffle(rand);
+
+            //return Items[_shuffledIndexes[_shuffleIndex]].Go(rand.Next());
         }
 
-        private void Reshuffle(Random rand)
-        {
-            _shuffleIndex = 0;
-            _shuffledIndexes.Shuffle(rand);
-        }
+        //private static readonly List<int> _shuffledIndexes = new List<int>();
+        //private static int _shuffleIndex;
+
+        //private void Reshuffle(Random rand)
+        //{
+        //    _shuffleIndex = 0;
+        //    _shuffledIndexes.Shuffle(rand);
+        //}
 
         public override string ToString()
         {

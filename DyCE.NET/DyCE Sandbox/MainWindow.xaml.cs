@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using DyCE;
+using mshtml;
 
 namespace DyCE_Sandbox
 {
@@ -59,6 +60,14 @@ namespace DyCE_Sandbox
 
             _vm.Results.CollectionChanged += Results_CollectionChanged;
             _vm.SubscribeToChange(() => _vm.SelectedEngine, SelectedEngineChanged);
+            web_Results.LoadCompleted += web_Results_LoadCompleted;
+        }
+
+        void web_Results_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            var htmlDocument = web_Results.Document as HTMLDocument;
+            if (htmlDocument != null)
+                htmlDocument.parentWindow.scroll(0, int.MaxValue);
         }
 
         private void SelectedEngineChanged(ViewModel sender)
@@ -68,10 +77,11 @@ namespace DyCE_Sandbox
 
         void Results_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            var border = System.Windows.Media.VisualTreeHelper.GetChild(tree_Results, 0) as Decorator;
-            if (border == null) return;
-            var scrollViewer = border.Child as ScrollViewer;
-            if (scrollViewer != null) scrollViewer.ScrollToBottom();
+            //var border = System.Windows.Media.VisualTreeHelper.GetChild(tree_Results, 0) as Decorator;
+            //if (border == null) return;
+            //var scrollViewer = border.Child as ScrollViewer;
+            //if (scrollViewer != null) scrollViewer.ScrollToBottom();
+            
         }
 
         private void txt_SelectAll(object sender, RoutedEventArgs e)

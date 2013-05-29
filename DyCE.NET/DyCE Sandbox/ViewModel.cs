@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using DyCE;
 using GalaSoft.MvvmLight;
@@ -45,21 +46,40 @@ namespace DyCE_Sandbox
         }
 
         private readonly ObservableCollection<ResultBase> _results = new ObservableCollection<ResultBase>();
-        private EngineBase _selectedEngine;
         public ObservableCollection<ResultBase> Results { get { return _results; } }
 
+        private string _resultsHTML;
+        public string ResultsHTML
+        {
+            get
+            {
+                if (_resultsHTML == null)
+                    UpdateResults();
+
+                return _resultsHTML;
+            }
+        }
+
+        private EngineBase _selectedEngine;
         public EngineBase SelectedEngine
         {
             get { return _selectedEngine; } 
             set
             {
+                if (_selectedEngine != null)
+                    _selectedEngine.Changed -= SelectedEngineOnChanged;
+
+
                 _selectedEngine = value;
                 RaisePropertyChanged(() => SelectedEngine);
                 RaisePropertyChanged(() => WindowName);
                 Results.Clear();
 
                 if (_selectedEngine != null)
+                {
                     Results.Add(SelectedEngine.Go(new Random().Next()));
+                    _selectedEngine.Changed += SelectedEngineOnChanged;
+                }
             }
         }
 
@@ -83,14 +103,29 @@ namespace DyCE_Sandbox
             _timer.Interval = TimeSpan.FromSeconds(0.5);
             _timer.Tick += _timer_Tick;
             _timer.Start();
-
-            PausePreviewCommand = new RelayCommand(PausePreview, CanPausePreview);
         }
 
-        public RelayCommand PausePreviewCommand { get; private set; }
+        private bool _updatingResults;
+        private void UpdateResults()
+        {
+            //if (_updatingResults) return;
 
+            _updatingResults = true;
+            Task.Factory.StartNew<string>(GetHTMLResult).ContinueWith(task =>
+            {
+                _resultsHTML = task.Result;
+                _updatingResults = false;
+                RaisePropertyChanged(() => ResultsHTML);
+            });
+        }
+
+        private string GetHTMLResult() { return Results.Count == 0 ? "" : Results.Select(r => r.ToString()).Aggregate((s1, s2) => s1 + "<p>" + s2 + "</p>"); }
+
+        private void SelectedEngineOnChanged(object sender, EventArgs eventArgs) { UpdateResults(); }
+
+
+        public RelayCommand PausePreviewCommand { get { return new RelayCommand(PausePreview, CanPausePreview); } }
         public bool CanPausePreview() { return SelectedEngine != null; }
-
         public void PausePreview() { Paused = !Paused; }
 
         void _timer_Tick(object sender, EventArgs e)
@@ -101,6 +136,8 @@ namespace DyCE_Sandbox
 
                 if (Results.Count > 100)
                     Results.RemoveAt(0);
+
+                UpdateResults();
             }
         }
 
