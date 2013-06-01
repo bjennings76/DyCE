@@ -15821,12 +15821,9 @@
   </Engine>
   <Engine xsi:type="EngineText" ID="TemplateTest" Name="Template Test ">Test: $dyce.SixLetterWords$</Engine>
   <Engine xsi:type="EngineText" ID="TemplatePropertyTest" Name="Template Property Test ">&lt;b&gt;Finnigan&lt;/b&gt; came across a steading. &lt;br/&gt;
-
-It's population was &lt;b&gt;$dyce.Steading.Population$&lt;/b&gt;. &lt;br/&gt;
-
-The settlement was &lt;b&gt;$dyce.Steading.Prosperity&lt;/b&gt;. &lt;br/&gt;
-
-It's defenses consisted of &lt;b&gt;$dyce.Steading.Defenses&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
+It's population was &lt;b&gt;$dyce.Steading.Population$&lt;/b&gt;.&lt;br/&gt;
+The settlement was &lt;b&gt;$dyce.Steading.Prosperity$&lt;/b&gt;.&lt;br/&gt;
+It's defenses consisted of &lt;b&gt;$dyce.Steading.Defenses$&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
 
 Finnigan exclaimed, "$dyce.SixLetterWords;format="toUpper"$!"</Engine>
 </DyCEBag>

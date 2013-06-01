@@ -23,21 +23,7 @@ namespace DyCE
             }
         }
 
-        public EngineBase SubEngine
-        {
-            get
-            {
-                var bag = DB.Instance["General"];
-
-                if (bag == null)
-                    return null;
-
-                var subEngine = bag[RefID];
-                if (subEngine == null)
-                    throw new Exception("Could not find engine " + RefID);
-                return subEngine;
-            }
-        }
+        public EngineBase SubEngine { get { return DyCEBag.GetEngine(RefID); } }
 
         public override IEnumerable<EngineBase> SubEngines { get { return new[] {SubEngine}; } }
 

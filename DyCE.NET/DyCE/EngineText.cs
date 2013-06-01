@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
 namespace DyCE
@@ -19,16 +22,38 @@ namespace DyCE
             }
         }
 
-        public override System.Collections.Generic.IEnumerable<EngineBase> SubEngines { get { return null; } }
+        private readonly Regex _engineRegex = new Regex(@"\$dyce.(?<engine>[^;$.]+)");
+        public override IEnumerable<EngineBase> SubEngines
+        {
+            get
+            {
+                if (_text == null)
+                    return null;
+
+                var matches = _engineRegex.Matches(_text);
+
+                if (matches.Count == 0)
+                    return null;
+
+                var engines = new List<EngineBase>();
+
+                foreach (Match match in matches)
+                {
+
+                    var subEngine = DyCEBag.GetEngine(match.Groups["engine"].Value);
+
+                    if (subEngine != null && engines.All(e => e.ID != subEngine.ID))
+                        engines.Add(subEngine);
+                }
+
+                return engines;
+            }
+        }
 
         public EngineText(string text, string name = null) : base(name) { Text = text; }
         public EngineText() { }
 
-        public override ResultBase Go(int seed)
-        {
-            //TODO: Parse text for sub-engines and replace with results.
-            return new ResultText(this, seed);
-        }
+        public override ResultBase Go(int seed) { return new ResultText(this, seed); }
 
         public override string ToString()
         {

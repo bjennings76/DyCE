@@ -158,5 +158,20 @@ namespace DyCE
         }
 
         public static EngineRef GetSubEngineRef(string engineID) { return new EngineRef(engineID); }
+
+        public static EngineBase GetEngine(string engineID)
+        {
+            var bag = DB.Instance["General"];
+
+            if (bag == null)
+                return null;
+
+            var engine = bag[engineID];
+
+            if (engine == null)
+                throw new Exception("Could not find engine " + engineID);
+
+            return engine;
+        }
     }
 }
