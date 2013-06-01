@@ -119,7 +119,15 @@ namespace DyCE_Sandbox
             });
         }
 
-        private string GetHTMLResult() { return Results.Count == 0 ? "" : Results.Select(r => r.ToString()).Aggregate((s1, s2) => s1 + "<p>" + s2 + "</p>"); }
+        private string GetHTMLResult()
+        {
+            var results = new List<ResultBase>();
+            lock (this)
+            {
+                results.AddRange(Results);
+            }
+            return results.Count == 0 ? "" : results.Select(r => r.ToString()).Aggregate((s1, s2) => s1 + "<p>" + s2 + "</p>");
+        }
 
         private void SelectedEngineOnChanged(object sender, EventArgs eventArgs) { UpdateResults(); }
 
@@ -132,11 +140,13 @@ namespace DyCE_Sandbox
         {
             if (SelectedEngine != null && !Paused)
             {
-                Results.Add(SelectedEngine.Go(new Random().Next()));
+                lock (this)
+                {
+                    Results.Add(SelectedEngine.Go(new Random().Next()));
 
-                if (Results.Count > 100)
-                    Results.RemoveAt(0);
-
+                    if (Results.Count > 100)
+                        Results.RemoveAt(0);                    
+                }
                 UpdateResults();
             }
         }

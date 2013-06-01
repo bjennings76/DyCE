@@ -1,46 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DyCEBag xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="General" Creator="Brian@BDJSILVER">
   <Engine xsi:type="EngineObject" ID="Steading">
-    <Property Name="Prosperity" RefID="ProsperityOptions">
-      <SubEngineActual xsi:type="EngineRef" RefID="ProsperityOptions" />
-    </Property>
-    <Property Name="Population" RefID="PopulationOptions">
-      <SubEngineActual xsi:type="EngineRef" RefID="PopulationOptions" />
-    </Property>
+    <Property Name="Prosperity" RefID="ProsperityOptions" />
+    <Property Name="Population" RefID="PopulationOptions" />
     <Property Name="Defenses">
-      <SubEngineActual xsi:type="EngineList">
-        <Engine xsi:type="EngineText">None</Engine>
-        <Engine xsi:type="EngineText">Militia</Engine>
-        <Engine xsi:type="EngineText">Watch</Engine>
-        <Engine xsi:type="EngineText">Guard</Engine>
-        <Engine xsi:type="EngineText">Garrison</Engine>
-        <Engine xsi:type="EngineText">Battalion</Engine>
-        <Engine xsi:type="EngineText">Legion</Engine>
-      </SubEngineActual>
       <Engine xsi:type="EngineList">
-        <Engine xsi:type="EngineText">None</Engine>
-        <Engine xsi:type="EngineText">Militia</Engine>
-        <Engine xsi:type="EngineText">Watch</Engine>
-        <Engine xsi:type="EngineText">Guard</Engine>
-        <Engine xsi:type="EngineText">Garrison</Engine>
-        <Engine xsi:type="EngineText">Battalion</Engine>
-        <Engine xsi:type="EngineText">Legion</Engine>
+        <Engine xsi:type="EngineText">nothing</Engine>
+        <Engine xsi:type="EngineText">a militia</Engine>
+        <Engine xsi:type="EngineText">a watch</Engine>
+        <Engine xsi:type="EngineText">guards</Engine>
+        <Engine xsi:type="EngineText">a garrison</Engine>
+        <Engine xsi:type="EngineText">a battalion</Engine>
+        <Engine xsi:type="EngineText">an entire legion</Engine>
       </Engine>
     </Property>
   </Engine>
   <Engine xsi:type="EngineList" ID="PopulationOptions" Name="Population Options">
-    <Engine xsi:type="EngineText">Exodus</Engine>
-    <Engine xsi:type="EngineText">Shrinking</Engine>
-    <Engine xsi:type="EngineText">Steady</Engine>
-    <Engine xsi:type="EngineText">Growing</Engine>
-    <Engine xsi:type="EngineText">Booming</Engine>
+    <Engine xsi:type="EngineText">exodus</Engine>
+    <Engine xsi:type="EngineText">shrinking</Engine>
+    <Engine xsi:type="EngineText">holding steady</Engine>
+    <Engine xsi:type="EngineText">growing</Engine>
+    <Engine xsi:type="EngineText">booming</Engine>
   </Engine>
   <Engine xsi:type="EngineList" ID="ProsperityOptions" Name="Prosperity Options">
-    <Engine xsi:type="EngineText">Dirt</Engine>
-    <Engine xsi:type="EngineText">Poor</Engine>
-    <Engine xsi:type="EngineText">Moderate</Engine>
-    <Engine xsi:type="EngineText">Wealthy</Engine>
-    <Engine xsi:type="EngineText">Rich</Engine>
+    <Engine xsi:type="EngineText">dirt poor</Engine>
+    <Engine xsi:type="EngineText">poor</Engine>
+    <Engine xsi:type="EngineText">doing all right</Engine>
+    <Engine xsi:type="EngineText">wealthy</Engine>
+    <Engine xsi:type="EngineText">extravagantly rich</Engine>
   </Engine>
   <Engine xsi:type="EngineList" ID="SixLetterWords" Name="Six Letter Words">
     <Engine xsi:type="EngineText">aahing</Engine>
@@ -15837,9 +15824,9 @@
 
 It's population was &lt;b&gt;$dyce.Steading.Population$&lt;/b&gt;. &lt;br/&gt;
 
-The settlement was &lt;b&gt;$dyce.Steading.Prosperity$&lt;/b&gt;. &lt;br/&gt;
+The settlement was &lt;b&gt;$dyce.Steading.Prosperity&lt;/b&gt;. &lt;br/&gt;
 
-It's defenses consisted of &lt;b&gt;$dyce.Steading.Defenses$&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
+It's defenses consisted of &lt;b&gt;$dyce.Steading.Defenses&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
 
-Finnigan exclaimed, "$dyce.SixLetterWords$!"</Engine>
+Finnigan exclaimed, "$dyce.SixLetterWords;format="toUpper"$!"</Engine>
 </DyCEBag>

@@ -10,8 +10,8 @@ namespace DyCE
         /// <summary>
         /// The actual sub-engine regardless of reference or anonymous state.
         /// </summary>
-        [XmlIgnore]
         private EngineBase _subEngineActual;
+        [XmlIgnore]
         public EngineBase SubEngineActual
         {
             get { return _subEngineActual; } 

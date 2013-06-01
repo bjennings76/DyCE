@@ -4,15 +4,15 @@ namespace DyCE
 {
     public class ResultProperty: ResultBase
     {
-        public ResultBase ValueResult { get; set; }
+        private ResultBase _valueResult { get; set; }
 
         public ResultProperty(EngineProperty engineObject, int seed) : base(engineObject, seed)
         {
-            ValueResult = engineObject.SubEngineActual.Go(seed);
+            _valueResult = engineObject.SubEngineActual.Go(seed);
         }
 
-        public override IEnumerable<ResultBase> SubResults { get { return new[] {ValueResult}; } }
+        public override IEnumerable<ResultBase> SubResults { get { return new[] {_valueResult}; } }
 
-        public override string ToString() { return ValueResult.ToString(); }
+        public override string ToString() { return _valueResult.ToString(); }
     }
 }

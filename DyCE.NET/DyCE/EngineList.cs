@@ -97,7 +97,7 @@ namespace DyCE
             if (Items.Count < 1)
                 return new ResultEmpty(this, rand.Next());
 
-            int index = rand.Next(0, Items.Count - 1);
+            int index = rand.Next(0, Items.Count);
 
             return Items[index].Go(rand.Next());
 
