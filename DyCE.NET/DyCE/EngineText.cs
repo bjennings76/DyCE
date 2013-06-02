@@ -7,7 +7,14 @@ using System.Xml.Serialization;
 namespace DyCE
 {
     public class EngineText : EngineBase {
+        /// <summary>
+        /// Internal string that holds the engine's raw template text.
+        /// </summary>
         private string _text;
+
+        /// <summary>
+        /// The Text Engine's template text.
+        /// </summary>
         [XmlText]
         public string Text
         {
@@ -22,7 +29,14 @@ namespace DyCE
             }
         }
 
+        /// <summary>
+        /// Regular expression that parses through the template text for top-level engine references.
+        /// </summary>
         private readonly Regex _engineRegex = new Regex(@"\$dyce.(?<engine>[^;$.]+)");
+
+        /// <summary>
+        /// List of sub-engines used by this engine parsed from the template text.
+        /// </summary>
         public override IEnumerable<EngineBase> SubEngines
         {
             get
@@ -35,26 +49,38 @@ namespace DyCE
                 if (matches.Count == 0)
                     return null;
 
-                var engines = new List<EngineBase>();
-
-                foreach (Match match in matches)
-                {
-
-                    var subEngine = DyCEBag.GetEngine(match.Groups["engine"].Value);
-
-                    if (subEngine != null && engines.All(e => e.ID != subEngine.ID))
-                        engines.Add(subEngine);
-                }
-
-                return engines;
+                return matches
+                    .Cast<Match>()
+                    .Select(match => match.Groups["engine"].Value)
+                    .Distinct()
+                    .Select(DyCEBag.GetEngine)
+                    .Where(engine => engine != null);
             }
         }
 
-        public EngineText(string text, string name = null) : base(name) { Text = text; }
+        /// <summary>
+        /// Creates an new empty Text Engine.
+        /// </summary>
         public EngineText() { }
 
+        /// <summary>
+        /// Creates a new Text Engine with the supplied template text and optional name.
+        /// </summary>
+        /// <param name="text">Template text of the new Text Engine.</param>
+        /// <param name="name">Optional name for the Text Engine. (The engine's ID is derived from this name.)</param>
+        public EngineText(string text, string name = null) : base(name) { Text = text; }
+
+        /// <summary>
+        /// Returns an Engine Result based on the supplied seed number.
+        /// </summary>
+        /// <param name="seed">The seed number which will allow the engine to repeatedly return the same 'random' result.</param>
+        /// <returns>The engine's Text Result based on the seed number supplied.</returns>
         public override ResultBase Go(int seed) { return new ResultText(this, seed); }
 
+        /// <summary>
+        /// Gets the display name of this Text Engine or text piece if the engine is anonymous and no name is given.
+        /// </summary>
+        /// <returns>The display name of the Object Engine or text piece if the engine is anonymous and no name is given.</returns>
         public override string ToString()
         {
             if (Name != null)
@@ -72,7 +98,5 @@ namespace DyCE
 
             return "[empty]";
         }
-
-        public override void Add(object item) { throw new NotImplementedException(); }
     }
 }

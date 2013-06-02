@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight.Command;
 
@@ -11,46 +9,70 @@ namespace DyCE
     [XmlRoot("EngineList")]
     public class EngineList : EngineBase
     {
+        /// <summary>
+        /// List of sub-engines referenced by this engine.
+        /// </summary>
         public override IEnumerable<EngineBase> SubEngines { get { return Items; } }
 
         private readonly ObservableCollection<EngineBase> _items = new ObservableCollection<EngineBase>();
+        /// <summary>
+        /// The items representing the list this engine selects from.
+        /// </summary>
         [XmlElement("Engine")]
         public ObservableCollection<EngineBase> Items { get { return _items; } }
 
-        private int _cyclePrime;
-        [XmlIgnore]
-        public int CyclePrime
+
+        /// <summary>
+        /// Command to add a new Object Engine.
+        /// </summary>
+        public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(() => Items.Add(new EngineObject("New Object Engine"))); } }
+
+        /// <summary>
+        /// Command to add a new List Engine.
+        /// </summary>
+        public RelayCommand AddEngineListCommand { get { return new RelayCommand(() => Items.Add(new EngineList("New List Engine"))); } }
+
+        /// <summary>
+        /// Command to add a new Text Engine.
+        /// </summary>
+        public RelayCommand AddEngineTextCommand { get { return new RelayCommand(() => Items.Add(new EngineText("New Text Engine"))); } }
+
+        /// <summary>
+        /// Command to delete an engine from the list.
+        /// </summary>
+        public RelayCommand<EngineBase> DeleteCommand { get { return new RelayCommand<EngineBase>(engine => Items.Remove(engine)); } }
+
+
+        /// <summary>
+        /// Creates a new List Engine using a list of supplied items.
+        /// </summary>
+        /// <param name="items">A list of supplied strings, engines, or lists to choose from.</param>
+        public EngineList(IEnumerable<object> items) : this(null, items) { }
+
+        /// <summary>
+        /// Creates a new List Engine using a name and list of supplied items.
+        /// </summary>
+        /// <param name="name">A name used for the engine. The engine's ID is derived from this name.</param>
+        /// <param name="items">A list of supplied strings, engines, or lists to choose from.</param>
+        public EngineList(string name, IEnumerable<object> items = null)
+            : base(name)
         {
-            get
-            {
-                if (_cyclePrime == 0) 
-                    _cyclePrime = Randomize.GetRandomPrime(Items.Count);
-                return _cyclePrime;
-            }
+            if (items == null) return;
+
+            foreach (var item in items)
+                Add(item);
         }
 
-        private int _lastIndex = -1;
+        /// <summary>
+        /// Creates a new empty List Engine instance.
+        /// </summary>
+        public EngineList() { }
 
-        [XmlIgnore]
-        public int LastIndex
-        {
-            get
-            {
-                if (_lastIndex == -1)
-                    _lastIndex = Randomize.GetNextIndex(0, Items.Count, CyclePrime);
-
-                if (_lastIndex == 0)
-                    _cyclePrime = Randomize.GetRandomPrime(Items.Count);
-
-                return _lastIndex;
-            }
-        }
-
-        #region ICommands
-
-        private const bool _canAddItem = true;
-
-        public override void Add(object item)
+        /// <summary>
+        /// Adds an item (string, Engine, or sub-lists of items) to the Items list.
+        /// </summary>
+        /// <param name="item">The item to add. Can be a string, Engine, or list of items.</param>
+        public void Add(object item)
         {
             if (item is EngineBase)
                 Items.Add(item as EngineBase);
@@ -62,34 +84,11 @@ namespace DyCE
                 throw new Exception("Unknown item type: " + item);
         }
 
-        #endregion
-
-        public EngineList(IEnumerable<object> items) : this(null, items) { }
-
-        public EngineList(string name, IEnumerable<object> items):base(name)
-        {
-            foreach (var item in items)
-                Add(item);
-        }
-
-        public EngineList(string name):base(name) { }
-
-        public EngineList() { }
-
-
-        public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(AddEngineObject); } }
-        public void AddEngineObject() { Add(new EngineObject("New Object Engine")); }
-
-        public RelayCommand AddEngineListCommand { get { return new RelayCommand(AddEngineList); } }
-        public void AddEngineList() { Add(new EngineList("New List Engine")); }
-
-        public RelayCommand AddEngineTextCommand { get { return new RelayCommand(AddEngineText); } }
-        public void AddEngineText() { Add(new EngineText("New Text Engine")); }
-
-
-        public RelayCommand<EngineBase> DeleteCommand { get { return new RelayCommand<EngineBase>(DeleteProperty); } }
-        public void DeleteProperty(EngineBase engine) { Items.Remove(engine); }
-
+        /// <summary>
+        /// Returns an Engine Result based on the supplied seed number.
+        /// </summary>
+        /// <param name="seed">The seed number which will allow the engine to repeatedly return the same 'random' result.</param>
+        /// <returns>The engine's result choice based on the seed number supplied.</returns>
         public override ResultBase Go(int seed)
         {
             var rand = new Random(seed);
@@ -100,35 +99,12 @@ namespace DyCE
             int index = rand.Next(0, Items.Count);
 
             return Items[index].Go(rand.Next());
-
-            //if (Items.Count != _shuffledIndexes.Count)
-            //{
-            //    _shuffledIndexes.Clear();
-            //    for (int i = 0; i < Items.Count; i++)
-            //        _shuffledIndexes.Add(i);
-            //    Reshuffle(rand);
-            //}
-
-            //_shuffleIndex++;
-
-            //if (_shuffleIndex >= Items.Count)
-            //    Reshuffle(rand);
-
-            //return Items[_shuffledIndexes[_shuffleIndex]].Go(rand.Next());
         }
 
-        //private static readonly List<int> _shuffledIndexes = new List<int>();
-        //private static int _shuffleIndex;
-
-        //private void Reshuffle(Random rand)
-        //{
-        //    _shuffleIndex = 0;
-        //    _shuffledIndexes.Shuffle(rand);
-        //}
-
-        public override string ToString()
-        {
-            return Name + " List"; //Items.Select(e => e.ToString()).Aggregate((s1, s2) => s1 + ", " + s2); 
-        }
+        /// <summary>
+        /// Gets the display name of the List Engine.
+        /// </summary>
+        /// <returns>The display name of the List Engine.</returns>
+        public override string ToString() { return Name + " List"; }
     }
 }
