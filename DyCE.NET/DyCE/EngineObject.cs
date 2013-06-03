@@ -68,6 +68,8 @@ namespace DyCE
         /// </summary>
         private void AddEngineObject() {
             var newEngine = new EngineObject("New Object Engine");
+
+            //TODO: Don't just use the 'General' DyCEBag. This should support references to other DyCEBags as well.
             DB.Instance["General"].Add(newEngine);
             Properties.Add(new EngineProperty("New Property", newEngine)); 
         }

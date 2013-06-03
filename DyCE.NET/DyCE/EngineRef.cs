@@ -76,6 +76,8 @@ namespace DyCE
         {
             if (SubEngine == null) return;
             TrackEngineChanges();
+
+            //TODO: Don't just use the 'General' DyCEBag. This should support references to other DyCEBags as well.
             DB.Instance["General"].DyCEList.CollectionChanged -= DyCEListOnCollectionChanged;
         }
 
@@ -87,6 +89,7 @@ namespace DyCE
             // If the referenced engine isn't loaded already, then wait for the DyCEBag to load first.
             if (SubEngine == null)
             {
+                //TODO: Don't just use the 'General' DyCEBag. This should support references to other DyCEBags as well.
                 var bag = DB.Instance["General"];
 
                 if (bag == null)
@@ -95,6 +98,7 @@ namespace DyCE
                     return;
                 }
 
+                //TODO: Don't just use the 'General' DyCEBag. This should support references to other DyCEBags as well.
                 DB.Instance["General"].DyCEList.CollectionChanged += DyCEListOnCollectionChanged;
                 return;
             }
@@ -104,6 +108,8 @@ namespace DyCE
 
             SubEngine.SubscribeToChange(() => SubEngine.ID, sender => RefID = sender.ID);
             _trackingChanges = true;
+
+            //TODO: Don't just use the 'General' DyCEBag. This should support references to other DyCEBags as well.
             DB.Instance["General"].DyCEList.CollectionChanged -= DyCEListOnCollectionChanged;
             DB.Instance.Loaded -= DBLoaded;
         }

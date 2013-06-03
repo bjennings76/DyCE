@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DyCEBag xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="General" Creator="Brian@BDJSILVER">
+  <Engine xsi:type="EngineText" ID="TextEngineTest" Name="Text Engine Test ">&lt;b&gt;Finnigan&lt;/b&gt; came across a steading. &lt;br/&gt;
+It's population was &lt;b&gt;$dyce.Steading.Population$&lt;/b&gt;.&lt;br/&gt;
+The settlement was &lt;b&gt;$dyce.Steading.Prosperity$&lt;/b&gt;.&lt;br/&gt;
+It's defenses consisted of &lt;b&gt;$dyce.Steading.Defenses$&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
+
+Finnigan exclaimed, "$dyce.SixLetterWords;format="toUpper"$!"</Engine>
   <Engine xsi:type="EngineObject" ID="Steading">
     <Property Name="Prosperity" RefID="ProsperityOptions" />
     <Property Name="Population" RefID="PopulationOptions" />
@@ -15,6 +21,7 @@
       </Engine>
     </Property>
   </Engine>
+  <Engine xsi:type="EngineNumber" ID="NumberEngineTest" Name="Number Engine Test" Min="20" Max="30" />
   <Engine xsi:type="EngineList" ID="PopulationOptions" Name="Population Options">
     <Engine xsi:type="EngineText">exodus</Engine>
     <Engine xsi:type="EngineText">shrinking</Engine>
@@ -15819,11 +15826,4 @@
     <Engine xsi:type="EngineText">zygote</Engine>
     <Engine xsi:type="EngineText">zymase</Engine>
   </Engine>
-  <Engine xsi:type="EngineText" ID="TemplateTest" Name="Template Test ">Test: $dyce.SixLetterWords$</Engine>
-  <Engine xsi:type="EngineText" ID="TemplatePropertyTest" Name="Template Property Test ">&lt;b&gt;Finnigan&lt;/b&gt; came across a steading. &lt;br/&gt;
-It's population was &lt;b&gt;$dyce.Steading.Population$&lt;/b&gt;.&lt;br/&gt;
-The settlement was &lt;b&gt;$dyce.Steading.Prosperity$&lt;/b&gt;.&lt;br/&gt;
-It's defenses consisted of &lt;b&gt;$dyce.Steading.Defenses$&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
-
-Finnigan exclaimed, "$dyce.SixLetterWords;format="toUpper"$!"</Engine>
 </DyCEBag>

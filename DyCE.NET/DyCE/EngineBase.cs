@@ -1,13 +1,19 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight;
 
 namespace DyCE
 {
-    [XmlInclude(typeof(EngineObject)), XmlInclude(typeof(EngineList)), XmlInclude(typeof(EngineText)), XmlInclude(typeof(EngineRef))]
+    /// <summary>
+    /// Base class for all DyCE Engines.
+    /// </summary>
+    [XmlInclude(typeof(EngineObject)), 
+    XmlInclude(typeof(EngineList)), 
+    XmlInclude(typeof(EngineText)), 
+    XmlInclude(typeof(EngineRef)), 
+    XmlInclude(typeof(EngineNumber))]
     public abstract class EngineBase : ViewModelBase
     {
         // dyce.Bear.Weapon
@@ -148,10 +154,5 @@ namespace DyCE
         public abstract ResultBase Go(int seed);
 
         public override string ToString() { return "EngingBase: " + Name; }
-    }
-
-    public class EngineNumber : EngineBase {
-        public override IEnumerable<EngineBase> SubEngines { get { throw new NotImplementedException(); } }
-        public override ResultBase Go(int seed) { throw new NotImplementedException(); }
     }
 }

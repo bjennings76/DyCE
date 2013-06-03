@@ -82,9 +82,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DB.cs" />
     <Compile Include="EngineBase.cs" />
     <Compile Include="DyCEBag.cs" />
     <Compile Include="EngineList.cs" />
+    <Compile Include="EngineNumber.cs" />
     <Compile Include="EngineObject.cs" />
     <Compile Include="EngineProperty.cs" />
     <Compile Include="EngineRef.cs" />
