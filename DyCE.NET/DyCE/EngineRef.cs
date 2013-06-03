@@ -35,6 +35,8 @@ namespace DyCE
         /// </summary>
         public EngineBase SubEngine { get { return DyCEBag.GetEngine(RefID); } }
 
+        protected override string _resultTemplateDefault { get { return "$this.Name$ Ref"; } }
+
         /// <summary>
         /// List of referenced sub-engines. In this case, the one referenced engine.
         /// </summary>

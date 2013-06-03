@@ -27,47 +27,24 @@ namespace DyCE
             }
         }
     }
+
     public class ResultText : ResultBase
     {
-        public string Text
+        private readonly EngineText _engine;
+
+        public string Text { get { return _engine.Text; } }
+
+        public ResultText(EngineText engine, int seed) : base(engine, seed)
         {
-            get
-            {
-                var engine = Engine as EngineText;
-                return engine != null ? engine.Text : null;
-            }
+            _engine = engine;
+            engine.Changed += engine_Changed;
         }
 
-        public ResultText(EngineText engineObject, int seed) : base(engineObject, seed)
-        {
-            engineObject.Changed += engineObject_Changed;
-        }
-
-        void engineObject_Changed(object sender, System.EventArgs e)
+        void engine_Changed(object sender, System.EventArgs e)
         {
             RaisePropertyChanged(() => Text);
         }
 
         public override IEnumerable<ResultBase> SubResults { get { return null; } }
-
-        public override string ToString()
-        {
-            if (Text == null)
-                return base.ToString();
-
-            try
-            {
-                
-                var template = new Template(Text, '$', '$');
-                template.Add("dyce", this);
-                template.Group.RegisterRenderer(typeof(object), new BasicFormatRenderer());
-                var result = template.Render();
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return "*** Template Error: " + ex.Message + " ***\r\n\r\n" + Text;
-            }
-        }
     }
 }

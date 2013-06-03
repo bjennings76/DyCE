@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DyCEBag xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="General" Creator="Brian@BDJSILVER">
-  <Engine xsi:type="EngineText" ID="TextEngineTest" Name="Text Engine Test ">&lt;b&gt;Finnigan&lt;/b&gt; came across a steading. &lt;br/&gt;
-It's population was &lt;b&gt;$dyce.Steading.Population$&lt;/b&gt;.&lt;br/&gt;
-The settlement was &lt;b&gt;$dyce.Steading.Prosperity$&lt;/b&gt;.&lt;br/&gt;
-It's defenses consisted of &lt;b&gt;$dyce.Steading.Defenses$&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
-
-Finnigan exclaimed, "$dyce.SixLetterWords;format="toUpper"$!"</Engine>
   <Engine xsi:type="EngineObject" ID="Steading">
+    <Template>Finnigan came across a steading. &lt;br/&gt;
+It's population included &lt;b&gt;$dyce.NumberEngineTest$&lt;/b&gt; people and &lt;b&gt;$this.Population$&lt;/b&gt;.&lt;br/&gt;
+The settlement was &lt;b&gt;$this.Prosperity$&lt;/b&gt;.&lt;br/&gt;
+It's defenses consisted of &lt;b&gt;$this.Defenses$&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
+
+Finnigan exclaimed, "&lt;b&gt;$dyce.SixLetterWords;format="toUpper"$&lt;/b&gt;!"</Template>
     <Property Name="Prosperity" RefID="ProsperityOptions" />
     <Property Name="Population" RefID="PopulationOptions" />
     <Property Name="Defenses">
@@ -21,13 +21,13 @@ Finnigan exclaimed, "$dyce.SixLetterWords;format="toUpper"$!"</Engine>
       </Engine>
     </Property>
   </Engine>
-  <Engine xsi:type="EngineNumber" ID="NumberEngineTest" Name="Number Engine Test" Min="20" Max="30" />
+  <Engine xsi:type="EngineNumber" ID="NumberEngineTest" Name="Number Engine Test" Min="20" Max="900" />
   <Engine xsi:type="EngineList" ID="PopulationOptions" Name="Population Options">
-    <Engine xsi:type="EngineText">exodus</Engine>
+    <Engine xsi:type="EngineText">leaving town fast</Engine>
     <Engine xsi:type="EngineText">shrinking</Engine>
     <Engine xsi:type="EngineText">holding steady</Engine>
     <Engine xsi:type="EngineText">growing</Engine>
-    <Engine xsi:type="EngineText">booming</Engine>
+    <Engine xsi:type="EngineText">increasing fast</Engine>
   </Engine>
   <Engine xsi:type="EngineList" ID="ProsperityOptions" Name="Prosperity Options">
     <Engine xsi:type="EngineText">dirt poor</Engine>
@@ -35,6 +35,13 @@ Finnigan exclaimed, "$dyce.SixLetterWords;format="toUpper"$!"</Engine>
     <Engine xsi:type="EngineText">doing all right</Engine>
     <Engine xsi:type="EngineText">wealthy</Engine>
     <Engine xsi:type="EngineText">extravagantly rich</Engine>
+  </Engine>
+  <Engine xsi:type="EngineNumber" ID="0to9" Name="0 to 9" Min="0" Max="9" />
+  <Engine xsi:type="EngineObject" ID="WifiPassword" Name="Wifi Password">
+    <Template>&lt;code&gt;$this.word$$this.num1$$this.num2$&lt;/code&gt;</Template>
+    <Property Name="word" RefID="SixLetterWords" />
+    <Property Name="num1" RefID="0to9" />
+    <Property Name="num2" RefID="0to9" />
   </Engine>
   <Engine xsi:type="EngineList" ID="SixLetterWords" Name="Six Letter Words">
     <Engine xsi:type="EngineText">aahing</Engine>

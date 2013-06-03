@@ -34,6 +34,8 @@ namespace DyCE
         /// </summary>
         private readonly Regex _engineRegex = new Regex(@"\$dyce.(?<engine>[^;$.]+)");
 
+        protected override string _resultTemplateDefault { get { return Text; } }
+
         /// <summary>
         /// List of sub-engines used by this engine parsed from the template text.
         /// </summary>

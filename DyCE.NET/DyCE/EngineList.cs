@@ -9,6 +9,8 @@ namespace DyCE
     [XmlRoot("EngineList")]
     public class EngineList : EngineBase
     {
+        protected override string _resultTemplateDefault { get { return "$this.Result$"; } }
+
         /// <summary>
         /// List of sub-engines referenced by this engine.
         /// </summary>
@@ -89,17 +91,7 @@ namespace DyCE
         /// </summary>
         /// <param name="seed">The seed number which will allow the engine to repeatedly return the same 'random' result.</param>
         /// <returns>The engine's result choice based on the seed number supplied.</returns>
-        public override ResultBase Go(int seed)
-        {
-            var rand = new Random(seed);
-
-            if (Items.Count < 1)
-                return new ResultEmpty(this, rand.Next());
-
-            int index = rand.Next(0, Items.Count);
-
-            return Items[index].Go(rand.Next());
-        }
+        public override ResultBase Go(int seed) { return new ResultList(this, seed); }
 
         /// <summary>
         /// Gets the display name of the List Engine.

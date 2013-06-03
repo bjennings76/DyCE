@@ -108,6 +108,8 @@ namespace DyCE
         /// </summary>
         public int SliderTicks { get { return _sliderMax/10; } }
 
+        protected override string _resultTemplateDefault { get { return "$this.Result$"; } }
+
         /// <summary>
         /// Returns a list of sub-engines. There are no sub-engines for a random number range.
         /// </summary>

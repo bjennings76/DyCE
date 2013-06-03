@@ -134,6 +134,8 @@
     							<TextBlock Text="Name:" Margin="2"/>
     							<TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="50" Margin="2" Grid.Column="1"/>
     						</Grid>
+    						<TextBlock Text="Template:" Margin="2"/>
+    						<TextBox Text="{Binding ResultTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
     						<ToolBar Margin="5" Visibility="Collapsed">
     							<ToolBar.Effect>
     								<DropShadowEffect ShadowDepth="3" Opacity="0.5"/>
@@ -234,7 +236,9 @@
     							<TextBlock Text="Object Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
     							<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotKeyboardFocus="txt_SelectAll"/>
     						</Grid>
-    						<ToolBar Margin="0,5">
+    						<TextBlock Text="Result Template:" Margin="2"/>
+    						<TextBox Text="{Binding ResultTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
+    						<ToolBar Margin="-2,5,0,5">
     							<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
     								<Image Source="Icons/object.png" Width="24" Height="24"/>
     							</Button>
@@ -299,6 +303,8 @@
     							<TextBlock Text="List Name:" HorizontalAlignment="Right" Margin="2" VerticalAlignment="Center"/>
     							<TextBox x:Name="txt_Name" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="9" MinWidth="150" Margin="2" GotKeyboardFocus="txt_SelectAll"/>
     						</Grid>
+    						<TextBlock Text="Template:" Margin="2"/>
+    						<TextBox Text="{Binding ResultTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
     						<ToolBar Margin="5">
     							<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
     								<Image Source="Icons/object.png" Width="24" Height="24"/>

@@ -32,15 +32,15 @@ namespace DyCE
             return engine == null ? null : engine.Properties.Select(p => p.Go(rand.Next()) as ResultProperty).ToList();
         }
 
-        public override string ToString()
-        {
-            if (!Properties.Any())
-                return Name;
+        //public override string ToString()
+        //{
+        //    if (!Properties.Any())
+        //        return Name;
 
-            if (!string.IsNullOrWhiteSpace(Name))
-                return Name + " Result: " + Properties.Select(p => p.ToString()).Aggregate((s1, s2) => s1 + ", " + s2);
+        //    if (!string.IsNullOrWhiteSpace(Name))
+        //        return Name + " Result: " + Properties.Select(p => p.ToString()).Aggregate((s1, s2) => s1 + ", " + s2);
 
-            return Properties.Select(p => p.ToString()).Aggregate((s1, s2) => s1 + ", " + s2) + ")";
-        }
+        //    return Properties.Select(p => p.ToString()).Aggregate((s1, s2) => s1 + ", " + s2) + ")";
+        //}
     }
 }

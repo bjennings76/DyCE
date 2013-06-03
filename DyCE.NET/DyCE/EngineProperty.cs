@@ -77,6 +77,8 @@ namespace DyCE
         [XmlAttribute("Name")]
         public override string NameSaved { get { return Name; } set { Name = value; } }
 
+        protected override string _resultTemplateDefault { get { return "$this.Result$"; } }
+
         /// <summary>
         /// List of one: the sub-engine this property references. Used by the Engine Editor's tree control.
         /// </summary>

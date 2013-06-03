@@ -25,6 +25,8 @@ namespace DyCE
         /// </summary>
         public override IEnumerable<EngineBase> SubEngines { get { return Properties; } }
 
+        protected override string _resultTemplateDefault { get { return "$this.Name$ Result: $this.Properties; separator=\", \"$"; } }
+
         /// <summary>
         /// Creates a new Object Engine using the supplied name and list of properties.
         /// </summary>

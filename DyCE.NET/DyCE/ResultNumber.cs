@@ -30,11 +30,5 @@ namespace DyCE
         /// The numberical result of this Number Result object.
         /// </summary>
         public int Result { get { return new Random(Seed).Next(_engine.Min, _engine.Max + 1); } }
-
-        /// <summary>
-        /// The final text result of this Result object.
-        /// </summary>
-        /// <returns>Returns the final result of this Result object.</returns>
-        public override string ToString() { return Result.ToString(CultureInfo.InvariantCulture); }
     }
 }

@@ -61,18 +61,29 @@ namespace DyCE
         /// </summary>
         public string DisplayName { get { return ToString(); } }
 
+        protected abstract string _resultTemplateDefault { get; }
+        
         private string _resultTemplate;
+
+        [XmlElement("Template")]
+        public string ResultTemplateSaved
+        {
+            get { return _resultTemplate == _resultTemplateDefault ? null : _resultTemplate; }
+            set { _resultTemplate = value; }
+        }
 
         /// <summary>
         /// This template text will be used to construct the result object's 'ToString' function using StringTemplate.
         /// </summary>
+        [XmlIgnore]
         public string ResultTemplate
         {
-            get { return _resultTemplate; } 
+            get { return _resultTemplate ?? (_resultTemplate = _resultTemplateDefault); }
             set
             {
                 _resultTemplate = value;
                 RaisePropertyChanged(() => ResultTemplate);
+                RaiseEngineChanged();
             }
         }
 
