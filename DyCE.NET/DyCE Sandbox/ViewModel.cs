@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using DyCE;
@@ -75,11 +76,10 @@ namespace DyCE_Sandbox
                 RaisePropertyChanged(() => WindowName);
                 Results.Clear();
 
-                if (_selectedEngine != null)
-                {
-                    Results.Add(SelectedEngine.Go(new Random().Next()));
-                    _selectedEngine.Changed += SelectedEngineOnChanged;
-                }
+                if (_selectedEngine == null) return;
+
+                Results.Add(SelectedEngine.Go(new Random().Next()));
+                _selectedEngine.Changed += SelectedEngineOnChanged;
             }
         }
 
@@ -103,20 +103,29 @@ namespace DyCE_Sandbox
             _timer.Interval = TimeSpan.FromSeconds(0.5);
             _timer.Tick += _timer_Tick;
             _timer.Start();
+            Results.CollectionChanged += Results_CollectionChanged;
         }
 
-        private bool _updatingResults;
+        void Results_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) { UpdateResults(); }
+
+        private CancellationTokenSource _cancellationTokenSource;
         private void UpdateResults()
         {
-            //if (_updatingResults) return;
+            if (_cancellationTokenSource != null) 
+                _cancellationTokenSource.Cancel();
 
-            _updatingResults = true;
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            var token = _cancellationTokenSource.Token;
+
             Task.Factory.StartNew<string>(GetHTMLResult).ContinueWith(task =>
             {
+                if (token.IsCancellationRequested)
+                    return;
+
                 _resultsHTML = task.Result;
-                _updatingResults = false;
                 RaisePropertyChanged(() => ResultsHTML);
-            });
+            }, token);
         }
 
         private string GetHTMLResult()
@@ -133,8 +142,8 @@ namespace DyCE_Sandbox
 
 
         public RelayCommand PausePreviewCommand { get { return new RelayCommand(PausePreview, CanPausePreview); } }
-        public bool CanPausePreview() { return SelectedEngine != null; }
-        public void PausePreview() { Paused = !Paused; }
+        private bool CanPausePreview() { return SelectedEngine != null; }
+        private void PausePreview() { Paused = !Paused; }
 
         void _timer_Tick(object sender, EventArgs e)
         {
