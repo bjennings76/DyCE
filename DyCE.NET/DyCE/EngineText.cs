@@ -8,20 +8,15 @@ namespace DyCE
 {
     public class EngineText : EngineBase {
         /// <summary>
-        /// Internal string that holds the engine's raw template text.
-        /// </summary>
-        private string _text;
-
-        /// <summary>
         /// The Text Engine's template text.
         /// </summary>
         [XmlText]
         public string Text
         {
-            get { return _text; } 
+            get { return ResultTemplate; }
             set
             {
-                _text = value;
+                ResultTemplate = value;
                 RaisePropertyChanged(() => Text);
                 RaisePropertyChanged(() => Name);
                 RaisePropertyChanged(() => DisplayName);
@@ -43,10 +38,10 @@ namespace DyCE
         {
             get
             {
-                if (_text == null)
+                if (ResultTemplate == null)
                     return null;
 
-                var matches = _engineRegex.Matches(_text);
+                var matches = _engineRegex.Matches(ResultTemplate);
 
                 if (matches.Count == 0)
                     return null;

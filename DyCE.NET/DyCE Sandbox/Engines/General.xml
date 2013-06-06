@@ -37,11 +37,27 @@ Finnigan exclaimed, "&lt;b&gt;$dyce.SixLetterWords;format="toUpper"$&lt;/b&gt;!"
     <Engine xsi:type="EngineText">extravagantly rich</Engine>
   </Engine>
   <Engine xsi:type="EngineNumber" ID="0to9" Name="0 to 9" Min="0" Max="9" />
-  <Engine xsi:type="EngineObject" ID="WifiPassword" Name="Wifi Password">
+  <Engine xsi:type="EngineObject" ID="WifiPasswordGenerator" Name="Wifi Password Generator">
     <Template>&lt;code&gt;$this.word$$this.num1$$this.num2$&lt;/code&gt;</Template>
     <Property Name="word" RefID="SixLetterWords" />
     <Property Name="num1" RefID="0to9" />
     <Property Name="num2" RefID="0to9" />
+  </Engine>
+  <Engine xsi:type="EngineObject" ID="TemplateTest" Name="Template Test">
+    <Template>$this.Name$ Result:&lt;br/&gt;
+$this.Properties:{p | &amp;nbsp &amp;nbsp &amp;nbsp $p.Name$: $p$}; separator="&lt;br/&gt;"$</Template>
+    <Property Name="Value 1" RefID="0to9" />
+    <Property Name="Value 2" RefID="0to9" />
+    <Property Name="Value 3">
+      <Engine xsi:type="EngineList">
+        <Engine xsi:type="EngineText">
+          <Template>New Text Engine</Template>Test1</Engine>
+        <Engine xsi:type="EngineText">
+          <Template>New Text Engine</Template>Test2</Engine>
+        <Engine xsi:type="EngineText">
+          <Template>New Text Engine</Template>Test3</Engine>
+      </Engine>
+    </Property>
   </Engine>
   <Engine xsi:type="EngineList" ID="SixLetterWords" Name="Six Letter Words">
     <Engine xsi:type="EngineText">aahing</Engine>
