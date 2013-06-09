@@ -89,6 +89,7 @@
     <Compile Include="EngineNumber.cs" />
     <Compile Include="EngineObject.cs" />
     <Compile Include="EngineProperty.cs" />
+    <Compile Include="EngineRange.cs" />
     <Compile Include="EngineRef.cs" />
     <Compile Include="EngineText.cs" />
     <Compile Include="NotificationExtensions.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="ResultNumber.cs" />
     <Compile Include="ResultObject.cs" />
     <Compile Include="ResultProperty.cs" />
+    <Compile Include="ResultRange.cs" />
     <Compile Include="ResultText.cs" />
     <Compile Include="StringWriterWithEncoding.cs" />
     <Compile Include="Utilities.cs" />

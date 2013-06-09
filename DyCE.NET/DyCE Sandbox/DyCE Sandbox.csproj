@@ -179,6 +179,7 @@
     <Resource Include="Icons\object.png" />
     <Resource Include="Icons\reference.png" />
     <Resource Include="Icons\text.png" />
+    <Resource Include="range.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\control_pause.png" />

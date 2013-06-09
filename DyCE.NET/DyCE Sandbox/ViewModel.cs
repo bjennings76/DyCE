@@ -33,7 +33,18 @@ namespace DyCE_Sandbox
             }
         }
 
-        public IEnumerable<DyCEBag> DyCEBags { get { return DB.Instance.DyCEBags; } } 
+        private int _maxResults = 100;
+        public int MaxResults
+        {
+            get { return _maxResults; }
+            set
+            {
+                _maxResults = value;
+                RaisePropertyChanged(() => MaxResults);
+            }
+        }
+
+        public IEnumerable<DyCEBag> DyCEBags { get { return DB.Instance.DyCEBags; } }
 
         private DyCEBag _bag;
         public DyCEBag Bag
@@ -147,17 +158,18 @@ namespace DyCE_Sandbox
 
         void _timer_Tick(object sender, EventArgs e)
         {
-            if (SelectedEngine != null && !Paused)
-            {
-                lock (this)
-                {
-                    Results.Add(SelectedEngine.Go(new Random().Next()));
+            if (SelectedEngine == null || Paused) 
+                return;
 
-                    if (Results.Count > 100)
-                        Results.RemoveAt(0);                    
-                }
-                UpdateResults();
+            lock (this)
+            {
+                Results.Add(SelectedEngine.Go(new Random().Next()));
+
+                if (Results.Count > MaxResults)
+                    Results.RemoveAt(0);                    
             }
+
+            UpdateResults();
         }
 
     }

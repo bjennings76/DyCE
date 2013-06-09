@@ -17,9 +17,9 @@ namespace DyCE
         /// <summary>
         /// Creates a new Number Engine Result object from the supplied Number Engine and seed number.
         /// </summary>
-        /// <param name="engineObject">Engine from which to generate the result.</param>
+        /// <param name="engine">Engine from which to generate the result.</param>
         /// <param name="seed">The seed number which allows this result to always return the same value.</param>
-        public ResultNumber(EngineNumber engineObject, int seed) : base(engineObject, seed) { _engine = engineObject; }
+        public ResultNumber(EngineNumber engine, int seed) : base(engine, seed) { _engine = engine; }
 
         /// <summary>
         /// A list of sub-results used to get the final value. (Always null for Number Result objects.)

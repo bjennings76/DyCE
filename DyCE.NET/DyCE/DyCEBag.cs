@@ -111,6 +111,11 @@ namespace DyCE
         public RelayCommand AddEngineNumberCommand { get { return new RelayCommand(() => DyCEList.Add(new EngineNumber("New Number Engine"))); } }
 
         /// <summary>
+        /// Adds a new Number Engine to the DyCEBag's DyCEList.
+        /// </summary>
+        public RelayCommand AddEngineRangeCommand { get { return new RelayCommand(() => DyCEList.Add(new EngineRange("New Number Engine"))); } }
+
+        /// <summary>
         /// Saves the DyCEBag to it's .xml file.
         /// </summary>
         public RelayCommand SaveCommand { get { return new RelayCommand(Save); } }

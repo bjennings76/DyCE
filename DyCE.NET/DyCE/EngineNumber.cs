@@ -125,6 +125,8 @@ namespace DyCE
             _limitDelay.Tick += _limitDelay_Tick;
         }
 
+        public EngineNumber(int min, int max) : this(null, min, max) { }
+
         /// <summary>
         /// Creates a new Number Engine with the supplied name and optional min and max values.
         /// </summary>

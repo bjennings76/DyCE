@@ -6,7 +6,6 @@ using GalaSoft.MvvmLight.Command;
 
 namespace DyCE
 {
-    [XmlRoot("EngineList")]
     public class EngineList : EngineBase
     {
         protected override string _resultTemplateDefault { get { return "$this.Result$"; } }

@@ -13,9 +13,9 @@ namespace DyCE
 
         public new ResultBase this[string propertyName] { get { return Properties.FirstOrDefault(p => p.Name.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase)); } }
 
-        public ResultObject(EngineObject engineObject, int seed) : base(engineObject, seed)
+        public ResultObject(EngineObject engine, int seed) : base(engine, seed)
         {
-            engineObject.Changed += engineObject_Changed;
+            engine.Changed += engineObject_Changed;
         }
 
         void engineObject_Changed(object sender, EventArgs e)

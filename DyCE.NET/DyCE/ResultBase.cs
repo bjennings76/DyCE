@@ -11,9 +11,9 @@ namespace DyCE
         public string DisplayName { get { return ToString(); } }
         public int Seed { get; set; }
 
-        public ResultBase(EngineBase engineObject, int seed)
+        public ResultBase(EngineBase engine, int seed)
         {
-            Engine = engineObject;
+            Engine = engine;
             Seed = seed;
             Engine.Changed += EngineChanged;
             Engine.SubscribeToChange(() => Engine.Name, NameChanged);
