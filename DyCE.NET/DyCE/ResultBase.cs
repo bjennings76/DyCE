@@ -41,7 +41,7 @@ namespace DyCE
 
             try
             {
-                var template = new Template(Engine.ResultTemplate, '$', '$');
+                var template = new Template(Engine.ResultTemplate.Replace("$this$", Name), '$', '$');
                 template.Add("this", this);
                 template.Add("dyce", new ResultDB(Seed));
                 template.Group.RegisterRenderer(typeof(object), new BasicFormatRenderer());

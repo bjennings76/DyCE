@@ -7,7 +7,7 @@ namespace DyCE
     [Serializable]
     public class EngineRange : EngineBase
     {
-        protected override string _resultTemplateDefault { get { return "$this.Count$ $this.Name$s"; } }
+        protected override string _resultTemplateDefault { get { return "$this.Name$: $this.Count$"; } }
         private EngineNumber _range = new EngineNumber();
         private EngineBase _subEngine;
 
@@ -41,5 +41,7 @@ namespace DyCE
         public override IEnumerable<EngineBase> SubEngines { get { return new[] {SubEngine}; } }
 
         public override ResultBase Go(int seed) { return new ResultRange(this, seed); }
+
+        public override string ToString() { return Name + " Range"; }
     }
 }

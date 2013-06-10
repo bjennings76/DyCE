@@ -8,7 +8,10 @@ namespace DyCE
         private readonly EngineRange _engine;
         public ResultRange(EngineRange engine, int seed) : base(engine, seed) { _engine = engine; }
 
-        private ResultNumber _rangeCountResult;
+        private ResultNumber _rangeCountResultRoot;
+        private ResultNumber _rangeCountResult { get { return _rangeCountResultRoot ?? (_rangeCountResultRoot = _engine.Range.Go(new Random(Seed).Next()) as ResultNumber); } }
+
+        public int Count { get { return _rangeCountResult.Result; } }
 
         private List<ResultBase> _results;
         public IEnumerable<ResultBase> Results
@@ -19,11 +22,6 @@ namespace DyCE
                 {
                     _results = new List<ResultBase>();
                     var rand = new Random(Seed);
-                    _rangeCountResult = _engine.Range.Go(new Random(Seed).Next()) as ResultNumber;
-
-                    if (_rangeCountResult == null)
-                        throw new Exception("Range results is not a 'ResultNumber' result somehow.");
-
                     _subResults.Add(_rangeCountResult);
 
                     for (int i = 0; i < _rangeCountResult.Result; i++)
@@ -35,8 +33,6 @@ namespace DyCE
                 return _results;
             }
         }
-
-        public int Count { get { return _results.Count; } }
 
         private List<ResultBase> _subResults = new List<ResultBase>();
         public override IEnumerable<ResultBase> SubResults { get { return _subResults ?? (_subResults = GetSubResults()); } }

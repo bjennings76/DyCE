@@ -77,14 +77,24 @@ namespace DyCE
         }
 
         /// <summary>
-        /// Command to add a new annonymous List Engine to this Object Engine's property list.
+        /// Command to add a new anonymous List Engine to this Object Engine's property list.
         /// </summary>
         public RelayCommand AddEngineListCommand { get { return new RelayCommand(() => Properties.Add(new EngineProperty("New Property", new EngineList()))); } }
 
         /// <summary>
-        /// Command to add a new annonymous Text Engine to this Object Engine's property list.
+        /// Command to add a new anonymous Text Engine to this Object Engine's property list.
         /// </summary>
         public RelayCommand AddEngineTextCommand { get { return new RelayCommand(() => Properties.Add(new EngineProperty("New Property", new EngineText("New Text Value")))); } }
+
+        /// <summary>
+        /// Command to add a new anonymous Number Engine to this Object Engine's property list.
+        /// </summary>
+        public RelayCommand AddEngineNumberCommand { get { return new RelayCommand(() => Properties.Add(new EngineProperty("New Property", new EngineNumber()))); } }
+
+        /// <summary>
+        /// Command to add a new anonymous Range Engine to this Object Engine's property list.
+        /// </summary>
+        public RelayCommand AddEngineRangeCommand { get { return new RelayCommand(() => Properties.Add(new EngineProperty("New Property", new EngineRange()))); } }
 
         /// <summary>
         /// Adds a new item to the property list.

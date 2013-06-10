@@ -13,6 +13,7 @@ namespace DyCE
     XmlInclude(typeof(EngineList)), 
     XmlInclude(typeof(EngineText)), 
     XmlInclude(typeof(EngineRef)), 
+    XmlInclude(typeof(EngineRange)), 
     XmlInclude(typeof(EngineNumber))]
     public abstract class EngineBase : ViewModelBase
     {

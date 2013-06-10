@@ -87,10 +87,10 @@
         				<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineTextCommand, Mode=OneWay}" ToolTip="Add New Text Engine">
         					<Image Source="Icons/text.png" Width="24" Height="24"/>
         				</Button>
-        				<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine" Command="{Binding AddEngineNumberCommand, Mode=OneWay}">
+        				<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineNumberCommand, Mode=OneWay}" ToolTip="Add New Number Engine">
         					<Image Height="24" Source="Icons/number.png" Width="24"/>
         				</Button>
-        				<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine" Command="{Binding AddEngineNumberCommand, Mode=OneWay}">
+        				<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineRangeCommand, Mode=OneWay}" ToolTip="Add New Range Engine">
         					<Image Height="24" Source="range.png" Width="24"/>
         				</Button>
         			</ToolBar>
@@ -166,6 +166,8 @@
     							<Slider AutoToolTipPlacement="TopLeft" TickPlacement="BottomRight" Margin="0,0,0,-4" Maximum="{Binding SliderMax, Mode=OneWay}" Value="{Binding Min}" TickFrequency="{Binding SliderTicks, Mode=OneWay}"/>
     							<Slider AutoToolTipPlacement="BottomRight" TickPlacement="TopLeft" Value="{Binding Max}" TickFrequency="{Binding SliderTicks, Mode=OneWay}" Maximum="{Binding SliderMax, Mode=OneWay}"/>
     						</StackPanel>
+    						<local:ToolBar_Engines Margin="0,4"/>
+    						<ContentControl Content="{Binding SubEngine}"/>
     					</StackPanel>
 					</HierarchicalDataTemplate>
     				<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineNumber}" ItemsSource="{Binding SubEngines}">
@@ -282,26 +284,7 @@
     						</Grid>
     						<TextBlock Text="Result Template:" Margin="2"/>
     						<TextBox Text="{Binding ResultTemplate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
-    						<ToolBar Margin="-2,5,0,5">
-    							<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineObjectCommand, Mode=OneWay}" ToolTip="Add New Object Engine">
-    								<Image Source="Icons/object.png" Width="24" Height="24"/>
-    							</Button>
-    							<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineListCommand, Mode=OneWay}" ToolTip="Add New List Engine">
-    								<Image Source="Icons/list.png" Width="24" Height="24"/>
-    							</Button>
-    							<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineTextCommand, Mode=OneWay}" ToolTip="Add New Text Engine">
-    								<Image Source="Icons/text.png" Width="24" Height="24"/>
-    							</Button>
-    							<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineNumberCommand, Mode=OneWay}" ToolTip="Add New Number Engine">
-    								<Image Height="24" Source="Icons/number.png" Width="24"/>
-    							</Button>
-    							<Button Style="{DynamicResource ButtonClear}" Command="{Binding AddEngineRangeCommand, Mode=OneWay}" ToolTip="Add New Range Engine">
-    								<Image Height="24" Source="Icons/range.png" Width="24"/>
-    							</Button>
-    							<Button Style="{DynamicResource ButtonClear}" ToolTip="Add Reference to Existing Engine" Click="btn_SelectEngine">
-    								<Image Height="24" Source="Icons/reference.png" Width="24"/>
-    							</Button>
-    						</ToolBar>
+    						<local:ToolBar_Engines/>
     						<TextBlock Text="Properties:" Margin="2"/>
     						<ListBox ItemsSource="{Binding Properties}" SelectedItem="{Binding SelectedSubEngine}" HorizontalContentAlignment="Stretch" Template="{DynamicResource NoWheelScrollListBoxTemplate}"/>
     						<Grid x:Name="pnl_SubEngineSelected" Margin="2">
