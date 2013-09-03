@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
+using DyCE.Annotations;
 using GalaSoft.MvvmLight;
 
 namespace DyCE
@@ -18,14 +19,18 @@ namespace DyCE
     public abstract class EngineBase : ViewModelBase
     {
         // dyce.Bear.Weapon
+
+        [XmlAttribute("ID")]
+        public string IDSaved { get { return _id; } set { ID = value; } }
+
         private string _id;
         /// <summary>
         /// Engine's reference ID. User + Bag + ID create the unique reference for any engine.
         /// </summary>
-        [XmlAttribute]
+        [XmlIgnore]
         public virtual string ID
         {
-            get { return _id; }
+            get { return string.IsNullOrWhiteSpace(_id) ? Name.Replace(" ", "") : _id; }
             set
             {
                 _id = value;
@@ -66,7 +71,7 @@ namespace DyCE
         
         private string _resultTemplate;
 
-        [XmlElement("Template")]
+        [XmlElement("Template"), UsedImplicitly]
         public string ResultTemplateSaved
         {
             get { return _resultTemplate == _resultTemplateDefault ? null : _resultTemplate; }
@@ -109,6 +114,8 @@ namespace DyCE
             }
         }
 
+        public virtual string URL { get { return DyCEBag.GetEngineURL(this); } }
+
         #region Changed [event]
 
         /// <summary>
@@ -141,7 +148,7 @@ namespace DyCE
 
         private void SetID(string name)
         {
-            if (name == null)
+            if (string.IsNullOrWhiteSpace(name))
                 return;
 
             _id = name.Replace(" ", "");

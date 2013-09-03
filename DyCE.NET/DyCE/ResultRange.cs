@@ -37,6 +37,11 @@ namespace DyCE
         private List<ResultBase> _subResults = new List<ResultBase>();
         public override IEnumerable<ResultBase> SubResults { get { return _subResults ?? (_subResults = GetSubResults()); } }
 
+        public override ResultBase this[string propertyName]
+        {
+            get { return null; }
+        }
+
         private List<ResultBase> GetSubResults()
         {
             var subResults = new List<ResultBase>(Results);

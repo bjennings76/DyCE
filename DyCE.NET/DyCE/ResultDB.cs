@@ -1,3 +1,4 @@
+using DyCE.Annotations;
 using GalaSoft.MvvmLight;
 
 namespace DyCE
@@ -6,6 +7,7 @@ namespace DyCE
     {
         private readonly int _seed;
 
+        [UsedImplicitly]
         public object this[string refID]
         {
             get

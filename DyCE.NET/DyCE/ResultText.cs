@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Antlr4.StringTemplate;
@@ -9,21 +8,31 @@ namespace DyCE
     {
         public string ToString(object obj, string formatString, CultureInfo culture)
         {
-            switch (formatString)
+            string objString = obj.ToString();
+
+            if (formatString == null)
+                return objString;
+
+            switch (formatString.ToLower())
             {
-                case "toUpper":
-                    var s = obj.ToString().ToCharArray();
+                case "toupper":
+                    var s = objString.ToCharArray();
                     s[0] = char.ToUpper(s[0]);
                     return new string(s);
 
-                case "toLower":
-                    return obj.ToString().ToLower();
+                case "tolower":
+                    return objString.ToLower();
 
-                case "toCaps":
-                    return obj.ToString().ToUpper();
+                case "tocaps":
+                    return objString.ToUpper();
 
                 default:
-                    return obj.ToString();
+                    int objInt;
+
+                    if (int.TryParse(objString, out objInt))
+                        return objInt.ToString(formatString);
+
+                    return objString;
             }
         }
     }
@@ -46,5 +55,10 @@ namespace DyCE
         }
 
         public override IEnumerable<ResultBase> SubResults { get { return null; } }
+
+        public override ResultBase this[string propertyName]
+        {
+            get { return null; }
+        }
     }
 }

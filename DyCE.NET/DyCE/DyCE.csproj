@@ -93,6 +93,7 @@
     <Compile Include="EngineRef.cs" />
     <Compile Include="EngineText.cs" />
     <Compile Include="NotificationExtensions.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Randomize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultBase.cs" />

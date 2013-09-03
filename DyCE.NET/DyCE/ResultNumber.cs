@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace DyCE
 {
@@ -25,6 +24,11 @@ namespace DyCE
         /// A list of sub-results used to get the final value. (Always null for Number Result objects.)
         /// </summary>
         public override IEnumerable<ResultBase> SubResults { get { return null; } }
+
+        public override ResultBase this[string propertyName]
+        {
+            get { return null; }
+        }
 
         /// <summary>
         /// The numberical result of this Number Result object.

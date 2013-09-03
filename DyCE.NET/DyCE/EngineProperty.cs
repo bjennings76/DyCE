@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Serialization;
 
 namespace DyCE
@@ -66,12 +65,6 @@ namespace DyCE
         }
 
         /// <summary>
-        /// Object Engine properties do not use this ID, but it is included due to inheritance form EngineBase.
-        /// </summary>
-        [XmlAttribute]
-        public override string ID { get { return null; } set { base.ID = value; } }
-
-        /// <summary>
         /// Serializable name of this Object Engine property.
         /// </summary>
         [XmlAttribute("Name")]
@@ -83,6 +76,11 @@ namespace DyCE
         /// List of one: the sub-engine this property references. Used by the Engine Editor's tree control.
         /// </summary>
         public override IEnumerable<EngineBase> SubEngines { get { return new[] { SubEngine }; } }
+
+        public override string URL
+        {
+            get { return SubEngine.URL; }
+        }
 
         /// <summary>
         /// Creates a new Object Engine property using the string supplied as the property name.

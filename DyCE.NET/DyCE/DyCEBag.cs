@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using System.Collections.ObjectModel;
@@ -15,6 +14,8 @@ namespace DyCE
     /// </summary>
     public class DyCEBag : ViewModelBase
     {
+        public const string ROOT_URL = "http://unspeakableproductions.com/dyce";
+
         /// <summary>
         /// Internal variable that holds the DyCEBag's name.
         /// </summary>
@@ -35,6 +36,17 @@ namespace DyCE
                 RaisePropertyChanged(() => Name);
             }
         }
+
+        /// <summary>
+        /// The ID of the DyCEBag, unique to the user.
+        /// </summary>
+        [XmlIgnore]
+        public string ID { get { return Name.Replace(" ", ""); } }
+
+        /// <summary>
+        /// The 
+        /// </summary>
+        public object URL { get { return ROOT_URL + "?creator=" + Creator + "&bag=" + ID; } }
 
         /// <summary>
         /// Name of the DyCEBag's creator/owner which will eventually be used as a 'namespace' to handle DyCEBags created by different people but hold the same name/ID.
@@ -180,6 +192,11 @@ namespace DyCE
                 throw new Exception("Could not find engine " + engineID);
 
             return engine;
+        }
+
+        public static string GetEngineURL(EngineBase engine)
+        {
+            return (from bag in DB.Instance.DyCEBags where bag.DyCEList.Contains(engine) select bag.URL + "&engine=" + engine.ID).FirstOrDefault();
         }
     }
 }

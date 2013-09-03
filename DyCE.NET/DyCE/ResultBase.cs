@@ -7,7 +7,6 @@ namespace DyCE
 {
     public abstract class ResultBase : ViewModelBase {
         public EngineBase Engine { get; set; }
-        public string Name { get { return Engine.Name; } }
         public string DisplayName { get { return ToString(); } }
         public int Seed { get; set; }
 
@@ -21,18 +20,18 @@ namespace DyCE
 
         private void EngineChanged(object sender, EventArgs e)
         {
-            RaisePropertyChanged(() => Name);
             RaisePropertyChanged(() => DisplayName);
             RaisePropertyChanged(() => SubResults);
         }
 
         private void NameChanged(EngineBase sender)
         {
-            RaisePropertyChanged(() => Name);
             RaisePropertyChanged(() => DisplayName);
         }
 
         public abstract IEnumerable<ResultBase> SubResults { get; }
+
+        public string URL { get { return Engine.URL + "&seed=" + Seed; } }
 
         public override sealed string ToString()
         {
@@ -41,7 +40,7 @@ namespace DyCE
 
             try
             {
-                var template = new Template(Engine.ResultTemplate.Replace("$this$", Name), '$', '$');
+                var template = new Template(Engine.ResultTemplate.Replace("$this$", Engine.Name), '$', '$');
                 template.Add("this", this);
                 template.Add("dyce", new ResultDB(Seed));
                 template.Group.RegisterRenderer(typeof(object), new BasicFormatRenderer());
@@ -53,6 +52,8 @@ namespace DyCE
                 return "*** Template Error: " + ex.Message + " ***\r\n\r\n" + Engine.ResultTemplate;
             }
         }
+
+        public abstract ResultBase this[string propertyName] { get; }
     }
 
     public class ResultList : ResultBase
@@ -77,5 +78,10 @@ namespace DyCE
         }
 
         public override IEnumerable<ResultBase> SubResults { get { return new List<ResultBase> {Result}; } }
+
+        public override ResultBase this[string propertyName]
+        {
+            get { return Result[propertyName]; }
+        }
     }
 }

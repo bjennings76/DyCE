@@ -409,7 +409,7 @@
     			</Button>
 
     		</Grid>
-    		<WebBrowser x:Name="web_Results" local:BrowserBehavior.Html="{Binding ResultsHTML, Mode=OneWay}" Grid.Row="1" Margin="2" UseLayoutRounding="True"/>
+    		<WebBrowser x:Name="web_Results" local:BrowserBehavior.Html="{Binding ResultsHTML, Mode=OneWay}" Grid.Row="1" Margin="2" UseLayoutRounding="True" Navigating="web_Results_Navigating"/>
     	</Grid>
     </Grid>
 </Window>

@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Windows;
 using System.Windows.Controls;
 using DyCE;
@@ -28,30 +29,12 @@ namespace DyCE_Sandbox
             // Get the 'ViewModel' resource
             _vm = (ViewModel)Application.Current.Resources["ViewModelDataSource"];
 
-            //var prosperityList = new EngineList("Prosperity Options", new object[]{"Dirt", "Poor", "Moderate", "Wealthy", "Rich"});
-            //var prosperityProperty = new EngineProperty("Prosperity", prosperityList);
-
-            //var populationList = new EngineList("Population Options", new[]{"Exodus", "Shrinking", "Steady", "Growing", "Booming"});
-            //var populationProperty = new EngineProperty("Population", populationList);
-
-            //var defenseList = new EngineList(new[]{"None", "Militia", "Watch", "Guard", "Garrison", "Battalion", "Legion"});
-            //var defenseProperty = new EngineProperty("Defenses", defenseList);
-
-            //var steadingEngine = new EngineObject("Steading", prosperityProperty, populationProperty, defenseProperty);
-
-            //ViewModel.Bag.DyCEList.Add(steadingEngine);
-            ////ViewModel.Bag.DyCEList.Add(defenseList);
-            //ViewModel.Bag.DyCEList.Add(populationList);
-            //ViewModel.Bag.DyCEList.Add(prosperityList);
-
-            //_vm.Bag = DyCEBag.Load(new FileInfo(@"Engines\Generic.xml"));
-
             var test = DB.Instance["General"]["Steading"].Go(55) as ResultObject;
 
-            string result = test.Name + ":\r\n";
+            string result = test.Engine.Name + ":\r\n";
 
             foreach (var property in test.Properties)
-                result += "    " + test[property.Name] + "\r\n";
+                result += "    " + test[property.Engine.ID] + "\r\n";
 
             Console.WriteLine(result);
 
@@ -114,6 +97,41 @@ namespace DyCE_Sandbox
             var newBag = new DyCEBag {Name = nameDialog.Result};
             DB.Instance.Add(newBag);
             _vm.Bag = newBag;
+        }
+
+        private void web_Results_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
+        {
+            if (e.Uri == null) 
+                return;
+
+            var queries = HttpUtility.ParseQueryString(e.Uri.Query);
+
+            int seed;
+            if (!int.TryParse(queries["seed"], out seed))
+                return;
+
+            var creator = queries["creator"];
+            var bag = queries["bag"];
+            var engine = queries["engine"];
+            
+            if (creator != null && bag != null && engine != null)
+            {
+                var bagObj = DyCE.DB.Instance.DyCEBags.FirstOrDefault(d => d.Name == bag);
+
+                if (bagObj == null)
+                    return;
+
+                var engineObj = bagObj.DyCEList.FirstOrDefault(dyce => dyce.ID == engine);
+
+                if (engineObj == null)
+                    return;
+
+                _vm.SelectedEngine = engineObj;
+                _vm.Results.Clear();
+                _vm.Results.Add(engineObj.Go(seed));
+                _vm.Paused = true;
+                e.Cancel = true;
+            }
         }
     }
 }

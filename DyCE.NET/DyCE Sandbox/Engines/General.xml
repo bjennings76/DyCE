@@ -2,14 +2,14 @@
 <DyCEBag xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="General" Creator="Brian@BDJSILVER">
   <Engine xsi:type="EngineObject" ID="Steading">
     <Template>Finnigan came across a steading. &lt;br/&gt;
-It's population included &lt;b&gt;$dyce.NumberEngineTest$&lt;/b&gt; people and &lt;b&gt;$this.Population$&lt;/b&gt;.&lt;br/&gt;
-The settlement was &lt;b&gt;$this.Prosperity$&lt;/b&gt;.&lt;br/&gt;
-It's defenses consisted of &lt;b&gt;$this.Defenses$&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
+      It's population included &lt;b&gt;$dyce.NumberEngineTest$&lt;/b&gt; people and &lt;b&gt;$this.Population$&lt;/b&gt;.&lt;br/&gt;
+      The settlement was &lt;b&gt;$this.Prosperity$&lt;/b&gt;.&lt;br/&gt;
+      It's defenses consisted of &lt;b&gt;$this.Defenses$&lt;/b&gt;.&lt;br/&gt;&lt;br/&gt;
 
 Finnigan exclaimed, "&lt;b&gt;$dyce.SixLetterWords;format="toUpper"$&lt;/b&gt;!"</Template>
-    <Property Name="Prosperity" RefID="ProsperityOptions" />
-    <Property Name="Population" RefID="PopulationOptions" />
-    <Property Name="Defenses">
+    <Property ID="Prosperity" Name="Prosperity" RefID="ProsperityOptions" />
+    <Property ID="Population" Name="Population" RefID="PopulationOptions" />
+    <Property ID="Defenses" Name="Defenses">
       <Engine xsi:type="EngineList">
         <Engine xsi:type="EngineText">nothing</Engine>
         <Engine xsi:type="EngineText">a militia</Engine>
@@ -36,26 +36,24 @@ Finnigan exclaimed, "&lt;b&gt;$dyce.SixLetterWords;format="toUpper"$&lt;/b&gt;!"
     <Engine xsi:type="EngineText">wealthy</Engine>
     <Engine xsi:type="EngineText">extravagantly rich</Engine>
   </Engine>
-  <Engine xsi:type="EngineNumber" ID="0to9" Name="0 to 9" Min="0" Max="9" />
+  <Engine xsi:type="EngineNumber" ID="0to99" Name="0 to 99" Min="0" Max="99" />
   <Engine xsi:type="EngineObject" ID="WifiPasswordGenerator" Name="Wifi Password Generator">
-    <Template>&lt;code&gt;$this.word$$this.num1$$this.num2$&lt;/code&gt;</Template>
-    <Property Name="word" RefID="SixLetterWords" />
-    <Property Name="num1" RefID="0to9" />
-    <Property Name="num2" RefID="0to9" />
+    <Template>&lt;code&gt;$this.word$$this.num1;format="00"$&lt;/code&gt;</Template>
+    <Property ID="word" Name="word" RefID="SixLetterWords" />
+    <Property ID="num1" Name="num1" RefID="0to99" />
   </Engine>
   <Engine xsi:type="EngineObject" ID="TemplateTest" Name="Template Test">
-    <Template>$this.Name$ Result:&lt;br/&gt;
-$this.Properties:{p | &amp;nbsp &amp;nbsp &amp;nbsp $p.Name$: $p$}; separator="&lt;br/&gt;"$</Template>
-    <Property Name="Value 1" RefID="0to9" />
-    <Property Name="Value 2" RefID="0to9" />
-    <Property Name="Value 3">
+    <Template>
+      $this.Name$ Result:&lt;br/&gt;
+      $this.Properties:{p | &amp;nbsp &amp;nbsp &amp;nbsp $p.Name$: $p$}; separator="&lt;br/&gt;"$
+    </Template>
+    <Property ID="Value1" Name="Value 1" RefID="0to99" />
+    <Property ID="Value2" Name="Value 2" RefID="0to99" />
+    <Property ID="Value3" Name="Value 3">
       <Engine xsi:type="EngineList">
-        <Engine xsi:type="EngineText">
-          <Template>New Text Engine</Template>Test1</Engine>
-        <Engine xsi:type="EngineText">
-          <Template>New Text Engine</Template>Test2</Engine>
-        <Engine xsi:type="EngineText">
-          <Template>New Text Engine</Template>Test3</Engine>
+        <Engine xsi:type="EngineText">Test1</Engine>
+        <Engine xsi:type="EngineText">Test2</Engine>
+        <Engine xsi:type="EngineText">Test3</Engine>
       </Engine>
     </Property>
   </Engine>
@@ -15848,5 +15846,35 @@ $this.Properties:{p | &amp;nbsp &amp;nbsp &amp;nbsp $p.Name$: $p$}; separator="&
     <Engine xsi:type="EngineText">zygose</Engine>
     <Engine xsi:type="EngineText">zygote</Engine>
     <Engine xsi:type="EngineText">zymase</Engine>
+  </Engine>
+  <Engine xsi:type="EngineObject" ID="Universe">
+    <Template>&lt;a href="$this.GalaxyOfInterest.URL$" title="$this.GalaxyOfInterest.URL$"&gt;$this.GalaxyOfInterest.Name$&lt;/a&gt;</Template>
+    <Property ID="GalaxyOfInterest" Name="Galaxy Of Interest" RefID="Galaxy" />
+    <Property ID="GalaxyList" Name="Galaxy List">
+      <Engine xsi:type="EngineRange">
+        <Range Min="4520" Max="7847" />
+      </Engine>
+    </Property>
+  </Engine>
+  <Engine xsi:type="EngineObject" ID="Galaxy">
+    <Property ID="Name" Name="Name">
+      <Engine xsi:type="EngineList" ID="GalaxyNames" Name="Galaxy Names">
+        <Engine xsi:type="EngineText">Hurrah</Engine>
+        <Engine xsi:type="EngineText">Epic</Engine>
+        <Engine xsi:type="EngineText">Andromeda</Engine>
+        <Engine xsi:type="EngineText">Franks's Swirly Place</Engine>
+        <Engine xsi:type="EngineText">Starholme</Engine>
+      </Engine>
+    </Property>
+    <Property ID="Description" Name="Description">
+      <Engine xsi:type="EngineText">The galaxy of $this.Name$ is known for it's many $this.Feature$.</Engine>
+    </Property>
+    <Property ID="Feature" Name="Feature">
+      <Engine xsi:type="EngineList" ID="GalaxyFeatures" Name="Galaxy Features">
+        <Engine xsi:type="EngineText">Black Holes</Engine>
+        <Engine xsi:type="EngineText">Nebulae</Engine>
+        <Engine xsi:type="EngineText">Supernova</Engine>
+      </Engine>
+    </Property>
   </Engine>
 </DyCEBag>

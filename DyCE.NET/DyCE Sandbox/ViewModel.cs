@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -129,7 +129,7 @@ namespace DyCE_Sandbox
 
             var token = _cancellationTokenSource.Token;
 
-            Task.Factory.StartNew<string>(GetHTMLResult).ContinueWith(task =>
+            Task.Factory.StartNew<string>(GetHTMLResult, token).ContinueWith(task =>
             {
                 if (token.IsCancellationRequested)
                     return;
