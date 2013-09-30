@@ -1,19 +1,23 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Antlr4.StringTemplate;
+using Antlr4.StringTemplate.Misc;
 using GalaSoft.MvvmLight;
 
 namespace DyCE
 {
     public abstract class ResultBase : ViewModelBase {
-        public EngineBase Engine { get; set; }
+        public EngineBase Engine { get; private set; }
         public string DisplayName { get { return ToString(); } }
-        public int Seed { get; set; }
+        protected int _seed { get; private set; }
+        public List<ResultError> Errors = new List<ResultError>(); 
 
-        public ResultBase(EngineBase engine, int seed)
+        protected ResultBase(EngineBase engine, int seed)
         {
             Engine = engine;
-            Seed = seed;
+            _seed = seed;
             Engine.Changed += EngineChanged;
             Engine.SubscribeToChange(() => Engine.Name, NameChanged);
         }
@@ -31,57 +35,110 @@ namespace DyCE
 
         public abstract IEnumerable<ResultBase> SubResults { get; }
 
-        public string URL { get { return Engine.URL + "&seed=" + Seed; } }
+        public string URL { get { return Engine.URL + "&seed=" + _seed; } }
 
         public override sealed string ToString()
         {
             if (Engine.ResultTemplate == null)
                 return base.ToString();
 
+            Errors.Clear();
+
             try
             {
-                var template = new Template(Engine.ResultTemplate.Replace("$this$", Engine.Name), '$', '$');
+                var template = new Template(Engine.ResultTemplate.Replace(".$", "$").Replace("$this$", Engine.Name), '$', '$');
                 template.Add("this", this);
-                template.Add("dyce", new ResultDB(Seed));
+                template.Add("dyce", new ResultDB(_seed));                
                 template.Group.RegisterRenderer(typeof(object), new BasicFormatRenderer());
-                var result = template.Render();
-                return result;
+                StringWriter writer = new StringWriter();
+                ErrorListener listener = new ErrorListener();
+                template.Write(writer, listener);
+
+                if (listener.HasErrors)
+                    Errors.AddRange(listener.Errors);
+
+                if (Errors.Any())
+                    return Errors.JoinToString(" / ");
+
+                return writer.ToString();
             }
             catch (Exception ex)
             {
-                return "*** Template Error: " + ex.Message + " ***\r\n\r\n" + Engine.ResultTemplate;
+                Errors.Add(new ResultError(ex, Engine.ResultTemplate));
+                return Errors.JoinToString(" / ");
             }
         }
 
-        public abstract ResultBase this[string propertyName] { get; }
-    }
-
-    public class ResultList : ResultBase
-    {
-        private readonly EngineList _engine;
-
-        public ResultList(EngineList engine, int seed) : base(engine, seed) { _engine = engine; }
-
-        public ResultBase Result
+        public virtual ResultBase this[string propertyName]
         {
             get
             {
-                var rand = new Random(Seed);
-
-                if (_engine.Items.Count < 1)
-                    return new ResultEmpty(_engine, rand.Next());
-
-                int index = rand.Next(0, _engine.Items.Count);
-
-                return _engine.Items[index].Go(rand.Next());
+                Errors.Add(new ResultError(string.Concat("Property '", propertyName, "' not found on engine ", Engine.Name)));
+                return null;
             }
         }
 
-        public override IEnumerable<ResultBase> SubResults { get { return new List<ResultBase> {Result}; } }
-
-        public override ResultBase this[string propertyName]
+        private class ErrorListener : ITemplateErrorListener
         {
-            get { return Result[propertyName]; }
+            public bool HasErrors { get { return Errors.Any(); } }
+            public readonly List<ResultError> Errors = new List<ResultError>(); 
+
+            public void CompiletimeError(TemplateMessage msg) { Errors.Add(new ResultError(msg)); }
+
+            public void RuntimeError(TemplateMessage msg) { Errors.Add(new ResultError(msg)); }
+
+            public void IOError(TemplateMessage msg) { Errors.Add(new ResultError(msg)); }
+
+            public void InternalError(TemplateMessage msg) { Errors.Add(new ResultError(msg)); }
         }
+    }
+
+    public class ResultError
+    {
+        private string _text { get; set; }
+        private string _details { get; set; }
+
+        public ResultError(string text, string details = null)
+        {
+            _text = text;
+            _details = details;
+        }
+
+        public ResultError(Exception ex, string details = null)
+        {
+            _text = ex.Message;
+            _details = details;
+        }
+
+        public ResultError(TemplateMessage msg)
+        {
+            _details = msg.ToString();
+            var lines = _details.Replace("context [anonymous] 1:1 ", "").Split('\n');
+            const string searchString = "System.Exception: ";
+            if (lines.Any() && lines[0].Contains(searchString))
+                _text = lines[0].Substring(lines[0].IndexOf(searchString) + searchString.Length);
+            else if (lines.Any())
+                _text = lines.FirstOrDefault();
+            else
+                _text = _details;
+        }
+
+        public string ErrorText
+        {
+            get
+            {
+                return String.Concat("*** Template Error: ", _text, " ***");
+            }
+        }
+
+        public string VerboseErrorText
+        {
+            get
+            {
+                return _details.IsNullOrEmpty() ? ErrorText : String.Concat("*** Template Error: ", _text, " ***\r\n\r\n", _details);                
+            }
+        }
+
+        public override string ToString() { return ErrorText; }
     }
 }

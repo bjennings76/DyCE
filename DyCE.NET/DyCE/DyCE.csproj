@@ -99,6 +99,7 @@
     <Compile Include="ResultBase.cs" />
     <Compile Include="ResultDB.cs" />
     <Compile Include="ResultEmpty.cs" />
+    <Compile Include="ResultList.cs" />
     <Compile Include="ResultNumber.cs" />
     <Compile Include="ResultObject.cs" />
     <Compile Include="ResultProperty.cs" />

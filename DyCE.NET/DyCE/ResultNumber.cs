@@ -25,14 +25,9 @@ namespace DyCE
         /// </summary>
         public override IEnumerable<ResultBase> SubResults { get { return null; } }
 
-        public override ResultBase this[string propertyName]
-        {
-            get { return null; }
-        }
-
         /// <summary>
         /// The numberical result of this Number Result object.
         /// </summary>
-        public int Result { get { return new Random(Seed).Next(_engine.Min, _engine.Max + 1); } }
+        public int Result { get { return new Random(_seed).Next(_engine.Min, _engine.Max + 1); } }
     }
 }

@@ -45,7 +45,7 @@ Finnigan exclaimed, "&lt;b&gt;$dyce.SixLetterWords;format="toUpper"$&lt;/b&gt;!"
   <Engine xsi:type="EngineObject" ID="TemplateTest" Name="Template Test">
     <Template>
       $this.Name$ Result:&lt;br/&gt;
-      $this.Properties:{p | &amp;nbsp &amp;nbsp &amp;nbsp $p.Name$: $p$}; separator="&lt;br/&gt;"$
+      $this.Properties:{p | &amp;nbsp &amp;nbsp &amp;nbsp $p.Engine.Name$: $p$}; separator="&lt;br/&gt;"$
     </Template>
     <Property ID="Value1" Name="Value 1" RefID="0to99" />
     <Property ID="Value2" Name="Value 2" RefID="0to99" />

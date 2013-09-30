@@ -46,6 +46,16 @@ namespace DyCE_Sandbox
             web_Results.LoadCompleted += web_Results_LoadCompleted;
         }
 
+        void Items_CurrentChanged(object sender, EventArgs e)
+        {
+            if (!_vm.Results.Any())
+                return;
+
+            var tvi = tree_Results.ItemContainerGenerator.ContainerFromItem(_vm.Results.Last()) as TreeViewItem;
+            if (tvi != null)
+                tvi.BringIntoView();
+        }
+
         void web_Results_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             var htmlDocument = web_Results.Document as HTMLDocument;
@@ -60,10 +70,10 @@ namespace DyCE_Sandbox
 
         void Results_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            //var border = System.Windows.Media.VisualTreeHelper.GetChild(tree_Results, 0) as Decorator;
-            //if (border == null) return;
-            //var scrollViewer = border.Child as ScrollViewer;
-            //if (scrollViewer != null) scrollViewer.ScrollToBottom();
+            var border = System.Windows.Media.VisualTreeHelper.GetChild(tree_Results, 0) as Decorator;
+            if (border == null) return;
+            var scrollViewer = border.Child as ScrollViewer;
+            if (scrollViewer != null) scrollViewer.ScrollToBottom();
             
         }
 

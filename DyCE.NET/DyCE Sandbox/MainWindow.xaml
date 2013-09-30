@@ -398,10 +398,14 @@
     				<ColumnDefinition Width="Auto"/>
     				<ColumnDefinition/>
     				<ColumnDefinition Width="Auto"/>
+    				<ColumnDefinition/>
+    				<ColumnDefinition Width="Auto"/>
     			</Grid.ColumnDefinitions>
-    			<Slider Grid.Column="1" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5" VerticalAlignment="Center" Margin="2" IsDirectionReversed="True"/>
-    			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Speed:" VerticalAlignment="Center" Margin="2"/>
-    			<Button x:Name="btn_Pause" Grid.Column="2" Command="{Binding PausePreviewCommand, Mode=OneWay}" Style="{DynamicResource ButtonClear}">
+    			<Slider Grid.Column="1" Value="{Binding MaxResults}" Minimum="1" Maximum="100" VerticalAlignment="Center" Margin="2" SmallChange="1" LargeChange="10" TickFrequency="10"/>
+    			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Max:" VerticalAlignment="Center" Margin="2"/>
+    			<Slider Grid.Column="3" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5" VerticalAlignment="Center" Margin="2" IsDirectionReversed="True"/>
+    			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Speed:" VerticalAlignment="Center" Margin="2" Grid.Column="2"/>
+    			<Button x:Name="btn_Pause" Grid.Column="4" Command="{Binding PausePreviewCommand, Mode=OneWay}" Style="{DynamicResource ButtonClear}">
     				<Grid Height="22" Width="22">
     					<Image x:Name="image1" Source="Icons/control_pause.png"/>
     					<Image x:Name="image" Source="Icons/control_play.png" Opacity="0"/>
@@ -409,7 +413,14 @@
     			</Button>
 
     		</Grid>
-    		<WebBrowser x:Name="web_Results" local:BrowserBehavior.Html="{Binding ResultsHTML, Mode=OneWay}" Grid.Row="1" Margin="2" UseLayoutRounding="True" Navigating="web_Results_Navigating"/>
+    		<TabControl Grid.RowSpan="2" Grid.Row="1">
+    			<TabItem Header="Tree">
+    				<TreeView x:Name="tree_Results" ItemsSource="{Binding Results}"/>
+    			</TabItem>
+    			<TabItem Header="HTML">
+    				<WebBrowser x:Name="web_Results" local:BrowserBehavior.Html="{Binding ResultsHTML, Mode=OneWay}" UseLayoutRounding="True" Navigating="web_Results_Navigating"/>
+    			</TabItem>
+    		</TabControl>
     	</Grid>
     </Grid>
 </Window>

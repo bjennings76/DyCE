@@ -15,8 +15,7 @@ namespace DyCE
         {
             get
             {
-
-                return Properties.FirstOrDefault(p => p.ID.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase));
+                return Properties.First(p => p.ID.Equals(propertyName, StringComparison.InvariantCultureIgnoreCase));
             }
         }
 
@@ -34,7 +33,7 @@ namespace DyCE
 
         private List<ResultProperty> GetUpdatedProperties()
         {
-            var rand = new Random(Seed);
+            var rand = new Random(_seed);
             var engine = Engine as EngineObject;
             return engine == null ? null : engine.Properties.Select(p => p.Go(rand.Next()) as ResultProperty).ToList();
         }

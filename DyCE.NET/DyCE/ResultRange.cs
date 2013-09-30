@@ -9,7 +9,7 @@ namespace DyCE
         public ResultRange(EngineRange engine, int seed) : base(engine, seed) { _engine = engine; }
 
         private ResultNumber _rangeCountResultRoot;
-        private ResultNumber _rangeCountResult { get { return _rangeCountResultRoot ?? (_rangeCountResultRoot = _engine.Range.Go(new Random(Seed).Next()) as ResultNumber); } }
+        private ResultNumber _rangeCountResult { get { return _rangeCountResultRoot ?? (_rangeCountResultRoot = _engine.Range.Go(new Random(_seed).Next()) as ResultNumber); } }
 
         public int Count { get { return _rangeCountResult.Result; } }
 
@@ -21,7 +21,7 @@ namespace DyCE
                 if (_results == null)
                 {
                     _results = new List<ResultBase>();
-                    var rand = new Random(Seed);
+                    var rand = new Random(_seed);
                     _subResults.Add(_rangeCountResult);
 
                     for (int i = 0; i < _rangeCountResult.Result; i++)

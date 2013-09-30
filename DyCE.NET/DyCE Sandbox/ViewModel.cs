@@ -33,7 +33,7 @@ namespace DyCE_Sandbox
             }
         }
 
-        private int _maxResults = 100;
+        private int _maxResults = 10;
         public int MaxResults
         {
             get { return _maxResults; }
@@ -41,6 +41,17 @@ namespace DyCE_Sandbox
             {
                 _maxResults = value;
                 RaisePropertyChanged(() => MaxResults);
+
+                lock (this)
+                {
+                    while (Results.Count > MaxResults)
+                        Results.RemoveAt(0);
+
+                    while (Results.Count < MaxResults)
+                        Results.Add(SelectedEngine.Go(new Random().Next()));
+
+                    UpdateResults();
+                }
             }
         }
 
@@ -146,7 +157,7 @@ namespace DyCE_Sandbox
             {
                 results.AddRange(Results);
             }
-            return results.Count == 0 ? "" : results.Select(r => r.ToString()).Aggregate((s1, s2) => s1 + "<p>" + s2 + "</p>");
+            return results.Count == 0 ? "" : results.Select(r => string.Concat("<p>", r.ToString(), "</p>")).JoinToString();
         }
 
         private void SelectedEngineOnChanged(object sender, EventArgs eventArgs) { UpdateResults(); }
@@ -163,10 +174,10 @@ namespace DyCE_Sandbox
 
             lock (this)
             {
-                Results.Add(SelectedEngine.Go(new Random().Next()));
+                if (Results.Count >= MaxResults)
+                    Results.RemoveAt(0);
 
-                if (Results.Count > MaxResults)
-                    Results.RemoveAt(0);                    
+                Results.Add(SelectedEngine.Go(new Random().Next()));
             }
 
             UpdateResults();
