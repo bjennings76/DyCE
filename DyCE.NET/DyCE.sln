@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE Sandbox", "DyCE Sandbox\DyCE Sandbox.csproj", "{3E41E028-48AC-4821-ACA8-AAA6CB778E26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE Editor", "DyCE Editor\DyCE Editor.csproj", "{3E41E028-48AC-4821-ACA8-AAA6CB778E26}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DyCE", "DyCE\DyCE.csproj", "{CE24803B-E587-46D0-8891-225AAA242607}"
 EndProject
