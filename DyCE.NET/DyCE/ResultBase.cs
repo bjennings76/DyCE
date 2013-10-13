@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Antlr4.StringTemplate;
 using Antlr4.StringTemplate.Misc;
 using GalaSoft.MvvmLight;
@@ -40,6 +41,22 @@ namespace DyCE
 
         public string URL { get { return Engine.URL + "&seed=" + _seed; } }
 
+        public virtual ResultBase this[string propertyName]
+        {
+            get
+            {
+                Errors.Add(new ResultError(string.Concat("Property '", propertyName, "' not found on engine ", Engine.Name)));
+                return null;
+            }
+        }
+
+        private List<ResultBase> GetAllSubResults()
+        {
+            return _results == null ? GetSubResults().ToList() : new List<ResultBase>(_results.Results.Concat(GetSubResults()));
+        }
+
+        protected virtual IEnumerable<ResultBase> GetSubResults() { return new List<ResultBase>(); }
+
         public override sealed string ToString()
         {
             if (Engine.ResultTemplate == null)
@@ -67,7 +84,7 @@ namespace DyCE
                 if (_results.Results.Any())
                     RaisePropertyChanged(() => SubResults);
 
-                return writer.ToString();
+                return PostProcess(writer.ToString());
             }
             catch (Exception ex)
             {
@@ -76,21 +93,25 @@ namespace DyCE
             }
         }
 
-        public virtual ResultBase this[string propertyName]
+
+        private Regex _anRegex = new Regex(@"\[a/an\] ([aeiou])");
+        private Regex _aRegex = new Regex(@"\[a/an\]");
+
+        // TODO: Use modularized/extendable post process rules.
+        private string PostProcess(string resultText)
         {
-            get
+            if (!resultText.Contains("["))
+                return resultText;
+
+            // Find [a/an]
+            if (resultText.Contains("[a/an]"))
             {
-                Errors.Add(new ResultError(string.Concat("Property '", propertyName, "' not found on engine ", Engine.Name)));
-                return null;
+                resultText = _anRegex.Replace(resultText, "an $1");
+                resultText = _aRegex.Replace(resultText, "a");
             }
-        }
 
-        private List<ResultBase> GetAllSubResults()
-        {
-            return _results == null ? GetSubResults().ToList() : new List<ResultBase>(_results.Results.Concat(GetSubResults()));
+            return resultText;
         }
-
-        protected virtual IEnumerable<ResultBase> GetSubResults() { return new List<ResultBase>(); }
 
         private class ErrorListener : ITemplateErrorListener
         {

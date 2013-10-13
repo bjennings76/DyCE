@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DyCEBag xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Nerd Detective" Creator="Brian@BDJSILVER">
-  <Engine xsi:type="EngineText" ID="CombatExample" Name="Combat Example">Carlton says: "$dyce.Attack;format="toUpper"$"&lt;br/&gt;
-Ronald says: "$dyce.Defense;format="toUpper"$ $dyce.ResponsePrefix;format="toUpper"$, $dyce.Attack$"
-</Engine>
+  <Engine xsi:type="EngineText" ID="CombatExample" Name="Combat Example">
+    Carlton says: "$dyce.Attack;format="toUpper"$"&lt;br/&gt;
+    Ronald says: "$dyce.Defense;format="toUpper"$ $dyce.ResponsePrefix;format="toUpper"$, $dyce.Attack$"
+  </Engine>
   <Engine xsi:type="EngineList" ID="Defense">
     <Engine xsi:type="EngineText">Whatever.</Engine>
     <Engine xsi:type="EngineText">No YOU are!</Engine>
@@ -12,7 +13,6 @@ Ronald says: "$dyce.Defense;format="toUpper"$ $dyce.ResponsePrefix;format="toUpp
     <Engine xsi:type="EngineText">Really?</Engine>
   </Engine>
   <Engine xsi:type="EngineList" ID="Attack">
-    <Template>$this.Result$!</Template>
     <Engine xsi:type="EngineText">$dyce.ShortAttack$</Engine>
     <Engine xsi:type="EngineText">$dyce.ShortAttack$</Engine>
     <Engine xsi:type="EngineText">$dyce.ShortAttack$</Engine>
@@ -35,18 +35,12 @@ Ronald says: "$dyce.Defense;format="toUpper"$ $dyce.ResponsePrefix;format="toUpp
     <Engine xsi:type="EngineText">$dyce.AttackAdjective$ $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
     <Engine xsi:type="EngineText">$dyce.AttackAdjective$ $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
     <Engine xsi:type="EngineText">$dyce.AttackAdjective$ $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
-    <Engine xsi:type="EngineText">$dyce.AttackPrefix$ $dyce.AttackAdjective$ $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
+    <Engine xsi:type="EngineText">$dyce.AttackAdjective$ $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
   </Engine>
   <Engine xsi:type="EngineList" ID="ShortAttack">
-    <Template>$this.Result$!</Template>
-    <Engine xsi:type="EngineText">$dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
-    <Engine xsi:type="EngineText">$dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
-    <Engine xsi:type="EngineText">$dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
+    <Template>you're [a/an] $this.Result$</Template>
     <Engine xsi:type="EngineText">$dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
     <Engine xsi:type="EngineText">$dyce.AttackAdjective$ $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
-    <Engine xsi:type="EngineText">$dyce.AttackAdjective$ $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
-    <Engine xsi:type="EngineText">$dyce.AttackAdjective$ $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
-    <Engine xsi:type="EngineText">$dyce.AttackPrefix$ $dyce.AttackAdjective$ $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
   </Engine>
   <Engine xsi:type="EngineList" ID="AttackPostfix">
     <Engine xsi:type="EngineText">!</Engine>
@@ -65,6 +59,11 @@ Ronald says: "$dyce.Defense;format="toUpper"$ $dyce.ResponsePrefix;format="toUpp
     <Engine xsi:type="EngineText">if you think about it</Engine>
     <Engine xsi:type="EngineText">on the other hand</Engine>
     <Engine xsi:type="EngineText">the fact is</Engine>
+    <Engine xsi:type="EngineText">knowing you</Engine>
+    <Engine xsi:type="EngineText">in the end</Engine>
+    <Engine xsi:type="EngineText">come to think of it</Engine>
+    <Engine xsi:type="EngineText">you know</Engine>
+    <Engine xsi:type="EngineText">really</Engine>
   </Engine>
   <Engine xsi:type="EngineList" ID="AttackPrefix">
     <Engine xsi:type="EngineText">you</Engine>
