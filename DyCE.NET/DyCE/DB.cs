@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -19,6 +19,8 @@ namespace DyCE
         /// The single static instance of the DyCEBag Database.
         /// </summary>
         public static DB Instance { get { return _instance; } }
+
+        public bool IsLoaded { get { return _dyCEBags != null; } }
 
         /// <summary>
         /// The internal list of DyCEBags.

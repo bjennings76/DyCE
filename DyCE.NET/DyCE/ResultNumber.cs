@@ -21,11 +21,6 @@ namespace DyCE
         public ResultNumber(EngineNumber engine, int seed) : base(engine, seed) { _engine = engine; }
 
         /// <summary>
-        /// A list of sub-results used to get the final value. (Always null for Number Result objects.)
-        /// </summary>
-        public override IEnumerable<ResultBase> SubResults { get { return null; } }
-
-        /// <summary>
         /// The numberical result of this Number Result object.
         /// </summary>
         public int Result { get { return new Random(_seed).Next(_engine.Min, _engine.Max + 1); } }

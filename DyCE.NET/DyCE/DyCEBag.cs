@@ -133,6 +133,11 @@ namespace DyCE
         public RelayCommand SaveCommand { get { return new RelayCommand(Save); } }
 
         /// <summary>
+        /// Deletes an engine from the dyce bag.
+        /// </summary>
+        public RelayCommand<EngineBase> DeleteCommand { get { return new RelayCommand<EngineBase>(engine => DyCEList.Remove(engine)); } }
+
+        /// <summary>
         /// Used by the 'Save' command to save the DyCEBag to it's .xml file.
         /// </summary>
         private void Save()
@@ -180,13 +185,10 @@ namespace DyCE
         /// <returns>The engine that matches the supplied engine ID.</returns>
         public static EngineBase GetEngine(string engineID)
         {
-            //TODO: Don't just use the 'General' DyCEBag. This should support references to other DyCEBags as well.
-            var bag = DB.Instance["General"];
-
-            if (bag == null)
+            if (!DB.Instance.IsLoaded)
                 return null;
 
-            var engine = bag[engineID];
+            var engine = DB.Instance.DyCEBags.SelectMany(b => b.DyCEList).FirstOrDefault(e => e.ID.Equals(engineID, StringComparison.OrdinalIgnoreCase));
 
             if (engine == null)
                 throw new Exception("Could not find engine " + engineID);

@@ -15,7 +15,7 @@
             <TextBlock Text="{Binding DisplayName}"/>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType= "{x:Type dyce:ResultBase}" ItemsSource="{Binding SubResults}">
-            <TextBlock Text="{Binding DisplayName}"/>
+            <TextBlock ToolTip="{Binding DisplayName}" Text="{Binding ResultText}"/>
         </HierarchicalDataTemplate>
     </Window.Resources>
     <Window.DataContext>
@@ -96,6 +96,20 @@
         			</ToolBar>
         		</StackPanel>
         		<TreeView ItemsSource="{Binding DyCEList}" Grid.Row="1"  VirtualizingPanel.IsVirtualizing="True" Margin="2">
+        			<TreeView.Resources>
+        				<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineBase}" ItemsSource="{Binding SubEngines}">
+        					<Grid VerticalAlignment="Top">
+        						<Grid.ColumnDefinitions>
+        							<ColumnDefinition SharedSizeGroup="EngineNames"/>
+        							<ColumnDefinition Width="Auto"/>
+        						</Grid.ColumnDefinitions>
+        						<TextBlock Text="{Binding DisplayName}" Margin="2" VerticalAlignment="Center"/>
+								<Button Grid.ColumnSpan="1" Grid.Column="1" Width="22" Style="{DynamicResource ButtonClear}" Command="{Binding Bag.DeleteCommand, Mode=OneWay, Source={StaticResource ViewModelDataSource}}" CommandParameter="{Binding}">
+        							<Image Source="Icons/item_delete.png" Margin="0"/>
+        						</Button>
+        					</Grid>
+        				</HierarchicalDataTemplate>
+        			</TreeView.Resources>
         			<i:Interaction.Behaviors>
         				<local:BindableSelectedItemBehavior SelectedItem="{Binding SelectedEngine, Mode=TwoWay, Source={StaticResource ViewModelDataSource}}"/>
         			</i:Interaction.Behaviors>

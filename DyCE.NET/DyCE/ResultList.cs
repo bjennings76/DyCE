@@ -9,20 +9,25 @@ namespace DyCE
 
         public ResultList(EngineList engine, int seed) : base(engine, seed) { _engine = engine; }
 
+        private ResultBase _result;
         public ResultBase Result
         {
             get
             {
+                if (_result != null)
+                    return _result;
+
                 if (_engine.Items.Count == 0)
                     return new ResultEmpty(_engine);
 
                 var rand = new Random(_seed);
                 int index = rand.Next(0, _engine.Items.Count);
-                return _engine.Items[index].Go(rand.Next());
+                _result = _engine.Items[index].Go(rand.Next());
+                return _result;
             }
         }
 
-        public override IEnumerable<ResultBase> SubResults { get { return new List<ResultBase> {Result}; } }
+        protected override IEnumerable<ResultBase> GetSubResults() { return new List<ResultBase>{Result}; }
 
         public override ResultBase this[string propertyName]
         {

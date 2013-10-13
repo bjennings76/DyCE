@@ -9,7 +9,5 @@ namespace DyCE
 
         public ResultEmpty(EngineBase engine, int seed)
             : base(engine, seed) { }
-
-        public override IEnumerable<ResultBase> SubResults { get { return null; } }
     }
 }

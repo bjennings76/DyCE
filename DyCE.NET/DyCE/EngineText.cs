@@ -50,7 +50,7 @@ namespace DyCE
                     .Cast<Match>()
                     .Select(match => match.Groups["engine"].Value)
                     .Distinct()
-                    .Select(DyCEBag.GetEngine)
+                    .Select( DyCEBag.GetEngine)
                     .Where(engine => engine != null);
             }
         }

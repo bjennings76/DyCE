@@ -9,8 +9,6 @@ namespace DyCE
         private List<ResultProperty> _properties;
         public IEnumerable<ResultProperty> Properties { get { return _properties ?? (_properties = GetUpdatedProperties()); } }
 
-        public override IEnumerable<ResultBase> SubResults { get { return Properties; } }
-
         public override ResultBase this[string propertyName]
         {
             get
@@ -24,7 +22,7 @@ namespace DyCE
             engine.Changed += engineObject_Changed;
         }
 
-        void engineObject_Changed(object sender, EventArgs e)
+        private void engineObject_Changed(object sender, EventArgs e)
         {
             _properties = GetUpdatedProperties();
             RaisePropertyChanged(() => Properties);
@@ -35,18 +33,15 @@ namespace DyCE
         {
             var rand = new Random(_seed);
             var engine = Engine as EngineObject;
-            return engine == null ? null : engine.Properties.Select(p => p.Go(rand.Next()) as ResultProperty).ToList();
+
+            if (engine == null)
+                throw new Exception("Whoah. Engine is somehow not of type EngineObject.");
+
+            // Get all the results at once so the order they are accessed in does not matter.
+            return engine.Properties.Select(p => p.Go(rand.Next()) as ResultProperty).ToList();
         }
 
-        //public override string ToString()
-        //{
-        //    if (!Properties.Any())
-        //        return Name;
+        protected override IEnumerable<ResultBase> GetSubResults() { return _properties != null ? _properties.Cast<ResultBase>() : new List<ResultBase>(); }
 
-        //    if (!string.IsNullOrWhiteSpace(Name))
-        //        return Name + " Result: " + Properties.Select(p => p.ToString()).Aggregate((s1, s2) => s1 + ", " + s2);
-
-        //    return Properties.Select(p => p.ToString()).Aggregate((s1, s2) => s1 + ", " + s2) + ")";
-        //}
     }
 }

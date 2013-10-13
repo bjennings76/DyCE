@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Antlr4.StringTemplate;
@@ -46,15 +47,10 @@ namespace DyCE
         public ResultText(EngineText engine, int seed) : base(engine, seed)
         {
             _engine = engine;
-            engine.Changed += engine_Changed;
+            engine.SubscribeToChange(() => engine.Text, EngineTextChanged);
         }
 
-        void engine_Changed(object sender, System.EventArgs e)
-        {
-            RaisePropertyChanged(() => Text);
-        }
-
-        public override IEnumerable<ResultBase> SubResults { get { return null; } }
+        private void EngineTextChanged(EngineText sender) { RaisePropertyChanged(() => Text); }
 
         public override ResultBase this[string propertyName]
         {

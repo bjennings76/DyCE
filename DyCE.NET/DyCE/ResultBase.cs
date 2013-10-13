@@ -10,9 +10,10 @@ namespace DyCE
 {
     public abstract class ResultBase : ViewModelBase {
         public EngineBase Engine { get; private set; }
-        public string DisplayName { get { return ToString(); } }
+        public string DisplayName { get { return string.Format("Results of {0}", Engine.DisplayName); } }
+        public string ResultText { get { return ToString(); } }
         protected int _seed { get; private set; }
-        public List<ResultError> Errors = new List<ResultError>(); 
+        public readonly List<ResultError> Errors = new List<ResultError>(); 
 
         protected ResultBase(EngineBase engine, int seed)
         {
@@ -33,7 +34,9 @@ namespace DyCE
             RaisePropertyChanged(() => DisplayName);
         }
 
-        public abstract IEnumerable<ResultBase> SubResults { get; }
+        public List<ResultBase> SubResults { get { return GetAllSubResults(); } }
+
+        private ResultDB _results;
 
         public string URL { get { return Engine.URL + "&seed=" + _seed; } }
 
@@ -46,9 +49,10 @@ namespace DyCE
 
             try
             {
+                _results = new ResultDB(_seed);
                 var template = new Template(Engine.ResultTemplate.Replace(".$", "$").Replace("$this$", Engine.Name), '$', '$');
                 template.Add("this", this);
-                template.Add("dyce", new ResultDB(_seed));                
+                template.Add("dyce", _results);
                 template.Group.RegisterRenderer(typeof(object), new BasicFormatRenderer());
                 StringWriter writer = new StringWriter();
                 ErrorListener listener = new ErrorListener();
@@ -59,6 +63,9 @@ namespace DyCE
 
                 if (Errors.Any())
                     return Errors.JoinToString(" / ");
+
+                if (_results.Results.Any())
+                    RaisePropertyChanged(() => SubResults);
 
                 return writer.ToString();
             }
@@ -77,6 +84,13 @@ namespace DyCE
                 return null;
             }
         }
+
+        private List<ResultBase> GetAllSubResults()
+        {
+            return _results == null ? GetSubResults().ToList() : new List<ResultBase>(_results.Results.Concat(GetSubResults()));
+        }
+
+        protected virtual IEnumerable<ResultBase> GetSubResults() { return new List<ResultBase>(); }
 
         private class ErrorListener : ITemplateErrorListener
         {

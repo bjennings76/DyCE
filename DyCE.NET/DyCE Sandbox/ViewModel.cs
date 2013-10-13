@@ -22,6 +22,7 @@ namespace DyCE_Sandbox
         public string WindowName { get { return SelectedEngine == null ? "DyCE Editor" : "DyCE Editor: " + SelectedEngine.DisplayName; } }
 
         private static readonly DispatcherTimer _timer = new DispatcherTimer();
+        private static readonly Random _random = new Random();
 
         public double TimerDuration
         {
@@ -48,7 +49,7 @@ namespace DyCE_Sandbox
                         Results.RemoveAt(0);
 
                     while (Results.Count < MaxResults)
-                        Results.Add(SelectedEngine.Go(new Random().Next()));
+                        Results.Add(SelectedEngine.Go(_random.Next()));
 
                     UpdateResults();
                 }

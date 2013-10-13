@@ -165,7 +165,7 @@ namespace DyCE
         public static string JoinToString<T>(this IEnumerable<T> list, string separator = null)
         {
             var array = list as T[] ?? list.ToArray();
-            return array.Any() ? string.Join(separator, array.Select(i => i.ToString()).ToArray()) : null;
+            return array.Any() ? string.Join(separator, array.Select(i => i == null ? "" : i.ToString()).ToArray()) : null;
         }
 
         /// <summary>

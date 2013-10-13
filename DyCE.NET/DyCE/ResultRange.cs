@@ -22,12 +22,9 @@ namespace DyCE
                 {
                     _results = new List<ResultBase>();
                     var rand = new Random(_seed);
-                    _subResults.Add(_rangeCountResult);
 
                     for (int i = 0; i < _rangeCountResult.Result; i++)
                         _results.Add(_engine.SubEngine.Go(rand.Next()));
-
-                    _subResults.AddRange(_results);
                 }
 
                 return _results;
@@ -35,14 +32,13 @@ namespace DyCE
         }
 
         private List<ResultBase> _subResults = new List<ResultBase>();
-        public override IEnumerable<ResultBase> SubResults { get { return _subResults ?? (_subResults = GetSubResults()); } }
 
         public override ResultBase this[string propertyName]
         {
             get { return null; }
         }
 
-        private List<ResultBase> GetSubResults()
+        protected override IEnumerable<ResultBase> GetSubResults()
         {
             var subResults = new List<ResultBase>(Results);
             subResults.Insert(0, _rangeCountResult);

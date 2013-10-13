@@ -30,7 +30,7 @@ namespace DyCE
         [XmlIgnore]
         public virtual string ID
         {
-            get { return string.IsNullOrWhiteSpace(_id) ? Name.Replace(" ", "") : _id; }
+            get { return _id.IsNullOrEmpty() && !Name.IsNullOrEmpty() ? Name.Replace(" ", "") : _id; }
             set
             {
                 _id = value;
