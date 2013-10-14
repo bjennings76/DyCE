@@ -128,6 +128,7 @@ namespace DyCE
         /// </summary>
         protected void RaiseEngineChanged()
         {
+            RaisePropertyChanged(() => SubEngines);
             EventHandler handler = Changed;
             if (handler != null)
                 handler(this, EventArgs.Empty);

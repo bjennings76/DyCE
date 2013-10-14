@@ -221,6 +221,7 @@
     </Content>
     <Content Include="Engines\Nerd Detective.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Resource Include="Icons\range.png" />
   </ItemGroup>

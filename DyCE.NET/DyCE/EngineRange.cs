@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
@@ -29,7 +29,6 @@ namespace DyCE
             {
                 _subEngine = value;
                 RaisePropertyChanged(() => SubEngine);
-                RaisePropertyChanged(() => SubEngines);
                 RaiseEngineChanged();
             }
         }

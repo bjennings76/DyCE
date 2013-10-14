@@ -23,7 +23,6 @@ namespace DyCE
                 _subEngineActual = value;
                 RaiseEngineChanged();
                 RaisePropertyChanged(() => SubEngine);
-                RaisePropertyChanged(() => SubEngines);
                 RaisePropertyChanged(() => SubEngineActual);
                 RaisePropertyChanged(() => SubEngineSaved);
                 RaisePropertyChanged(() => RefID);

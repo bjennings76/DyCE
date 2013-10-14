@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Xml.Serialization;
@@ -25,7 +25,6 @@ namespace DyCE
                 RaisePropertyChanged(() => RefID);
                 //TrackEngineChanges();
                 RaisePropertyChanged(() => SubEngine);
-                RaisePropertyChanged(() => SubEngines);
                 RaiseEngineChanged();
             }
         }

@@ -15,7 +15,7 @@
             <TextBlock Text="{Binding DisplayName}"/>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType= "{x:Type dyce:ResultBase}" ItemsSource="{Binding SubResults}">
-            <TextBlock ToolTip="{Binding DisplayName}" Text="{Binding ResultText}"/>
+            <TextBlock ToolTip="{Binding DisplayName}" Text="{Binding ResultText}" Margin="2"/>
         </HierarchicalDataTemplate>
     </Window.Resources>
     <Window.DataContext>
@@ -225,7 +225,22 @@
     				</HierarchicalDataTemplate>
     				<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineText}" ItemsSource="{Binding SubEngines}">
     					<StackPanel>
-    						<Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="SubEngineStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition GeneratedDuration="0:0:0.2"/>
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="SubEngineUnselected"/>
+                                    <VisualState x:Name="SubEngineSelected">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="pnl_SubEngineSelected">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid>
     							<Grid.ColumnDefinitions>
     								<ColumnDefinition Width="Auto"/>
     								<ColumnDefinition/>
@@ -252,7 +267,27 @@
     						</ToolBar>
     						<TextBlock Text="Text Template:" Margin="2"/>
     						<TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MinWidth="150" AcceptsReturn="True" TextWrapping="Wrap" AutoWordSelection="True" VerticalScrollBarVisibility="Auto" Margin="2"/>
-    					</StackPanel>
+                            <ListBox ItemsSource="{Binding SubEngines}" ItemTemplate="{DynamicResource DeletableEngineItemTemplate}" SelectedItem="{Binding SelectedSubEngine}" HorizontalContentAlignment="Stretch" Template="{DynamicResource NoWheelScrollListBoxTemplate}" MaxHeight="400"/>
+                            <Grid x:Name="pnl_SubEngineSelected" Margin="2">
+                                <i:Interaction.Behaviors>
+                                    <ei:DataStateBehavior Binding="{Binding Text, ElementName=textBlock}" Value="" TrueState="SubEngineUnselected" FalseState="SubEngineSelected"/>
+                                </i:Interaction.Behaviors>
+                                <Grid.LayoutTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="0"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Grid.LayoutTransform>
+                                <ed:BlockArrow HorizontalAlignment="Center" Height="34" Orientation="Down" VerticalAlignment="Center" Width="20" Fill="#FF727272"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,10">
+                                    <TextBlock Text="Selected Engine: " Foreground="White"/>
+                                    <TextBlock x:Name="textBlock" Text="{Binding SelectedSubEngine.DisplayName, Mode=OneWay}" Foreground="White"/>
+                                </StackPanel>
+                            </Grid>
+                            <ContentControl Content="{Binding SelectedSubEngine}"/>
+                        </StackPanel>
     				</HierarchicalDataTemplate>
     				<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineProperty}" ItemsSource="{Binding SubEngines}">
     					<Grid VerticalAlignment="Top">

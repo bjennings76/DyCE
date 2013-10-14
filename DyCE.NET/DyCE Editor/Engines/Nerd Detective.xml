@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DyCEBag xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="Nerd Detective" Creator="Brian@BDJSILVER">
-  <Engine xsi:type="EngineText" ID="CombatExample" Name="Combat Example">
-    Carlton says: "$dyce.Attack;format="toUpper"$"&lt;br/&gt;
-    Ronald says: "$dyce.Defense;format="toUpper"$ $dyce.ResponsePrefix;format="toUpper"$, $dyce.Attack$"
-  </Engine>
+  <Engine xsi:type="EngineText" ID="CombatExample" Name="Combat Example">Carlton says: "$dyce.Attack;format="toUpper"$"&lt;br/&gt;
+Ronald says: "$dyce.Defense;format="toUpper"$ $dyce.ResponsePrefix;format="toUpper"$, $dyce.Attack$"  </Engine>
   <Engine xsi:type="EngineList" ID="Defense">
     <Engine xsi:type="EngineText">Whatever.</Engine>
     <Engine xsi:type="EngineText">No YOU are!</Engine>
@@ -23,8 +21,8 @@
   </Engine>
   <Engine xsi:type="EngineList" ID="PowerfulAttack">
     <Template>$this.Result$!</Template>
-    <Engine xsi:type="EngineText">A $dyce.AttackNoun$ such as you could never handle the complexities of modern society$dyce.AttackPostfix$</Engine>
-    <Engine xsi:type="EngineText">The logistical inferences that you would need to make would simply fry your brain, $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
+    <Engine xsi:type="EngineText">a $dyce.AttackNoun$ such as you could never handle the complexities of modern society$dyce.AttackPostfix$</Engine>
+    <Engine xsi:type="EngineText">the logistical inferences that you would need to make would simply fry your brain, $dyce.AttackNoun$$dyce.AttackPostfix$</Engine>
   </Engine>
   <Engine xsi:type="EngineList" ID="PowerfulAttackPostfix">
     <Template>$this.Result$!</Template>

@@ -27,6 +27,7 @@ namespace DyCE
         private void EngineChanged(object sender, EventArgs e)
         {
             RaisePropertyChanged(() => DisplayName);
+            RaisePropertyChanged(() => ResultText);
             RaisePropertyChanged(() => SubResults);
         }
 

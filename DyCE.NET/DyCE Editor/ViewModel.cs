@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 using DyCE;
+using DyCE.Editor.Properties;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 
@@ -61,12 +64,21 @@ namespace DyCE.Editor
         private DyCEBag _bag;
         public DyCEBag Bag
         {
-            get { return _bag ?? DyCEBags.FirstOrDefault(); }
+            get { return _bag ?? GetDefaultDyCEBag(); }
             set
             {
                 _bag = value;
                 RaisePropertyChanged(() => Bag);
+                Settings.Default.CurrentDyCEBag = _bag.ID;
             }
+        }
+
+        private DyCEBag GetDefaultDyCEBag()
+        {
+            if (Settings.Default.CurrentDyCEBag.IsNullOrEmpty())
+                return DyCEBags.FirstOrDefault();
+
+            return DyCEBags.FirstOrDefault(b => b.ID == Settings.Default.CurrentDyCEBag) ?? DyCEBags.FirstOrDefault();
         }
 
         private readonly ObservableCollection<ResultBase> _results = new ObservableCollection<ResultBase>();
@@ -92,7 +104,6 @@ namespace DyCE.Editor
             {
                 if (_selectedEngine != null)
                     _selectedEngine.Changed -= SelectedEngineOnChanged;
-
 
                 _selectedEngine = value;
                 RaisePropertyChanged(() => SelectedEngine);
@@ -126,7 +137,20 @@ namespace DyCE.Editor
             _timer.Interval = TimeSpan.FromSeconds(0.5);
             _timer.Tick += _timer_Tick;
             _timer.Start();
+            _saveSettingsTimer.Interval = TimeSpan.FromSeconds(2);
+            _saveSettingsTimer.Tick += SaveSettingsTimerOnTick;
             Results.CollectionChanged += Results_CollectionChanged;
+            Settings.Default.PropertyChanged += DefaultOnPropertyChanged;
+        }
+
+        private static readonly DispatcherTimer _saveSettingsTimer = new DispatcherTimer();
+        private static void DefaultOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs) { _saveSettingsTimer.Start(); }
+
+        private static void SaveSettingsTimerOnTick(object sender, EventArgs eventArgs)
+        {
+            Settings.Default.Save();
+            Console.WriteLine("Settings saved.");
+            _saveSettingsTimer.Stop();
         }
 
         void Results_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) { UpdateResults(); }

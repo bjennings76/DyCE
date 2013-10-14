@@ -46,12 +46,19 @@ namespace DyCE
                 if (matches.Count == 0)
                     return null;
 
-                return matches
-                    .Cast<Match>()
-                    .Select(match => match.Groups["engine"].Value)
-                    .Distinct()
-                    .Select( DyCEBag.GetEngine)
-                    .Where(engine => engine != null);
+                var engineIDs = matches.Cast<Match>().Select(match => match.Groups["engine"].Value).Distinct();
+                var engines = new List<EngineBase>();
+                foreach (var engineID in engineIDs)
+                {
+                    try {
+                        engines.Add(DyCEBag.GetEngine(engineID));
+                    }
+                    catch (Exception e) {
+                        Console.WriteLine(e);
+                    }
+                }
+
+                return engines.Where(engine => engine != null);
             }
         }
 
