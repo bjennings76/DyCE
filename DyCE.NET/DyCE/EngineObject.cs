@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight.Command;
+using Newtonsoft.Json;
 
 namespace DyCE
 {
@@ -43,6 +44,7 @@ namespace DyCE
         /// <summary>
         /// Command to add a new property to the Object Engine.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand CreatePropertyCommand { get { return new RelayCommand(CreateProperty); } }
 
         /// <summary>
@@ -58,11 +60,13 @@ namespace DyCE
         /// <summary>
         /// Deletes the selected property from the Object Engine.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand<EngineProperty> DeleteCommand { get { return new RelayCommand<EngineProperty>(prop => Properties.Remove(prop)); } }
 
         /// <summary>
         /// Command to add a new Engine Object to the current DyCEBag and adds a property that references the new Object Engine.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(AddEngineObject); } }
 
         /// <summary>
@@ -79,21 +83,25 @@ namespace DyCE
         /// <summary>
         /// Command to add a new anonymous List Engine to this Object Engine's property list.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineListCommand { get { return new RelayCommand(() => Properties.Add(new EngineProperty("New Property", new EngineList()))); } }
 
         /// <summary>
         /// Command to add a new anonymous Text Engine to this Object Engine's property list.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineTextCommand { get { return new RelayCommand(() => Properties.Add(new EngineProperty("New Property", new EngineText("New Text Value")))); } }
 
         /// <summary>
         /// Command to add a new anonymous Number Engine to this Object Engine's property list.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineNumberCommand { get { return new RelayCommand(() => Properties.Add(new EngineProperty("New Property", new EngineNumber()))); } }
 
         /// <summary>
         /// Command to add a new anonymous Range Engine to this Object Engine's property list.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineRangeCommand { get { return new RelayCommand(() => Properties.Add(new EngineProperty("New Property", new EngineRange()))); } }
 
         /// <summary>

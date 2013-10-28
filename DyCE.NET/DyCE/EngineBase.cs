@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using DyCE.Annotations;
 using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 
 namespace DyCE
 {
@@ -27,7 +28,7 @@ namespace DyCE
         /// <summary>
         /// Engine's reference ID. User + Bag + ID create the unique reference for any engine.
         /// </summary>
-        [XmlIgnore]
+        [XmlIgnore, JsonIgnore]
         public virtual string ID
         {
             get { return _id.IsNullOrEmpty() && !Name.IsNullOrEmpty() ? Name.Replace(" ", "") : _id; }
@@ -48,7 +49,7 @@ namespace DyCE
         /// <summary>
         /// The engine's readable name. This is the same as the ID if the ID doesn't have spaces.
         /// </summary>
-        [XmlIgnore]
+        [XmlIgnore, JsonIgnore]
         public string Name
         {
             get { return _name ?? _id; }
@@ -65,7 +66,14 @@ namespace DyCE
         /// <summary>
         /// Read only name to display in lists and in the editor. Uses 'ToString()' to get the name modifications.
         /// </summary>
+        [JsonIgnore]
         public string DisplayName { get { return ToString(); } }
+
+        private bool _isSelected;
+        [XmlIgnore, JsonIgnore] public bool IsSelected { get { return _isSelected; } set { Set(() => IsSelected, ref _isSelected, value); } }
+
+        private bool _isExpanded;
+        [XmlIgnore, JsonIgnore] public bool IsExpanded { get { return _isExpanded; } set { Set(() => IsExpanded, ref _isExpanded, value); } }
 
         protected abstract string _resultTemplateDefault { get; }
         
@@ -81,7 +89,7 @@ namespace DyCE
         /// <summary>
         /// This template text will be used to construct the result object's 'ToString' function using StringTemplate.
         /// </summary>
-        [XmlIgnore]
+        [XmlIgnore, JsonIgnore]
         public string ResultTemplate
         {
             get { return _resultTemplate ?? (_resultTemplate = _resultTemplateDefault); }
@@ -96,13 +104,15 @@ namespace DyCE
         /// <summary>
         /// List of engines referenced by this engine.
         /// </summary>
+        [XmlIgnore, JsonIgnore]
         public abstract IEnumerable<EngineBase> SubEngines { get; }
 
         private EngineBase _selectedSubEngine;
+
         /// <summary>
         /// Currently selected sub-engine for use by engine editors.
         /// </summary>
-        [XmlIgnore]
+        [XmlIgnore, JsonIgnore]
         public EngineBase SelectedSubEngine
         {
             get { return _selectedSubEngine; } 
@@ -114,7 +124,11 @@ namespace DyCE
             }
         }
 
+        [JsonIgnore]
         public virtual string URL { get { return DyCEBag.GetEngineURL(this); } }
+
+        private EngineBase _parent;
+        [XmlIgnore, JsonIgnore] public EngineBase Parent { get { return _parent; } set { Set(() => Parent, ref _parent, value); } }
 
         #region Changed [event]
 

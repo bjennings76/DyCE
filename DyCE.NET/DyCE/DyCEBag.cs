@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.IO;
@@ -6,6 +7,8 @@ using System;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace DyCE
 {
@@ -40,12 +43,13 @@ namespace DyCE
         /// <summary>
         /// The ID of the DyCEBag, unique to the user.
         /// </summary>
-        [XmlIgnore]
+        [XmlIgnore, JsonIgnore]
         public string ID { get { return Name.Replace(" ", ""); } }
 
         /// <summary>
         /// The 
         /// </summary>
+        [JsonIgnore]
         public object URL { get { return ROOT_URL + "?creator=" + Creator + "&bag=" + ID; } }
 
         /// <summary>
@@ -81,8 +85,11 @@ namespace DyCE
         /// <summary>
         /// The file info of the DyCEBag's .xml file.
         /// </summary>
-        [XmlIgnore]
+        [XmlIgnore, JsonIgnore]
         public FileInfo File { get { return _file ?? (_file = new FileInfo(Path.Combine("Engines", Name + ".xml"))); } set { _file = value; } }
+
+        private FileInfo _fileJson;
+        private FileInfo FileJson { get { return _fileJson ?? (_fileJson = new FileInfo(Path.Combine("Engines", Name + ".txt"))); } set { _fileJson = value; } }
 
         /// <summary>
         /// This indexer returns the dynamic content engine matching the supplied ID.
@@ -105,36 +112,43 @@ namespace DyCE
         /// <summary>
         /// Adds a new Object Engine to the DyCEBag's DyCEList.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(() => DyCEList.Add(new EngineObject("New Object Engine"))); } }
 
         /// <summary>
         /// Adds a new List Engine to the DyCEBag's DyCEList.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineListCommand { get { return new RelayCommand(() => DyCEList.Add(new EngineList("New List Engine"))); } }
 
         /// <summary>
         /// Adds a new Text Engine to the DyCEBag's DyCEList.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineTextCommand { get { return new RelayCommand(() => DyCEList.Add(new EngineText("New Text Value", "New Text Engine"))); } }
 
         /// <summary>
         /// Adds a new Number Engine to the DyCEBag's DyCEList.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineNumberCommand { get { return new RelayCommand(() => DyCEList.Add(new EngineNumber("New Number Engine"))); } }
 
         /// <summary>
         /// Adds a new Number Engine to the DyCEBag's DyCEList.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineRangeCommand { get { return new RelayCommand(() => DyCEList.Add(new EngineRange("New Number Engine"))); } }
 
         /// <summary>
         /// Saves the DyCEBag to it's .xml file.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand SaveCommand { get { return new RelayCommand(Save); } }
 
         /// <summary>
         /// Deletes an engine from the dyce bag.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand<EngineBase> DeleteCommand { get { return new RelayCommand<EngineBase>(engine => DyCEList.Remove(engine)); } }
 
         /// <summary>
@@ -143,7 +157,16 @@ namespace DyCE
         private void Save()
         {
             Utilities.SaveToXML(File, this);
-            Process.Start(File.FullName);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore, 
+                Formatting = Formatting.Indented, 
+                DefaultValueHandling = DefaultValueHandling.Ignore, 
+                TypeNameHandling = TypeNameHandling.Auto
+            };
+
+            System.IO.File.WriteAllText(FileJson.FullName, JsonConvert.SerializeObject(this, settings));
+            Process.Start(FileJson.FullName);
         }
 
         /// <summary>

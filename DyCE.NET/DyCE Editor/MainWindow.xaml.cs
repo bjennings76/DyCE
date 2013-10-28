@@ -62,10 +62,66 @@ namespace DyCE.Editor
             if (htmlDocument != null)
                 htmlDocument.parentWindow.scroll(0, int.MaxValue);
         }
-
         private void SelectedEngineChanged(ViewModel sender)
         {
+            if (sender.SelectedEngine == null)
+                return;
+
+            ExpandToSelected();
+
             //control_EngineEditor.Focus();
+        }
+
+        private void ExpandToSelected()
+        {
+            TreeViewItem node = tree_Engines.ItemContainerGenerator.ContainerFromItem(tree_Engines.SelectedItem) as TreeViewItem;
+
+            if (node == null)
+            {
+                Console.WriteLine("Could not convert the selected item into a tree view item.");
+                return;
+            }
+
+            node = node.Parent as TreeViewItem;
+
+            while (node != null)
+            {
+                node.IsExpanded = true;
+                node = node.Parent as TreeViewItem;
+            } 
+        }
+
+        private static bool SelectItem(object o, TreeViewItem parentItem)
+        {
+            if (parentItem == null)
+                return false;
+
+            bool isExpanded = parentItem.IsExpanded;
+            if (!isExpanded)
+            {
+                parentItem.IsExpanded = true;
+                parentItem.UpdateLayout();
+            }
+
+            TreeViewItem item = parentItem.ItemContainerGenerator.ContainerFromItem(o) as TreeViewItem;
+            if (item != null)
+            {
+                item.IsSelected = true;
+                return true;
+            }
+
+            bool wasFound = false;
+            for (int i = 0; i < parentItem.Items.Count; i++)
+            {
+                TreeViewItem itm = parentItem.ItemContainerGenerator.ContainerFromIndex(i) as TreeViewItem;
+                var found = SelectItem(o, itm);
+                if (!found && itm != null)
+                    itm.IsExpanded = false;
+                else
+                    wasFound = true;
+            }
+
+            return wasFound;
         }
 
         void Results_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

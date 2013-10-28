@@ -64,21 +64,33 @@ namespace DyCE.Editor
         private DyCEBag _bag;
         public DyCEBag Bag
         {
-            get { return _bag ?? GetDefaultDyCEBag(); }
+            get { return _bag ?? (_bag = GetDefaultDyCEBag()); }
             set
             {
                 _bag = value;
                 RaisePropertyChanged(() => Bag);
+
+                if (_bag == null)
+                    return;
+
+                SelectedEngine = _bag.DyCEList.FirstOrDefault();
                 Settings.Default.CurrentDyCEBag = _bag.ID;
             }
         }
 
         private DyCEBag GetDefaultDyCEBag()
         {
-            if (Settings.Default.CurrentDyCEBag.IsNullOrEmpty())
-                return DyCEBags.FirstOrDefault();
+            DyCEBag bag;
 
-            return DyCEBags.FirstOrDefault(b => b.ID == Settings.Default.CurrentDyCEBag) ?? DyCEBags.FirstOrDefault();
+            if (Settings.Default.CurrentDyCEBag.IsNullOrEmpty())
+                bag = DyCEBags.FirstOrDefault();
+            else
+                bag = DyCEBags.FirstOrDefault(b => b.ID == Settings.Default.CurrentDyCEBag) ?? DyCEBags.FirstOrDefault();
+
+            if (bag != null)
+                SelectedEngine = bag.DyCEList.FirstOrDefault();
+
+            return bag;
         }
 
         private readonly ObservableCollection<ResultBase> _results = new ObservableCollection<ResultBase>();
@@ -102,9 +114,14 @@ namespace DyCE.Editor
             get { return _selectedEngine; } 
             set
             {
-                if (_selectedEngine != null)
-                    _selectedEngine.Changed -= SelectedEngineOnChanged;
+                if (_selectedEngine == value)
+                    return;
 
+                if (_selectedEngine != null)
+                {
+                    _selectedEngine.Changed -= SelectedEngineOnChanged;
+                    _selectedEngine.IsSelected = false;
+                }
                 _selectedEngine = value;
                 RaisePropertyChanged(() => SelectedEngine);
                 RaisePropertyChanged(() => WindowName);
@@ -114,6 +131,7 @@ namespace DyCE.Editor
 
                 Results.Add(SelectedEngine.Go(new Random().Next()));
                 _selectedEngine.Changed += SelectedEngineOnChanged;
+                _selectedEngine.IsSelected = true;
             }
         }
 
@@ -188,9 +206,9 @@ namespace DyCE.Editor
         private void SelectedEngineOnChanged(object sender, EventArgs eventArgs) { UpdateResults(); }
 
 
-        public RelayCommand PausePreviewCommand { get { return new RelayCommand(PausePreview, CanPausePreview); } }
-        private bool CanPausePreview() { return SelectedEngine != null; }
-        private void PausePreview() { Paused = !Paused; }
+        public RelayCommand PausePreviewCommand { get { return new RelayCommand(() => Paused = !Paused, () => SelectedEngine != null); } }
+
+        public RelayCommand<EngineBase> SelectEngineCommand { get { return new RelayCommand<EngineBase>(e => SelectedEngine = e); } } 
 
         void _timer_Tick(object sender, EventArgs e)
         {

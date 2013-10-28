@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace DyCE
 {
@@ -14,7 +15,7 @@ namespace DyCE
         /// <summary>
         /// The actual sub-engine regardless of reference or anonymous state. Generally by the Property Result object to get this property's result.
         /// </summary>
-        [XmlIgnore]
+        [XmlIgnore, JsonIgnore]
         public EngineBase SubEngineActual
         {
             get { return _subEngineActual; } 
@@ -38,7 +39,7 @@ namespace DyCE
         /// <summary>
         /// The pass-through engine for the Engine Editor UI to use.
         /// </summary>
-        [XmlIgnore]
+        [XmlIgnore, JsonIgnore]
         public EngineBase SubEngine
         {
             get
@@ -76,6 +77,7 @@ namespace DyCE
         /// </summary>
         public override IEnumerable<EngineBase> SubEngines { get { return new[] { SubEngine }; } }
 
+        [JsonIgnore]
         public override string URL
         {
             get { return SubEngine.URL; }

@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight.Command;
+using Newtonsoft.Json;
 
 namespace DyCE
 {
@@ -26,21 +27,25 @@ namespace DyCE
         /// <summary>
         /// Command to add a new Object Engine.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineObjectCommand { get { return new RelayCommand(() => Items.Add(new EngineObject("New Object Engine"))); } }
 
         /// <summary>
         /// Command to add a new List Engine.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineListCommand { get { return new RelayCommand(() => Items.Add(new EngineList("New List Engine"))); } }
 
         /// <summary>
         /// Command to add a new Text Engine.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand AddEngineTextCommand { get { return new RelayCommand(() => Items.Add(new EngineText("New Text Engine"))); } }
 
         /// <summary>
         /// Command to delete an engine from the list.
         /// </summary>
+        [JsonIgnore]
         public RelayCommand<EngineBase> DeleteCommand { get { return new RelayCommand<EngineBase>(engine => Items.Remove(engine)); } }
 
 

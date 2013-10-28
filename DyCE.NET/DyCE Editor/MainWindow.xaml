@@ -15,7 +15,14 @@
             <TextBlock Text="{Binding DisplayName}"/>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate DataType= "{x:Type dyce:ResultBase}" ItemsSource="{Binding SubResults}">
-            <TextBlock ToolTip="{Binding DisplayName}" Text="{Binding ResultText}" Margin="2"/>
+            <Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<Button Grid.Column="0" Content="{Binding Engine.DisplayName, Mode=OneWay}" MinWidth="50" Margin="2" MaxWidth="150" VerticalAlignment="Center" Command="{Binding SelectEngineCommand, Mode=OneWay, Source={StaticResource ViewModelDataSource}}" CommandParameter="{Binding Engine, Mode=OneWay}"/>
+				<TextBlock Grid.Column="1" Text="{Binding ResultText}" Margin="2"/>
+			</Grid>
         </HierarchicalDataTemplate>
     </Window.Resources>
     <Window.DataContext>
@@ -95,7 +102,13 @@
         				</Button>
         			</ToolBar>
         		</StackPanel>
-        		<TreeView ItemsSource="{Binding DyCEList}" Grid.Row="1"  VirtualizingPanel.IsVirtualizing="True" Margin="2">
+        		<TreeView x:Name="tree_Engines" ItemsSource="{Binding DyCEList}" Grid.Row="1"  VirtualizingPanel.IsVirtualizing="True" Margin="2">
+        			<TreeView.ItemContainerStyle>
+						<Style TargetType="{x:Type TreeViewItem}">
+							<Setter Property="IsSelected" Value="{Binding IsSelected}" />
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+						</Style>
+				    </TreeView.ItemContainerStyle>
         			<TreeView.Resources>
         				<HierarchicalDataTemplate DataType= "{x:Type dyce:EngineBase}" ItemsSource="{Binding SubEngines}">
         					<Grid VerticalAlignment="Top">
@@ -452,7 +465,7 @@
     			</Grid.ColumnDefinitions>
     			<Slider Grid.Column="1" Value="{Binding MaxResults}" Minimum="1" Maximum="100" VerticalAlignment="Center" Margin="2" SmallChange="1" LargeChange="10" TickFrequency="10"/>
     			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Max:" VerticalAlignment="Center" Margin="2"/>
-    			<Slider Grid.Column="3" Value="{Binding TimerDuration}" Minimum="0.1" Maximum="5" VerticalAlignment="Center" Margin="2" IsDirectionReversed="True"/>
+    			<Slider Grid.Column="3" Value="{Binding TimerDuration}" Minimum="0.05" Maximum="3" VerticalAlignment="Center" Margin="2" IsDirectionReversed="True"/>
     			<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Speed:" VerticalAlignment="Center" Margin="2" Grid.Column="2"/>
     			<Button x:Name="btn_Pause" Grid.Column="4" Command="{Binding PausePreviewCommand, Mode=OneWay}" Style="{DynamicResource ButtonClear}">
     				<Grid Height="22" Width="22">

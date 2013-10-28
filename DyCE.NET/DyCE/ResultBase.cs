@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using Antlr4.StringTemplate;
 using Antlr4.StringTemplate.Misc;
 using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 
 namespace DyCE
 {
